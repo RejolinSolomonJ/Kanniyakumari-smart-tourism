@@ -1,0 +1,398 @@
+{
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "experiences": "Experiences",
+    "plan": "Plan My Trip",
+    "bookings": "Bookings",
+    "stay": "Stay",
+    "events": "Events",
+    "gallery": "Gallery",
+    "blogs": "Blogs",
+    "downloads": "Downloads",
+    "emergency": "Emergency",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "My Profile",
+    "admin": "Admin Panel",
+    "search": "Search",
+    "language": "தமிழ்",
+    "ai_assistant": "AI Assistant",
+    "explore_dropdown": {
+      "by_category": "By Category",
+      "all_destinations": "All Destinations",
+      "interactive_map": "Interactive Map"
+    },
+    "experiences_dropdown": {
+      "food_trails": "Food Trails",
+      "religious_tours": "Religious Tours",
+      "adventure": "Adventure",
+      "cultural": "Cultural Programs",
+      "wildlife": "Wildlife (Coming Soon)",
+      "ar_vr": "AR/VR (Coming Soon)"
+    },
+    "plan_dropdown": {
+      "ai_planner": "AI Itinerary Planner",
+      "transport": "Public Transport",
+      "guide_booking": "Guide Booking",
+      "rentals": "Rental Vehicles"
+    },
+    "bookings_dropdown": {
+      "tickets": "Book Tickets",
+      "hotels": "Book Hotels",
+      "guides": "Book Guide"
+    },
+    "stay_dropdown": {
+      "government": "Government Hotels",
+      "resorts": "Resorts",
+      "homestays": "Homestays",
+      "budget": "Budget"
+    },
+    "gallery_dropdown": {
+      "photos": "Photo Gallery",
+      "videos": "Video Gallery"
+    }
+  },
+  "hero": {
+    "department": "Department of Tourism · Tamil Nadu",
+    "title": "Experience Kanyakumari",
+    "subtitle": "The Southern Gateway of Incredible India",
+    "cta_explore": "Explore",
+    "cta_plan": "Plan Your Journey",
+    "cta_book": "Book Tickets",
+    "cta_watch": "Watch Story",
+    "scroll": "SCROLL",
+    "govt_name": "Government of Tamil Nadu",
+    "dept_name": "Department of Tourism"
+  },
+  "stats": {
+    "destinations": "Destinations",
+    "annual_visitors": "Annual Visitors",
+    "heritage_years": "Years of Heritage",
+    "area": "Sq KM of Beauty"
+  },
+  "quick_actions": {
+    "plan_trip": "Plan Trip",
+    "book_tickets": "Book Tickets",
+    "find_hotels": "Find Hotels",
+    "emergency": "Emergency",
+    "download_map": "Download Map",
+    "ai_assistant": "AI Assistant"
+  },
+  "destinations": {
+    "featured_title": "Featured Destinations",
+    "explore_all": "Explore All",
+    "entry_free": "Free Entry",
+    "entry_paid": "Entry: ₹{fee}",
+    "search_placeholder": "Search destinations...",
+    "filter_all": "All",
+    "open_now": "Open Now",
+    "category": {
+      "BEACH": "Beaches",
+      "TEMPLE": "Temples",
+      "WILDLIFE": "Wildlife",
+      "WATERFALL": "Waterfalls",
+      "ADVENTURE": "Adventure",
+      "HERITAGE": "Heritage",
+      "MUSEUM": "Museums",
+      "CULTURE": "Culture",
+      "SHOPPING": "Shopping",
+      "FOOD": "Food",
+      "RELIGIOUS": "Religious",
+      "PHOTOGRAPHY": "Photography"
+    },
+    "detail": {
+      "overview": "Overview",
+      "history": "History",
+      "gallery": "Gallery",
+      "map": "Map",
+      "reviews": "Reviews",
+      "opening_hours": "Opening Hours",
+      "entry_fee": "Entry Fee",
+      "book_now": "Book Now",
+      "nearby": "Nearby Attractions",
+      "how_to_reach": "How to Reach",
+      "best_time": "Best Time to Visit",
+      "share": "Share",
+      "save": "Save",
+      "print": "Print"
+    }
+  },
+  "categories": {
+    "title": "Explore By Category",
+    "subtitle": "Discover the diverse wonders of Kanyakumari"
+  },
+  "map": {
+    "title": "Interactive Map",
+    "subtitle": "Discover places around Kanyakumari",
+    "layers": {
+      "hotels": "Hotels",
+      "restaurants": "Restaurants",
+      "atm": "ATM",
+      "hospital": "Hospital",
+      "parking": "Parking"
+    }
+  },
+  "stories": {
+    "title": "Travel Stories",
+    "subtitle": "Real experiences from travelers",
+    "read_more": "Read More"
+  },
+  "food": {
+    "title": "Food Trails",
+    "subtitle": "Taste the flavors of Kanyakumari",
+    "veg": "Vegetarian",
+    "non_veg": "Non-Vegetarian",
+    "seafood": "Seafood",
+    "beverage": "Beverage",
+    "street_food": "Street Food"
+  },
+  "festivals": {
+    "title": "Festival Calendar",
+    "subtitle": "Celebrate with Kanyakumari"
+  },
+  "gallery_section": {
+    "title": "Photo Gallery",
+    "subtitle": "Stunning captures of Kanyakumari",
+    "view_all": "View Full Gallery"
+  },
+  "announcements": {
+    "title": "Government Announcements",
+    "read_more": "Read More"
+  },
+  "booking": {
+    "step_destination": "Select Destination",
+    "step_date": "Select Date & Tickets",
+    "step_details": "Visitor Details",
+    "step_payment": "Payment",
+    "step_confirmation": "Confirmation",
+    "ticket_type": {
+      "ADULT": "Adult",
+      "CHILD": "Child (5-12 yrs)",
+      "SENIOR": "Senior Citizen",
+      "FOREIGNER": "Foreign National"
+    },
+    "select_date": "Select Visit Date",
+    "quantity": "Quantity",
+    "total": "Total Amount",
+    "proceed_pay": "Proceed to Pay",
+    "pay_now": "Pay Now",
+    "booking_confirmed": "Booking Confirmed!",
+    "download_ticket": "Download Ticket",
+    "qr_instruction": "Show this QR code at the entrance",
+    "add_calendar": "Add to Calendar",
+    "visitor_name": "Full Name",
+    "visitor_phone": "Phone Number",
+    "visitor_email": "Email Address",
+    "visitor_id_type": "ID Type",
+    "visitor_id_number": "ID Number"
+  },
+  "hotels": {
+    "title": "Where to Stay",
+    "subtitle": "Find your perfect accommodation",
+    "per_night": "/night",
+    "amenities": "Amenities",
+    "book_now": "Book Now",
+    "type": {
+      "GOVERNMENT": "Government Hotel",
+      "LUXURY": "Luxury",
+      "MID_RANGE": "Mid-Range",
+      "BUDGET": "Budget",
+      "HOMESTAY": "Homestay",
+      "RESORT": "Resort"
+    }
+  },
+  "events_page": {
+    "title": "Events & Festivals",
+    "subtitle": "Experience the vibrant culture of Kanyakumari",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "view_details": "View Details",
+    "type": {
+      "CULTURAL": "Cultural",
+      "FESTIVAL": "Festival",
+      "TEMPLE": "Temple",
+      "GOVERNMENT": "Government",
+      "SPORTS": "Sports",
+      "FOOD": "Food",
+      "MUSIC": "Music"
+    }
+  },
+  "blogs_page": {
+    "title": "Travel Stories & Guides",
+    "subtitle": "Insights, tips, and tales from Kanyakumari",
+    "read_more": "Read More",
+    "min_read": "min read",
+    "category": {
+      "TRAVEL_STORY": "Travel Story",
+      "HISTORY": "History",
+      "CULTURE": "Culture",
+      "FOOD": "Food",
+      "GUIDE": "Guide",
+      "GOVERNMENT": "Government",
+      "REVIEW": "Review"
+    }
+  },
+  "ai": {
+    "welcome": "Hello! I'm your Kanyakumari Tourism Assistant. How can I help you today?",
+    "placeholder": "Ask me anything about Kanyakumari...",
+    "suggested": {
+      "q1": "What to see in Kanyakumari?",
+      "q2": "Best time to visit?",
+      "q3": "How to reach from Chennai?",
+      "q4": "Nearest hospital?",
+      "q5": "Plan my trip"
+    },
+    "thinking": "Thinking...",
+    "error": "Sorry, I couldn't process that. Please try again."
+  },
+  "planner": {
+    "title": "AI Trip Planner",
+    "subtitle": "Let AI craft your perfect Kanyakumari journey",
+    "step1_title": "Tell us about your trip",
+    "dates": "Travel Dates",
+    "people": "Number of People",
+    "adults": "Adults",
+    "children": "Children",
+    "seniors": "Seniors",
+    "budget": "Budget (₹)",
+    "travel_type": "Travel Type",
+    "interests": "Your Interests",
+    "vehicle": "Vehicle",
+    "hotel_pref": "Hotel Preference",
+    "dietary": "Dietary Preference",
+    "accessibility": "Accessibility Needs",
+    "generate": "Generate My Itinerary",
+    "generating": "Creating your perfect journey...",
+    "download_pdf": "Download as PDF",
+    "save_profile": "Save to Profile",
+    "share": "Share",
+    "travel_types": {
+      "solo": "Solo",
+      "couple": "Couple",
+      "family": "Family",
+      "group": "Group"
+    },
+    "vehicles": {
+      "own_car": "Own Car",
+      "rental": "Rental",
+      "bus": "Bus",
+      "train": "Train"
+    },
+    "hotel_prefs": {
+      "budget": "Budget",
+      "mid": "Mid-Range",
+      "luxury": "Luxury",
+      "homestay": "Homestay"
+    },
+    "diet": {
+      "veg": "Vegetarian",
+      "non_veg": "Non-Vegetarian",
+      "vegan": "Vegan",
+      "seafood": "Seafood Lover"
+    },
+    "day": "Day",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Night",
+    "estimated_cost": "Estimated Cost",
+    "packing_list": "Packing Checklist",
+    "weather": "Weather Forecast"
+  },
+  "emergency_page": {
+    "title": "Emergency Services",
+    "subtitle": "Quick access to emergency contacts in Kanyakumari",
+    "call": "Call Now",
+    "type": {
+      "HOSPITAL": "Hospital",
+      "POLICE": "Police",
+      "FIRE": "Fire Station",
+      "TOURIST_HELPLINE": "Tourist Helpline",
+      "WOMEN_SAFETY": "Women Safety",
+      "AMBULANCE": "Ambulance"
+    }
+  },
+  "transport": {
+    "title": "Transport Guide",
+    "subtitle": "Getting around Kanyakumari",
+    "by_bus": "By Bus",
+    "by_train": "By Train",
+    "by_air": "By Air",
+    "local_transport": "Local Transport"
+  },
+  "guides_page": {
+    "title": "Licensed Tour Guides",
+    "subtitle": "Expert local guides for an authentic experience",
+    "experience": "years experience",
+    "languages": "Languages",
+    "rate": "per day",
+    "book": "Book Guide",
+    "verified": "Government Verified"
+  },
+  "downloads_page": {
+    "title": "Downloads",
+    "subtitle": "Maps, brochures, and guides",
+    "download": "Download"
+  },
+  "auth": {
+    "login_title": "Welcome Back",
+    "login_subtitle": "Sign in to your account",
+    "register_title": "Create Account",
+    "register_subtitle": "Join us to explore Kanyakumari",
+    "email": "Email Address",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "phone": "Phone Number",
+    "name": "Full Name",
+    "login_button": "Sign In",
+    "register_button": "Create Account",
+    "or": "or",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?",
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In",
+    "otp_sent": "OTP sent to your phone",
+    "enter_otp": "Enter OTP",
+    "verify": "Verify",
+    "resend_otp": "Resend OTP",
+    "forgot_password": "Forgot Password?"
+  },
+  "footer": {
+    "tagline": "The Southern Gateway of Incredible India",
+    "quick_links": "Quick Links",
+    "useful_links": "Useful Links",
+    "contact_us": "Contact Us",
+    "follow_us": "Follow Us",
+    "about": "About Kanyakumari",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "accessibility": "Accessibility",
+    "rti": "RTI",
+    "sitemap": "Sitemap",
+    "copyright": "© {year} Department of Tourism, Government of Tamil Nadu. All rights reserved.",
+    "developed_by": "Developed under the Digital India initiative"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "back": "Go Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "search": "Search",
+    "no_results": "No results found",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "coming_soon": "Coming Soon",
+    "phase2": "This feature will be available in Phase 2"
+  }
+}
