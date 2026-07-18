@@ -24,7 +24,7 @@ export default function HeroVideo() {
         muted
         loop
         playsInline
-        poster="/images/hero-poster.jpg"
+        poster="https://images.unsplash.com/photo-1590766940554-634e880d0e44?q=80&w=1920"
       />
 
       {/* Cinematic Gradient Overlay */}
