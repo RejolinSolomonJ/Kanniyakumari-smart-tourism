@@ -276,6 +276,16 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
             <button onClick={() => window.print()} className="p-2 rounded-full border hover:bg-granite-50 text-granite-600" aria-label="Print">
               <Printer className="w-4 h-4" />
             </button>
+            <a 
+              href={destination.lat && destination.lng 
+                ? `https://www.google.com/maps/dir/?api=1&destination=${destination.lat},${destination.lng}` 
+                : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination.nameEn + ', Kanyakumari')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 rounded-xl border border-ocean text-ocean hover:bg-ocean hover:text-white transition-all text-body-sm font-semibold flex items-center gap-1.5 cursor-pointer bg-white"
+            >
+              <MapPin className="w-4 h-4" /> Get Directions
+            </a>
             <a href="#booking-section" className="btn-primary py-2 px-6 text-body-sm font-semibold">
               Book Tickets Now
             </a>

@@ -180,36 +180,103 @@ Respond ONLY with valid JSON in this exact structure (do not include any convers
       tickets: Math.round(budget * 0.05),
       total: Math.round(budget * 0.95)
     },
-    days: Array.from({ length: days }, (_, idx) => ({
-      day: idx + 1,
-      theme: idx === 0 ? 'Sunrise & Heritage Monuments' : idx === 1 ? 'Waterfalls & Palaces' : 'Nature & Local Markets',
-      slots: [
-        {
-          time: 'Morning',
-          place: 'Kanyakumari Beach Sunrise Point',
-          activity: 'Watch the sunrise where three oceans meet. Incredible sunrise photography opportunity.',
-          duration: '1.5 hours',
-          tips: 'Reach by 5:30 AM to secure a good spot.',
-          estimatedCost: 0
-        },
-        {
-          time: 'Afternoon',
-          place: 'Vivekananda Rock Memorial & Thiruvalluvar Statue',
-          activity: 'Ferry ride to the rock memorial and stone statue island.',
-          duration: '3 hours',
-          tips: 'Wear slip-on shoes for quick removal at the memorial entrance.',
-          estimatedCost: 70
-        },
-        {
-          time: 'Evening',
-          place: 'Sunset View Point',
-          activity: 'Unwind and witness the sunset over the Arabian Sea.',
-          duration: '1.5 hours',
-          tips: 'Try the local Nannari Sarbath nearby.',
-          estimatedCost: 20
-        }
-      ]
-    })),
+    days: Array.from({ length: days }, (_, idx) => {
+      const dayNum = idx + 1;
+      if (idx === 0) {
+        return {
+          day: dayNum,
+          theme: 'Sunrise & Heritage Monuments',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Kanyakumari Beach Sunrise Point',
+              activity: 'Watch the sunrise where three oceans meet. Incredible sunrise photography opportunity.',
+              duration: '1.5 hours',
+              tips: 'Reach by 5:30 AM to secure a good spot.',
+              estimatedCost: 0
+            },
+            {
+              time: 'Afternoon',
+              place: 'Vivekananda Rock Memorial & Thiruvalluvar Statue',
+              activity: 'Ferry ride to the rock memorial and stone statue island.',
+              duration: '3 hours',
+              tips: 'Wear slip-on shoes for quick removal at the memorial entrance.',
+              estimatedCost: 70
+            },
+            {
+              time: 'Evening',
+              place: 'Sunset View Point',
+              activity: 'Unwind and witness the sunset over the Arabian Sea.',
+              duration: '1.5 hours',
+              tips: 'Try the local Nannari Sarbath nearby.',
+              estimatedCost: 20
+            }
+          ]
+        };
+      } else if (idx === 1) {
+        return {
+          day: dayNum,
+          theme: 'Wooden Palaces & Heritage Temples',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Padmanabhapuram Palace',
+              activity: 'Explore the magnificent 16th-century wooden palace of the Travancore kings.',
+              duration: '2.5 hours',
+              tips: 'Keep shoes outside. Hiring a guide is highly recommended.',
+              estimatedCost: 50
+            },
+            {
+              time: 'Afternoon',
+              place: 'Suchindram Thanumalayan Temple',
+              activity: 'Marvel at the ancient musical pillars and the 18-foot Hanuman statue.',
+              duration: '2 hours',
+              tips: 'Strict dress code: men must remove shirts before entry.',
+              estimatedCost: 0
+            },
+            {
+              time: 'Evening',
+              place: 'Muttom Beach',
+              activity: 'Relax on the rocky shores and visit the iconic colonial lighthouse.',
+              duration: '2 hours',
+              tips: 'Perfect spot for sunset photographs.',
+              estimatedCost: 10
+            }
+          ]
+        };
+      } else {
+        return {
+          day: dayNum,
+          theme: 'Eco-Tourism & Waterfalls',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Mathur Aqueduct (Hanging Bridge)',
+              activity: 'Walk across the longest and highest aqueduct in South Asia over Pahrali river.',
+              duration: '1.5 hours',
+              tips: 'Buy fresh pineapples from local stalls nearby.',
+              estimatedCost: 10
+            },
+            {
+              time: 'Afternoon',
+              place: 'Thirparappu Waterfalls',
+              activity: 'Enjoy a refreshing bath in the cascading waterfalls and go boating in the river upstream.',
+              duration: '3 hours',
+              tips: 'Changing rooms are available for a nominal fee.',
+              estimatedCost: 30
+            },
+            {
+              time: 'Evening',
+              place: 'Vattakottai Fort',
+              activity: 'Explore the seaside granite fort built by the Travancore kings with scenic ocean views.',
+              duration: '1.5 hours',
+              tips: 'Climb the ramparts for a panoramic view of the coastline.',
+              estimatedCost: 0
+            }
+          ]
+        };
+      }
+    }),
     packingList: ['Sunglasses', 'Sunscreen lotion', 'Light cotton clothing', 'Comfortable footwear', 'Camera'],
     weatherNote: 'Breezy and pleasant coastal temperatures. High UV during mid-day.',
     emergencyContacts: [
@@ -563,10 +630,21 @@ Respond ONLY with valid JSON matching this exact structure (no conversational te
                               {slot.time}
                             </span>
                             <div className="flex-1 space-y-1">
-                              <h4 className="font-semibold text-body text-granite-900 flex items-center gap-1.5">
-                                <MapPin className="w-4 h-4 text-gold" />
-                                {slot.place}
-                              </h4>
+                              <div className="flex items-start md:items-center justify-between gap-3 flex-wrap">
+                                <h4 className="font-semibold text-body text-granite-900 flex items-center gap-1.5">
+                                  <MapPin className="w-4 h-4 text-gold animate-pulse" />
+                                  {slot.place}
+                                </h4>
+                                <a 
+                                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(slot.place + ', Kanyakumari')}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[10px] text-ocean hover:text-ocean-700 font-bold flex items-center gap-1 bg-ocean-50/50 hover:bg-ocean-50 px-2 py-0.5 rounded border border-ocean-100 transition-all cursor-pointer"
+                                  title="Get Directions"
+                                >
+                                  <MapPin className="w-3 h-3 text-ocean" /> Get Directions
+                                </a>
+                              </div>
                               <p className="text-body-sm text-granite-600">{slot.activity}</p>
                               <div className="flex flex-wrap gap-4 text-caption text-granite-400 pt-1">
                                 <span>Duration: {slot.duration}</span>

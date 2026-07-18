@@ -6,7 +6,7 @@ const getModel = () => {
     return null
   }
   const genAI = new GoogleGenerativeAI(apiKey)
-  return genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+  return genAI.getGenerativeModel({ model: 'gemini-flash-latest' })
 }
 
 export async function analyzeSentiment(text: string): Promise<{ score: number, label: 'positive'|'negative'|'neutral', summary: string }> {

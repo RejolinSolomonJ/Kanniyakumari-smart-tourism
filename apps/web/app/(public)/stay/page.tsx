@@ -188,17 +188,28 @@ export default function StayPage() {
                 </div>
               </div>
 
-              <div className="p-5 border-t border-granite-100 flex items-center justify-between">
-                <div>
-                  <span className="block text-caption text-granite-400 font-medium">Starting from</span>
-                  <span className="text-body-lg font-bold text-granite-900">{formatCurrency(hotel.pricePerNight)}<span className="text-caption font-normal">/night</span></span>
+              <div className="p-5 border-t border-granite-100 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="block text-caption text-granite-400 font-medium">Starting from</span>
+                    <span className="text-body-lg font-bold text-granite-900">{formatCurrency(hotel.pricePerNight)}<span className="text-caption font-normal">/night</span></span>
+                  </div>
+                  <button
+                    onClick={() => { setBookingHotel(hotel); setBookingSubmitted(false); setBookingName(''); setBookingPhone(''); }}
+                    className="btn-gold py-2 px-5 text-body-sm font-semibold cursor-pointer"
+                  >
+                    Book Stay
+                  </button>
                 </div>
-                <button
-                  onClick={() => { setBookingHotel(hotel); setBookingSubmitted(false); setBookingName(''); setBookingPhone(''); }}
-                  className="btn-gold py-2 px-5 text-body-sm font-semibold"
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 px-4 rounded-xl border border-slate-200 hover:border-slate-350 hover:bg-slate-50 transition-all text-caption font-semibold flex items-center justify-center gap-1.5 cursor-pointer text-slate-700 bg-white"
+                  title="Get Directions"
                 >
-                  Book Stay
-                </button>
+                  <MapPin className="w-4 h-4 text-ocean animate-pulse" /> Get Directions
+                </a>
               </div>
 
             </div>

@@ -376,21 +376,26 @@ export default function ReligiousToursPage() {
                       </p>
                     </div>
 
-                    <div className="border-t border-slate-100 pt-4 flex flex-wrap gap-4 text-caption text-granite-400 font-semibold">
+                    <div className="border-t border-slate-100 pt-4 space-y-3">
+                      <div className="flex flex-wrap gap-4 text-caption text-granite-400 font-semibold">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-ocean" />
+                          {site.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-gold" />
+                          {site.hours}
+                        </span>
+                      </div>
                       <a 
                         href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(site.name + ', Kanyakumari')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 hover:text-ocean transition-colors cursor-pointer group"
+                        className="w-full py-2 px-4 rounded-xl border border-slate-200 hover:border-slate-350 hover:bg-slate-50 transition-all text-caption font-semibold flex items-center justify-center gap-1.5 cursor-pointer text-slate-700 bg-white"
                         title="Get Directions"
                       >
-                        <MapPin className="w-3.5 h-3.5 text-ocean group-hover:scale-110 transition-transform" />
-                        <span className="hover:underline">{site.location}</span>
+                        <MapPin className="w-4 h-4 text-ocean animate-pulse" /> Get Directions
                       </a>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-gold" />
-                        {site.hours}
-                      </span>
                     </div>
                   </div>
                 </div>

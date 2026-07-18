@@ -115,20 +115,25 @@ export default function EventsPage() {
                 </div>
               </div>
 
-              <div className="p-6 border-t border-granite-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-caption text-granite-400">
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-gold" />
-                  {event.startDate} to {event.endDate}
-                </span>
+              <div className="p-6 border-t border-granite-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-caption text-granite-500">
+                <div className="space-y-1">
+                  <span className="flex items-center gap-1.5 text-granite-400">
+                    <Calendar className="w-4 h-4 text-gold" />
+                    {event.startDate} to {event.endDate}
+                  </span>
+                  <span className="flex items-center gap-1.5 text-granite-400">
+                    <MapPin className="w-4 h-4 text-ocean" />
+                    {event.venue}
+                  </span>
+                </div>
                 <a 
                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(event.venue + ', Kanyakumari')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-ocean transition-colors cursor-pointer group"
+                  className="px-3 py-1.5 rounded bg-ocean-50 text-ocean hover:bg-ocean hover:text-white transition-all duration-200 text-[11px] font-bold flex items-center gap-1 border border-ocean-100 cursor-pointer self-start sm:self-auto"
                   title="Get Directions"
                 >
-                  <MapPin className="w-4 h-4 text-ocean group-hover:scale-110 transition-transform" />
-                  <span className="hover:underline">{event.venue}</span>
+                  Get Directions
                 </a>
               </div>
 

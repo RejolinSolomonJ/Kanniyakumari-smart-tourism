@@ -207,7 +207,17 @@ function ExplorePageContent() {
                     </h3>
                     <p className="text-caption text-granite-400 font-tamil mb-3">{dest.nameTa}</p>
                     
-                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-granite-100">
+                    <div className="flex flex-col gap-2 mt-4 pt-3 border-t border-granite-100">
+                      <div className="flex items-center justify-between text-caption text-granite-500">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-ocean" />
+                          {dest.location || 'Kanyakumari'}
+                        </span>
+                        <span className="flex items-center gap-1 text-gold-600 font-semibold">
+                          <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+                          {dest.rating || '4.5'}
+                        </span>
+                      </div>
                       <button
                         onClick={(e) => {
                           e.preventDefault()
@@ -217,16 +227,10 @@ function ExplorePageContent() {
                             : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest.nameEn + ', Kanyakumari')}`
                           window.open(url, '_blank')
                         }}
-                        className="flex items-center gap-1 text-caption text-granite-500 hover:text-ocean transition-colors cursor-pointer group"
-                        title="Get Directions"
+                        className="w-full py-1.5 px-3 rounded-lg bg-ocean-50 hover:bg-ocean text-ocean hover:text-white transition-all duration-200 text-[11px] font-bold flex items-center justify-center gap-1 border border-ocean-100 cursor-pointer"
                       >
-                        <MapPin className="w-3.5 h-3.5 text-ocean group-hover:scale-110 transition-transform" />
-                        <span className="hover:underline">{dest.location || 'Kanyakumari'}</span>
+                        <MapPin className="w-3 h-3" /> Get Directions
                       </button>
-                      <span className="flex items-center gap-1 text-caption text-gold-600 font-semibold">
-                        <Star className="w-3.5 h-3.5 fill-gold text-gold" />
-                        {dest.rating || '4.5'}
-                      </span>
                     </div>
                   </div>
                 </Link>

@@ -7,7 +7,7 @@ const getModel = () => {
     return null
   }
   const genAI = new GoogleGenerativeAI(apiKey)
-  return genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+  return genAI.getGenerativeModel({ model: 'gemini-flash-latest' })
 }
 
 export async function generateItinerary(params: {
@@ -126,36 +126,103 @@ function getSimulatedItinerary(params: any) {
       tickets: Math.round(params.budget * 0.05),
       total: Math.round(params.budget * 0.9)
     },
-    days: Array.from({ length: params.days }, (_, idx) => ({
-      day: idx + 1,
-      theme: idx === 0 ? 'Wonders of Sunrise & Heritage' : 'Scenic Beaches & Waterfalls',
-      slots: [
-        {
-          time: 'Morning',
-          place: 'Kanyakumari Beach (Triveni Sangam)',
-          activity: 'Watch the breathtaking sunrise at the confluence of three seas.',
-          duration: '2 hours',
-          tips: 'Reach by 5:30 AM for the best view.',
-          estimatedCost: 0
-        },
-        {
-          time: 'Afternoon',
-          place: 'Vivekananda Rock Memorial & Thiruvalluvar Statue',
-          activity: 'Take the ferry to the rock memorial and saint statue.',
-          duration: '3 hours',
-          tips: 'Ferry ticket counters close by 4:00 PM.',
-          estimatedCost: 70
-        },
-        {
-          time: 'Evening',
-          place: 'Sunset View Point',
-          activity: 'Relax and watch the golden sunset.',
-          duration: '1.5 hours',
-          tips: 'Great photography spot.',
-          estimatedCost: 0
-        }
-      ]
-    })),
+    days: Array.from({ length: params.days }, (_, idx) => {
+      const dayNum = idx + 1;
+      if (idx === 0) {
+        return {
+          day: dayNum,
+          theme: 'Wonders of Sunrise & Heritage',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Kanyakumari Beach (Triveni Sangam)',
+              activity: 'Watch the breathtaking sunrise at the confluence of three seas.',
+              duration: '2 hours',
+              tips: 'Reach by 5:30 AM for the best view.',
+              estimatedCost: 0
+            },
+            {
+              time: 'Afternoon',
+              place: 'Vivekananda Rock Memorial & Thiruvalluvar Statue',
+              activity: 'Take the ferry to the rock memorial and saint statue.',
+              duration: '3 hours',
+              tips: 'Ferry ticket counters close by 4:00 PM.',
+              estimatedCost: 70
+            },
+            {
+              time: 'Evening',
+              place: 'Sunset View Point',
+              activity: 'Relax and watch the golden sunset.',
+              duration: '1.5 hours',
+              tips: 'Great photography spot.',
+              estimatedCost: 0
+            }
+          ]
+        };
+      } else if (idx === 1) {
+        return {
+          day: dayNum,
+          theme: 'Wooden Palaces & Heritage Temples',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Padmanabhapuram Palace',
+              activity: 'Explore the magnificent 16th-century wooden palace of the Travancore kings.',
+              duration: '2.5 hours',
+              tips: 'Keep shoes outside. Hiring a guide is highly recommended.',
+              estimatedCost: 50
+            },
+            {
+              time: 'Afternoon',
+              place: 'Suchindram Thanumalayan Temple',
+              activity: 'Marvel at the ancient musical pillars and the 18-foot Hanuman statue.',
+              duration: '2 hours',
+              tips: 'Strict dress code: men must remove shirts before entry.',
+              estimatedCost: 0
+            },
+            {
+              time: 'Evening',
+              place: 'Muttom Beach',
+              activity: 'Relax on the rocky shores and visit the iconic colonial lighthouse.',
+              duration: '2 hours',
+              tips: 'Perfect spot for sunset photographs.',
+              estimatedCost: 10
+            }
+          ]
+        };
+      } else {
+        return {
+          day: dayNum,
+          theme: 'Eco-Tourism & Waterfalls',
+          slots: [
+            {
+              time: 'Morning',
+              place: 'Mathur Aqueduct (Hanging Bridge)',
+              activity: 'Walk across the longest and highest aqueduct in South Asia over Pahrali river.',
+              duration: '1.5 hours',
+              tips: 'Buy fresh pineapples from local stalls nearby.',
+              estimatedCost: 10
+            },
+            {
+              time: 'Afternoon',
+              place: 'Thirparappu Waterfalls',
+              activity: 'Enjoy a refreshing bath in the cascading waterfalls and go boating in the river upstream.',
+              duration: '3 hours',
+              tips: 'Changing rooms are available for a nominal fee.',
+              estimatedCost: 30
+            },
+            {
+              time: 'Evening',
+              place: 'Vattakottai Fort',
+              activity: 'Explore the seaside granite fort built by the Travancore kings with scenic ocean views.',
+              duration: '1.5 hours',
+              tips: 'Climb the ramparts for a panoramic view of the coastline.',
+              estimatedCost: 0
+            }
+          ]
+        };
+      }
+    }),
     packingList: ['Sunglasses', 'Sunscreen', 'Comfortable walking shoes', 'Cotton clothes'],
     weatherNote: 'Warm and breezy. Best visited in early morning or late evening.',
     emergencyContacts: [

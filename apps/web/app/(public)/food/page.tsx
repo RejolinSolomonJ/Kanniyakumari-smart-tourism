@@ -105,16 +105,21 @@ export default function FoodTrailsPage() {
 
                   <p className="text-body-sm text-granite-600 leading-relaxed">{food.description}</p>
                   
-                  <a 
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.location + ', Kanyakumari')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-caption text-granite-500 hover:text-ocean transition-colors cursor-pointer group"
-                    title="Search locations on Google Maps"
-                  >
-                    <MapPin className="w-4 h-4 text-ocean group-hover:scale-110 transition-transform" />
-                    <span className="hover:underline">{food.location}</span>
-                  </a>
+                  <div className="flex items-center justify-between gap-3 pt-1">
+                    <span className="flex items-center gap-1.5 text-caption text-granite-500">
+                      <MapPin className="w-4 h-4 text-ocean" />
+                      {food.location}
+                    </span>
+                    <a 
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.location + ', Kanyakumari')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1 rounded bg-ocean-50 text-ocean hover:bg-ocean hover:text-white transition-all duration-200 text-[11px] font-bold flex items-center gap-1 border border-ocean-100 cursor-pointer"
+                      title="Search locations on Google Maps"
+                    >
+                      Get Directions
+                    </a>
+                  </div>
                 </div>
               </div>
 
