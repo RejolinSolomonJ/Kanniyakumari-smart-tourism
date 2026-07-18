@@ -14,7 +14,7 @@ const mockEvents = [
     venue: 'Kanyakumari Beach Open Air Stage',
     startDate: '2026-10-15',
     endDate: '2026-10-17',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500',
+    image: '/images/Cape Festival.jpg',
     descriptionEn: 'Organized by the Department of Tourism, Tamil Nadu. Showcases regional culture with music concerts and dance performances.',
     isGovernment: true
   },
@@ -26,7 +26,7 @@ const mockEvents = [
     venue: 'Suchindram Temple Street',
     startDate: '2026-12-20',
     endDate: '2026-12-30',
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500',
+    image: '/images/Margazhi Temple Car Festival.jpg',
     descriptionEn: 'The grand chariot festival of Suchindram Thanumalayan Temple involving a massive procession of three decorated cars.',
     isGovernment: false
   }
