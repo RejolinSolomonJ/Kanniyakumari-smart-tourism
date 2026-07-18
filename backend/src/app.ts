@@ -17,6 +17,9 @@ import { scannerRouter } from './routes/scanner.routes'
 import { reportsRouter } from './routes/reports.routes'
 import { paymentsRouter } from './routes/payments.routes'
 import { announcementsRouter } from './routes/announcements.routes'
+import { reviewsRouter } from './routes/reviews.routes'
+import { campaignsRouter } from './routes/campaigns.routes'
+import { weatherRouter } from './routes/weather.routes'
 import { generalLimiter } from './middleware/rateLimit.middleware'
 
 const app = express()
@@ -49,6 +52,9 @@ app.use('/api/scanner', scannerRouter)
 app.use('/api/reports', reportsRouter)
 app.use('/api/payments', paymentsRouter)
 app.use('/api/announcements', announcementsRouter)
+app.use('/api/reviews', reviewsRouter)
+app.use('/api/campaigns', campaignsRouter)
+app.use('/api/weather', weatherRouter)
 
 // Health Check Endpoint
 app.get('/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }))

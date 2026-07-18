@@ -10,7 +10,7 @@ import {
   Church, Mountain, TreePine, Palette,
   Map as MapIcon, Bus, UserCheck, Car,
   Camera, Video, BookOpen, Download,
-  Shield
+  Shield, Glasses, CloudSun, Star, Flag, ImageIcon
 } from 'lucide-react'
 import { useUIStore } from '@/lib/auth'
 import { cn } from '@/lib/utils'
@@ -35,7 +35,8 @@ const navLinks = [
       { label: 'Religious Tours', href: '/religious', icon: Church },
       { label: 'Adventure', href: '/explore?category=ADVENTURE', icon: Mountain },
       { label: 'Cultural Programs', href: '/events', icon: Palette },
-      { label: 'Wildlife', href: '/wildlife', icon: TreePine, badge: 'Soon' },
+      { label: 'Wildlife Sanctuary', href: '/wildlife', icon: TreePine },
+      { label: 'AR/VR Virtual Tours', href: '/ar-vr', icon: Glasses, badge: 'New' },
     ]
   },
   {
@@ -44,6 +45,9 @@ const navLinks = [
     icon: MapIcon,
     children: [
       { label: 'AI Itinerary Planner', href: '/plan', icon: Sparkles },
+      { label: 'Weather & Best Time', href: '/weather', icon: CloudSun },
+      { label: 'Photo Spots Guide', href: '/photo-spots', icon: ImageIcon },
+      { label: 'Compare Destinations', href: '/compare', icon: Compass },
       { label: 'Public Transport', href: '/transport', icon: Bus },
       { label: 'Guide Booking', href: '/guides', icon: UserCheck },
       { label: 'Rental Vehicles', href: '/rentals', icon: Car },
@@ -81,7 +85,16 @@ const navLinks = [
     ]
   },
   { label: 'Blogs', href: '/blogs', icon: BookOpen },
-  { label: 'Downloads', href: '/downloads', icon: Download },
+  {
+    label: 'More',
+    href: '#',
+    icon: Star,
+    children: [
+      { label: 'Tourist Reviews', href: '/reviews', icon: Star },
+      { label: 'Report an Issue', href: '/report-issue', icon: Flag },
+      { label: 'Downloads', href: '/downloads', icon: Download },
+    ]
+  },
 ]
 
 export default function Navbar() {
