@@ -9,7 +9,7 @@ const tours = [
     id: 'vivekananda-rock',
     title: 'Vivekananda Rock Memorial',
     description: 'Immersive 360° view from the iconic rock memorial.',
-    image: '/images/hero-poster.jpg',
+    image: 'https://images.unsplash.com/photo-1590766940554-634e880d0e44?q=80&w=1920',
     tag: 'VR Ready'
   },
   {

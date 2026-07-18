@@ -20,7 +20,12 @@ import { announcementsRouter } from './routes/announcements.routes'
 import { reviewsRouter } from './routes/reviews.routes'
 import { campaignsRouter } from './routes/campaigns.routes'
 import { weatherRouter } from './routes/weather.routes'
+import { PrismaClient } from '@prisma/client'
 import { generalLimiter } from './middleware/rateLimit.middleware'
+
+export const prisma = new PrismaClient({
+  log: ['warn', 'error'],
+})
 
 const app = express()
 
