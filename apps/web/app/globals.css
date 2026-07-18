@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Noto+Sans+Tamil:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ─────────────────────────────────────────── */
+:root {
+  --background: #FAFAFA;
+  --foreground: #171717;
+  
+  /* Brand Colors */
+  --ocean: #0B4F8A;
+  --ocean-light: #1A6FBE;
+  --ocean-dark: #083D6B;
+  --gold: #C9981A;
+  --gold-light: #D4AA35;
+  --gold-dark: #A07A14;
+  --sunset: #E8601C;
+  --sea-green: #059669;
+  
+  /* Surfaces */
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F5F5F5;
+  --surface-tertiary: #E5E5E5;
+  --surface-elevated: #FFFFFF;
+  
+  /* Text */
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-inverse: #FFFFFF;
+  
+  /* Borders */
+  --border-default: #E5E5E5;
+  --border-subtle: #F5F5F5;
+  --border-strong: #D4D4D4;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+  
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Navbar */
+  --navbar-height: 72px;
+  --navbar-height-mobile: 64px;
+}
+
+/* ───────────────────────────────────────────
+   BASE STYLES
+   ─────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    overflow-x: hidden;
+  }
+  
+  /* Tamil font for Tamil content */
+  [lang="ta"] body,
+  .font-tamil {
+    font-family: 'Noto Sans Tamil', 'Latha', 'Tamil MN', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  /* Smooth anchor scrolling offset for fixed navbar */
+  [id] {
+    scroll-margin-top: var(--navbar-height);
+  }
+
+  /* Focus visible styles */
+  :focus-visible {
+    outline: 2px solid var(--ocean);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+  
+  /* Selection color */
+  ::selection {
+    background-color: rgba(11, 79, 138, 0.15);
+    color: var(--ocean-dark);
+  }
+}
+
+/* ───────────────────────────────────────────
+   COMPONENT STYLES
+   ─────────────────────────────────────────── */
+@layer components {
+  /* Glass Card */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  }
+  
+  .glass-card-dark {
+    @apply bg-black/20 backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+  
+  /* Premium Card */
+  .card-premium {
+    @apply relative overflow-hidden rounded-2xl bg-white transition-all duration-400;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .card-premium:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+  }
+  
+  .card-premium img {
+    @apply transition-transform duration-700 ease-out;
+  }
+  
+  .card-premium:hover img {
+    transform: scale(1.08);
+  }
+  
+  /* Section styling (Kerala Tourism inspired) */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+  
+  .section-header {
+    @apply text-center mb-12 md:mb-16;
+  }
+  
+  .section-title {
+    @apply font-serif text-heading-xl md:text-display text-granite-900 mb-4;
+  }
+  
+  .section-subtitle {
+    @apply text-body-lg text-granite-500 max-w-2xl mx-auto;
+  }
+  
+  /* Container */
+  .container-wide {
+    @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-ocean text-white font-medium rounded-full 
+           transition-all duration-300 hover:bg-ocean-700 hover:shadow-ocean-glow active:scale-[0.98];
+  }
+  
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-gold text-granite-900 font-semibold rounded-full 
+           transition-all duration-300 hover:brightness-110 hover:shadow-gold-glow active:scale-[0.98];
+  }
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-transparent border-2 border-ocean text-ocean font-medium rounded-full 
+           transition-all duration-300 hover:bg-ocean hover:text-white active:scale-[0.98];
+  }
+  
+  .btn-glass {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-white/10 backdrop-blur-sm text-white font-medium rounded-full 
+           border border-white/30 transition-all duration-300 hover:bg-white/20 hover:border-white/50 active:scale-[0.98];
+  }
+  
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-red-600 text-white font-medium rounded-full 
+           transition-all duration-300 hover:bg-red-700 active:scale-[0.98];
+  }
+  
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-caption font-medium;
+  }
+  
+  .badge-ocean {
+    @apply badge bg-ocean-50 text-ocean-700;
+  }
+  
+  .badge-gold {
+    @apply badge bg-gold-50 text-gold-700;
+  }
+  
+  .badge-sunset {
+    @apply badge bg-sunset-50 text-sunset-700;
+  }
+  
+  .badge-sea {
+    @apply badge bg-sea-50 text-sea-700;
+  }
+  
+  /* Category Pill */
+  .category-pill {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-body-sm font-medium 
+           border border-granite-200 text-granite-600 bg-white transition-all duration-300 
+           hover:border-ocean hover:text-ocean hover:bg-ocean-50 cursor-pointer whitespace-nowrap;
+  }
+  
+  .category-pill-active {
+    @apply category-pill border-ocean bg-ocean text-white hover:bg-ocean-700 hover:text-white;
+  }
+  
+  /* Kerala Tourism style destination card */
+  .destination-card {
+    @apply relative overflow-hidden rounded-2xl bg-white cursor-pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .destination-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-6px);
+  }
+  
+  .destination-card .card-image {
+    @apply relative overflow-hidden;
+  }
+  
+  .destination-card .card-image img {
+    @apply w-full h-64 object-cover transition-transform duration-700;
+  }
+  
+  .destination-card:hover .card-image img {
+    transform: scale(1.1);
+  }
+  
+  .destination-card .card-image::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  .destination-card:hover .card-image::after {
+    opacity: 1;
+  }
+  
+  /* Input styles */
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-granite-200 rounded-xl text-body text-granite-900 
+           placeholder:text-granite-400 transition-all duration-200 
+           focus:border-ocean focus:ring-2 focus:ring-ocean/20 focus:outline-none;
+  }
+  
+  /* Gradient text */
+  .text-gradient-ocean {
+    @apply bg-clip-text text-transparent bg-gradient-ocean;
+  }
+  
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-gold;
+  }
+  
+  /* Scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-granite-100 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-granite-300 rounded-full hover:bg-granite-400;
+  }
+  
+  /* Hide scrollbar but allow scroll */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Horizontal scroll container */
+  .scroll-container {
+    @apply flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .scroll-item {
+    @apply flex-shrink-0 snap-start;
+  }
+}
+
+/* ───────────────────────────────────────────
+   UTILITY STYLES
+   ─────────────────────────────────────────── */
+@layer utilities {
+  /* Masonry grid */
+  .masonry-grid {
+    columns: 3;
+    column-gap: 1rem;
+  }
+  
+  .masonry-grid > * {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .masonry-grid {
+      columns: 2;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .masonry-grid {
+      columns: 1;
+    }
+  }
+  
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Aspect ratios */
+  .aspect-cinema {
+    aspect-ratio: 21/9;
+  }
+  
+  .aspect-card {
+    aspect-ratio: 4/3;
+  }
+  
+  .aspect-portrait {
+    aspect-ratio: 3/4;
+  }
+}
+
+/* ───────────────────────────────────────────
+   MAPBOX OVERRIDES
+   ─────────────────────────────────────────── */
+.mapboxgl-ctrl-attrib {
+  @apply text-caption;
+}
+
+.mapboxgl-popup-content {
+  @apply rounded-xl shadow-lg p-4 !important;
+}
+
+/* ───────────────────────────────────────────
+   ANIMATIONS
+   ─────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  @apply bg-granite-200 rounded-lg;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ───────────────────────────────────────────
+   PRINT STYLES
+   ─────────────────────────────────────────── */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+}

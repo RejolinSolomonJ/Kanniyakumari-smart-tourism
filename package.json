@@ -1,0 +1,12 @@
+{
+  "name": "kanyakumari-tourism",
+  "version": "1.0.0",
+  "description": "Kanyakumari Smart Tourism Digital Platform - Government of Tamil Nadu",
+  "private": true,
+  "scripts": {
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build:web": "cd apps/web && npm run build",
+    "build:backend": "cd backend && npm run build"
+  }
+}
