@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { Camera, Sun, Clock, Compass, Info } from 'lucide-react';
 
 const CATEGORIES = ["All", "Sunrise", "Sunset", "Architecture", "Nature", "Aerial"];
@@ -102,12 +101,10 @@ export default function PhotoSpotsPage() {
       {/* Header */}
       <div className="bg-granite text-white py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image 
+          <img 
             src="https://images.unsplash.com/photo-1506198547285-d698e3b56417?auto=format&fit=crop&q=80" 
             alt="Photography background" 
-            layout="fill" 
-            objectFit="cover" 
-            className="opacity-20"
+            className="absolute inset-0 w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-granite to-transparent"></div>
         </div>
@@ -143,12 +140,10 @@ export default function PhotoSpotsPage() {
           {filteredSpots.map((spot) => (
             <div key={spot.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100">
               <div className="h-64 relative overflow-hidden">
-                <Image 
+                <img 
                   src={spot.image} 
                   alt={spot.title} 
-                  layout="fill" 
-                  objectFit="cover" 
-                  className="group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                 />
                 <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs font-medium px-3 py-1.5 rounded-full">
                   {spot.category}

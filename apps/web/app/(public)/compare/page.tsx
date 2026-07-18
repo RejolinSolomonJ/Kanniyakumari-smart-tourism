@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Search, X, MapPin, Clock, Ticket, Star, ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 
 const MOCK_DESTINATIONS = [
   {
@@ -151,7 +150,7 @@ export default function ComparePage() {
                           onClick={() => handleAdd(dest.id)}
                         >
                           <div className="w-10 h-10 rounded bg-gray-200 mr-3 overflow-hidden flex-shrink-0 relative">
-                            <Image src={dest.image} alt={dest.name} layout="fill" objectFit="cover" />
+                            <img src={dest.image} alt={dest.name} className="w-full h-full object-cover" />
                           </div>
                           <span className="text-sm font-medium text-granite truncate">{dest.name}</span>
                         </div>
@@ -185,7 +184,7 @@ export default function ComparePage() {
                     </button>
                   )}
                   <div className="w-full h-40 relative rounded-xl overflow-hidden mb-4 shadow-sm">
-                    <Image src={dest.image} alt={dest.name} layout="fill" objectFit="cover" className="hover:scale-105 transition-transform duration-500" />
+                    <img src={dest.image} alt={dest.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-2 left-2 bg-black/50 backdrop-blur-md text-white text-xs px-2 py-1 rounded-md">
                       {dest.category}
                     </div>
