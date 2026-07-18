@@ -19,6 +19,12 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
   const [visitDate, setVisitDate] = useState('')
   const [adultQty, setAdultQty] = useState(1)
   const [childQty, setChildQty] = useState(0)
+  
+  // Extra Tickets State
+  const [cameraQty, setCameraQty] = useState(0)
+  const [carQty, setCarQty] = useState(0)
+  const [bikeQty, setBikeQty] = useState(0)
+
   const [bookingSuccess, setBookingSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -51,7 +57,16 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
   const adultPrice = destination.entryFeeAdult || 0
   const childPrice = destination.entryFeeChild || 0
-  const totalCost = (adultQty * adultPrice) + (childQty * childPrice)
+  const cameraPrice = destination.entryFeeCamera || 0
+  const carPrice = destination.parkingFeeCar || 0
+  const bikePrice = destination.parkingFeeBike || 0
+  
+  const totalCost = 
+    (adultQty * adultPrice) + 
+    (childQty * childPrice) + 
+    (cameraQty * cameraPrice) + 
+    (carQty * carPrice) + 
+    (bikeQty * bikePrice)
 
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,6 +93,15 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       if (childQty > 0) {
         ticketsArray.push({ type: 'CHILD', quantity: childQty, unitPrice: childPrice })
       }
+      if (cameraQty > 0) {
+        ticketsArray.push({ type: 'CAMERA', quantity: cameraQty, unitPrice: cameraPrice })
+      }
+      if (carQty > 0) {
+        ticketsArray.push({ type: 'PARKING_CAR', quantity: carQty, unitPrice: carPrice })
+      }
+      if (bikeQty > 0) {
+        ticketsArray.push({ type: 'PARKING_BIKE', quantity: bikeQty, unitPrice: bikePrice })
+      }
 
       const bookingRes = await fetch('http://localhost:5000/api/bookings/ticket/create', {
         method: 'POST',
@@ -94,7 +118,14 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
       const bookingData = await bookingRes.json()
       if (bookingData.error) {
-        alert(bookingData.error)
+        if (bookingData.error === 'User not found') {
+          alert('Your session has expired or your user account was reset. Please login again.')
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('user')
+          window.location.href = '/login'
+        } else {
+          alert(bookingData.error)
+        }
         setIsLoading(false)
         return
       }
@@ -171,9 +202,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
           ticketType: 'ADULT',
           quantity: adultQty,
           qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_AD_${adultQty}`,
-          destination: {
-            nameEn: destination.nameEn || destination.name || 'Destination'
-          }
+          destination: { nameEn: destination.nameEn || destination.name || 'Destination' }
         });
       }
       if (childQty > 0) {
@@ -183,9 +212,37 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
           ticketType: 'CHILD',
           quantity: childQty,
           qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_CH_${childQty}`,
-          destination: {
-            nameEn: destination.nameEn || destination.name || 'Destination'
-          }
+          destination: { nameEn: destination.nameEn || destination.name || 'Destination' }
+        });
+      }
+      if (cameraQty > 0) {
+        ticketsList.push({
+          id: 'TK-CAM-' + Math.floor(1000 + Math.random() * 9000),
+          visitDate,
+          ticketType: 'CAMERA',
+          quantity: cameraQty,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_CAM_${cameraQty}`,
+          destination: { nameEn: destination.nameEn || destination.name || 'Destination' }
+        });
+      }
+      if (carQty > 0) {
+        ticketsList.push({
+          id: 'TK-CAR-' + Math.floor(1000 + Math.random() * 9000),
+          visitDate,
+          ticketType: 'PARKING_CAR',
+          quantity: carQty,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_CAR_${carQty}`,
+          destination: { nameEn: destination.nameEn || destination.name || 'Destination' }
+        });
+      }
+      if (bikeQty > 0) {
+        ticketsList.push({
+          id: 'TK-BIKE-' + Math.floor(1000 + Math.random() * 9000),
+          visitDate,
+          ticketType: 'PARKING_BIKE',
+          quantity: bikeQty,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_BIKE_${bikeQty}`,
+          destination: { nameEn: destination.nameEn || destination.name || 'Destination' }
         });
       }
       const localBooking = {
@@ -479,6 +536,84 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                       </div>
                     </div>
                   )}
+
+                  {cameraPrice > 0 && (
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="block text-body-sm font-semibold text-granite-800">Camera Pass</span>
+                        <span className="text-caption text-granite-400">Photography permit</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setCameraQty(Math.max(0, cameraQty - 1))}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          -
+                        </button>
+                        <span className="font-semibold text-body">{cameraQty}</span>
+                        <button
+                          type="button"
+                          onClick={() => setCameraQty(cameraQty + 1)}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {carPrice > 0 && (
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="block text-body-sm font-semibold text-granite-800">Car Parking</span>
+                        <span className="text-caption text-granite-400">4-Wheeler slot</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setCarQty(Math.max(0, carQty - 1))}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          -
+                        </button>
+                        <span className="font-semibold text-body">{carQty}</span>
+                        <button
+                          type="button"
+                          onClick={() => setCarQty(carQty + 1)}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {bikePrice > 0 && (
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className="block text-body-sm font-semibold text-granite-800">Bike Parking</span>
+                        <span className="text-caption text-granite-400">2-Wheeler slot</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setBikeQty(Math.max(0, bikeQty - 1))}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          -
+                        </button>
+                        <span className="font-semibold text-body">{bikeQty}</span>
+                        <button
+                          type="button"
+                          onClick={() => setBikeQty(bikeQty + 1)}
+                          className="w-8 h-8 rounded-full border flex items-center justify-center font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Cost Breakdown */}
@@ -492,6 +627,24 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                       <div className="flex justify-between">
                         <span>Child ({childQty} × {formatCurrency(childPrice)})</span>
                         <span>{formatCurrency(childQty * childPrice)}</span>
+                      </div>
+                    )}
+                    {cameraQty > 0 && (
+                      <div className="flex justify-between">
+                        <span>Camera ({cameraQty} × {formatCurrency(cameraPrice)})</span>
+                        <span>{formatCurrency(cameraQty * cameraPrice)}</span>
+                      </div>
+                    )}
+                    {carQty > 0 && (
+                      <div className="flex justify-between">
+                        <span>Car Parking ({carQty} × {formatCurrency(carPrice)})</span>
+                        <span>{formatCurrency(carQty * carPrice)}</span>
+                      </div>
+                    )}
+                    {bikeQty > 0 && (
+                      <div className="flex justify-between">
+                        <span>Bike Parking ({bikeQty} × {formatCurrency(bikePrice)})</span>
+                        <span>{formatCurrency(bikeQty * bikePrice)}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-bold text-granite-900 pt-2 border-t border-dashed">

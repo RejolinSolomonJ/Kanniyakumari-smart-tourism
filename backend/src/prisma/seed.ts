@@ -23,6 +23,7 @@ async function main() {
   await clearTable(prisma.ticket)
   await clearTable(prisma.booking)
   await clearTable(prisma.guideBooking)
+  await clearTable(prisma.itinerary)
   await clearTable(prisma.guide)
   await clearTable(prisma.user)
   await clearTable(prisma.otpStore)
@@ -247,6 +248,9 @@ async function main() {
       longitude: 77.3168,
       entryFeeAdult: 20,
       entryFeeChild: 10,
+      entryFeeCamera: 50,
+      parkingFeeCar: 30,
+      parkingFeeBike: 10,
       isFeatured: true,
       openingHours: { open: '08:00 AM', close: '05:30 PM' }
     }

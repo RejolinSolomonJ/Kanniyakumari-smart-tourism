@@ -62,12 +62,12 @@ export default function FoodTrailsPage() {
     <div className="pt-24 min-h-screen bg-granite-50 pb-16">
       <div className="container-wide">
         
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-2">
-            Local Food Trails
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <h1 className="font-serif text-heading-xl font-bold text-granite-900">
+            Culinary Tourism
           </h1>
-          <p className="text-body-sm text-granite-500">
-            Taste the coastal spices, fresh seafood, and unique street food delicacies of Kanyakumari.
+          <p className="text-body-sm text-granite-500 max-w-xl mx-auto leading-relaxed">
+            Savor the authentic flavors of Tamil Nadu, from spicy Chettinad curries to traditional vegetarian feasts served on banana leaves.
           </p>
         </div>
 

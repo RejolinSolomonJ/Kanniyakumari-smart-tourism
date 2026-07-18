@@ -81,6 +81,9 @@ model Destination {
   openingHours  Json?
   entryFeeAdult Float?
   entryFeeChild Float?
+  entryFeeCamera Float?
+  parkingFeeCar Float?
+  parkingFeeBike Float?
   isFeatured    Boolean     @default(false)
   isActive      Boolean     @default(true)
   createdAt     DateTime    @default(now())
@@ -138,6 +141,9 @@ enum TicketType {
   CHILD
   SENIOR
   FOREIGNER
+  CAMERA
+  PARKING_CAR
+  PARKING_BIKE
 }
 
 // ─────────────────────────────────────────

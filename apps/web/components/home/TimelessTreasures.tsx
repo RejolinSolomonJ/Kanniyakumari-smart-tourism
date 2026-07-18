@@ -16,14 +16,14 @@ const treasures = [
     title: 'Agri & Rural Tourism',
     desc: 'Experience the rustic charm of village life, walk through lush paddy fields, and understand the roots of Tamil culture.',
     image: '/images/rural_tourism.png',
-    link: '/explore',
+    link: '/rural',
     icon: Leaf
   },
   {
     title: 'Wellness & Medical Tourism',
     desc: 'Rejuvenate your mind and body with world-class healthcare, traditional Siddha medicine, and peaceful yoga retreats.',
     image: '/images/explore',
-    link: '/explore',
+    link: '/medical',
     icon: Activity
   }
 ]
