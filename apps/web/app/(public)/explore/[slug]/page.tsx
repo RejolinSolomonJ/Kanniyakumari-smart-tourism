@@ -231,9 +231,18 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
             </p>
 
             <div className="flex gap-3 text-white/90 text-caption font-semibold">
-              <span className="flex items-center gap-1">
-                <MapPin className="w-4 h-4 text-gold" /> {destination.location || 'Kanyakumari'}
-              </span>
+              <a 
+                href={destination.lat && destination.lng 
+                  ? `https://www.google.com/maps/dir/?api=1&destination=${destination.lat},${destination.lng}` 
+                  : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination.nameEn + ', Kanyakumari')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 hover:text-gold transition-colors group cursor-pointer"
+                title="Get Directions on Google Maps"
+              >
+                <MapPin className="w-4 h-4 text-gold group-hover:scale-110 transition-transform" /> 
+                <span className="underline decoration-dashed">{destination.location || 'Kanyakumari'}</span>
+              </a>
               <span>|</span>
               <span className="flex items-center gap-1">
                 <Star className="w-4 h-4 fill-gold text-gold" /> {destination.rating || '4.8'} (Reviews)

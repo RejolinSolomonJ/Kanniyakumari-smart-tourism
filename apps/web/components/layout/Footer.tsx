@@ -72,9 +72,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-full bg-gradient-ocean flex items-center justify-center">
-                <span className="text-white font-serif font-bold text-xl">K</span>
-              </div>
+              <img 
+                src="/images/logo.png" 
+                alt="Namma Kumari Logo" 
+                className="w-12 h-12 object-contain rounded-full bg-white p-0.5"
+              />
               <div>
                 <h3 className="font-serif font-bold text-xl">Kanyakumari</h3>
                 <p className="text-caption text-granite-400">Tourism Portal</p>
@@ -90,7 +92,7 @@ export default function Footer() {
             <div className="space-y-3 text-body-sm">
               <div className="flex items-start gap-3 text-granite-400">
                 <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-gold" />
-                <span>Department of Tourism, Government of Tamil Nadu, Kanyakumari District</span>
+                <span>Department of Tourism, Government of Kanyakumari</span>
               </div>
               <div className="flex items-center gap-3 text-granite-400">
                 <Phone className="w-4 h-4 flex-shrink-0 text-gold" />
@@ -168,9 +170,7 @@ export default function Footer() {
       <div className="border-t border-granite-800">
         <div className="container-wide py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 text-caption text-granite-500">
-            <span>© {new Date().getFullYear()} Department of Tourism, Government of Tamil Nadu</span>
-            <span className="hidden md:inline">|</span>
-            <span className="hidden md:inline">Developed under Digital India Initiative</span>
+            <span>© {new Date().getFullYear()} Department of Tourism, Government of Kanyakumari</span>
           </div>
 
           {/* Social Links */}

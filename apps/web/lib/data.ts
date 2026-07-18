@@ -706,15 +706,134 @@ export const emergencyContacts = [
 ]
 
 // ─── RELIGIOUS SITES ────────────────────────────────────────────
+// ─── RELIGIOUS SITES ────────────────────────────────────────────
 export const religiousSites = [
-  { name: 'Bhagavathi Amman Temple (Kanyakumari)', location: 'Beach Road, Kanyakumari', hours: '04:30 AM - 12:00 PM, 04:00 PM - 08:30 PM', description: 'An ancient temple dedicated to Goddess Kanyakumari. Known for its 3,000-year history and the diamond nose ring of the deity.', type: 'Temple' },
-  { name: 'Suchindram Thanumalayan Temple', location: 'Suchindram (7 km from Nagercoil)', hours: '05:00 AM - 12:30 PM, 04:30 PM - 08:30 PM', description: 'Unique temple dedicated to Shiva, Vishnu, and Brahma represented as Sthanumalayan. Features musical pillars and a grand 18-foot Hanuman statue.', type: 'Temple' },
-  { name: 'Our Lady of Ransom Church', location: 'Kanyakumari Beach Road', hours: '06:00 AM - 07:30 PM', description: 'Beautiful Gothic-style Catholic church overlooking the ocean, famous for its golden car procession in December.', type: 'Church' },
-  { name: 'St. Francis Xavier Church', location: 'Kottar, Nagercoil', hours: '05:30 AM - 08:00 PM', description: 'A historic church built on the site where St. Francis Xavier lived and preached in the 1540s.', type: 'Church' },
-  { name: 'Nagaraja Temple', location: 'Nagercoil (District HQ)', hours: '05:30 AM - 12:00 PM, 05:00 PM - 08:00 PM', description: 'The city of Nagercoil gets its name from this serpent deity temple. One of the rare temples dedicated to Nagaraja (Snake King).', type: 'Temple' },
-  { name: 'Thirunandhikarai Cave Temple', location: 'Thirunandhikarai (15 km)', hours: '06:00 AM - 06:00 PM', description: 'An ancient Jain cave temple dating back to the 8th century, featuring rock-cut sculptures and stone beds used by Jain monks.', type: 'Jain Cave' },
-  { name: 'Kumari Amman Temple (Bharat Mata)', location: 'Kanyakumari Town', hours: '08:00 AM - 06:00 PM', description: 'A temple dedicated to Mother India (Bharat Mata), showcasing the spiritual unity of the nation at its southern tip.', type: 'Temple' },
-  { name: 'Swami Vivekananda Wandering Monk Exhibit', location: 'Vivekananda Rock Memorial', hours: '08:00 AM - 04:00 PM', description: 'Exhibition hall inside the rock memorial depicting the life journey of Swami Vivekananda through life-size dioramas.', type: 'Ashram' }
+  { 
+    name: 'Bhagavathi Amman Temple', 
+    location: 'Beach Road, Kanyakumari', 
+    hours: '04:30 AM - 12:00 PM, 04:00 PM - 08:30 PM', 
+    description: 'An ancient 3,000-year-old temple dedicated to Goddess Kanyakumari, located at the very confluence of the three oceans. Famous for the deity\'s sparkling diamond nose ring.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: '/images/bhagavathi-amman-temple.jpg'
+  },
+  { 
+    name: 'Suchindram Thanumalayan Temple', 
+    location: 'Suchindram (12 km from Kanyakumari)', 
+    hours: '05:00 AM - 12:30 PM, 04:30 PM - 08:30 PM', 
+    description: 'An architectural marvel dedicated to the Hindu trinity: Shiva (Sthanu), Vishnu (Mal), and Brahma (Ayan). Famous for its musical pillars and an 18-foot Hanuman statue.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Suchindram_Thanumalayan_Temple.jpg'
+  },
+  { 
+    name: 'Nagaraja Temple', 
+    location: 'Nagercoil Town (18 km from Kanyakumari)', 
+    hours: '05:30 AM - 12:00 PM, 05:00 PM - 08:00 PM', 
+    description: 'A unique temple dedicated to the King of Serpents, Nagaraja. The town of Nagercoil is named after this ancient shrine, which has a traditional thatched roof.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Nagaraja_temple.JPG'
+  },
+  { 
+    name: 'Thiruvattar Adikesava Perumal Temple', 
+    location: 'Thiruvattar (46 km from Kanyakumari)', 
+    hours: '05:00 AM - 12:00 PM, 05:00 PM - 08:00 PM', 
+    description: 'One of the 108 Divya Desams, dedicated to Lord Vishnu reclining on Adisesha. It predates and has similar architectural style to the Padmanabhaswamy temple in Trivandrum.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Thiruvattar_Adhi_Kesava_Temple.JPG'
+  },
+  { 
+    name: 'Mandaikadu Bhagavathi Amman Temple', 
+    location: 'Mandaikadu, near Colachel (32 km from Kanyakumari)', 
+    hours: '05:00 AM - 12:30 PM, 05:00 PM - 08:30 PM', 
+    description: 'Known as the "Sabarimala of Women", this temple features a natural, growing 15-foot high ant-hill (Valmiki) representing the Goddess.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Mondaikkadu_temple._tamil_nadu_-_panoramio.jpg'
+  },
+  { 
+    name: 'Lord Subramanya Temple (Kumara Koil)', 
+    location: 'Velimalai, near Thuckalay (34 km from Kanyakumari)', 
+    hours: '06:00 AM - 12:00 PM, 05:00 PM - 08:00 PM', 
+    description: 'Set on a beautiful green hillock in the Western Ghats, this temple is dedicated to Lord Murugan. Celebrated for its unique architecture and serene mountain views.', 
+    type: 'Temple', 
+    religion: 'Hinduism',
+    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800'
+  },
+  { 
+    name: 'Our Lady of Ransom Church', 
+    location: 'Beach Road, Kanyakumari', 
+    hours: '06:00 AM - 07:30 PM', 
+    description: 'A magnificent Gothic-style Roman Catholic church overlooking the sea. Its 153-foot tall white spires and stunning stained-glass windows are iconic.', 
+    type: 'Church', 
+    religion: 'Christianity',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Our_Lady_of_Ransom_Church_in_Kanyakumari.jpg'
+  },
+  { 
+    name: 'St. Francis Xavier Cathedral', 
+    location: 'Kottar, Nagercoil (18 km from Kanyakumari)', 
+    hours: '05:30 AM - 08:00 PM', 
+    description: 'A highly historic church built in the 1540s. St. Francis Xavier lived, preached, and performed several miracles here, making it a major pilgrimage center.', 
+    type: 'Church', 
+    religion: 'Christianity',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/St._Xavier%27s_Church%2C_Kottar.JPG'
+  },
+  { 
+    name: 'Thiruvithancode Arappally (St. Mary\'s Church)', 
+    location: 'Thiruvithancode (32 km from Kanyakumari)', 
+    hours: '07:00 AM - 06:00 PM', 
+    description: 'Recognized as one of the oldest standing churches in the world, founded in 57 AD by St. Thomas the Apostle. Features traditional granite architecture.', 
+    type: 'Church', 
+    religion: 'Christianity',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Thiruvithamkode_Arappaly.jpg'
+  },
+  { 
+    name: 'CSI Home Church', 
+    location: 'Nagercoil Town (18 km from Kanyakumari)', 
+    hours: '08:00 AM - 06:00 PM', 
+    description: 'One of the oldest and largest Protestant churches in South Asia, constructed in 1819 with grand colonial style pillars and a massive prayer hall.', 
+    type: 'Church', 
+    religion: 'Christianity',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/CSI_Home_Church_Nagercoil.jpg'
+  },
+  { 
+    name: 'Malik Deenar Jumma Mosque (Valiyapalli)', 
+    location: 'Thengapattinam (50 km from Kanyakumari)', 
+    hours: '04:00 AM - 10:00 PM', 
+    description: 'A historical 7th-century mosque established by Malik Deenar. Built in early Islamic style, it is one of the earliest centers of Islam in South India.', 
+    type: 'Mosque', 
+    religion: 'Islam',
+    image: 'https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=800'
+  },
+  { 
+    name: 'Peer Mohammed Oliyullah Dargah', 
+    location: 'Thuckalay (33 km from Kanyakumari)', 
+    hours: '05:00 AM - 09:00 PM', 
+    description: 'The shrine of Sufi saint-philosopher Peer Mohammed Oliyullah, famous for his spiritual writings. Celebrated by people of all faiths during the annual festival.', 
+    type: 'Dargah', 
+    religion: 'Islam',
+    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800'
+  },
+  { 
+    name: 'Malik Mohammad Oliyullah Dargah', 
+    location: 'Thiruvithancode (32 km from Kanyakumari)', 
+    hours: '06:00 AM - 08:30 PM', 
+    description: 'A historically significant Dargah drawing devotees from all over the district for prayer, reflection, and spiritual healing.', 
+    type: 'Dargah', 
+    religion: 'Islam',
+    image: 'https://images.unsplash.com/photo-1508962914676-134849a727f0?w=800'
+  },
+  { 
+    name: 'Thittuvilai Jumma Mosque', 
+    location: 'Thittuvilai (28 km from Kanyakumari)', 
+    hours: '04:30 AM - 09:00 PM', 
+    description: 'A prominent and beautiful community mosque located in the serene village of Thittuvilai, serving as a center of religious life.', 
+    type: 'Mosque', 
+    religion: 'Islam',
+    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800'
+  }
 ]
 
 // ─── DOWNLOADS ──────────────────────────────────────────────────

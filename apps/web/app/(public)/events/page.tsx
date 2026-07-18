@@ -120,10 +120,16 @@ export default function EventsPage() {
                   <Calendar className="w-4 h-4 text-gold" />
                   {event.startDate} to {event.endDate}
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-ocean" />
-                  {event.venue}
-                </span>
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(event.venue + ', Kanyakumari')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-ocean transition-colors cursor-pointer group"
+                  title="Get Directions"
+                >
+                  <MapPin className="w-4 h-4 text-ocean group-hover:scale-110 transition-transform" />
+                  <span className="hover:underline">{event.venue}</span>
+                </a>
               </div>
 
             </div>

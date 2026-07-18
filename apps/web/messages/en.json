@@ -55,7 +55,7 @@
     }
   },
   "hero": {
-    "department": "Department of Tourism · Tamil Nadu",
+    "department": "Department of Tourism · Kanyakumari",
     "title": "Experience Kanyakumari",
     "subtitle": "The Southern Gateway of Incredible India",
     "cta_explore": "Explore",
@@ -63,7 +63,7 @@
     "cta_book": "Book Tickets",
     "cta_watch": "Watch Story",
     "scroll": "SCROLL",
-    "govt_name": "Government of Tamil Nadu",
+    "govt_name": "Government of Kanyakumari",
     "dept_name": "Department of Tourism"
   },
   "stats": {
@@ -371,7 +371,7 @@
     "accessibility": "Accessibility",
     "rti": "RTI",
     "sitemap": "Sitemap",
-    "copyright": "© {year} Department of Tourism, Government of Tamil Nadu. All rights reserved.",
+    "copyright": "© {year} Department of Tourism, Government of Kanyakumari. All rights reserved.",
     "developed_by": "Developed under the Digital India initiative"
   },
   "common": {

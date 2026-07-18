@@ -160,10 +160,16 @@ export default function StayPage() {
                     <p className="text-caption text-granite-400 font-tamil">{hotel.nameTa}</p>
                   </div>
 
-                  <p className="flex items-center gap-1.5 text-caption text-granite-500">
-                    <MapPin className="w-4 h-4 text-ocean" />
-                    {hotel.address}
-                  </p>
+                  <a 
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-caption text-granite-500 hover:text-ocean transition-colors cursor-pointer group"
+                    title="Get Directions"
+                  >
+                    <MapPin className="w-4 h-4 text-ocean group-hover:scale-110 transition-transform" />
+                    <span className="hover:underline">{hotel.address}</span>
+                  </a>
 
                   {hotel.starRating && (
                     <div className="flex items-center gap-1 text-[11px] font-bold text-gold-600">

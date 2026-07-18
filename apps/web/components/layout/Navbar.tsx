@@ -157,32 +157,19 @@ export default function Navbar() {
             : 'bg-transparent'
         )}
       >
-        {/* Government Banner */}
-        <div className={cn(
-          'transition-all duration-300 overflow-hidden',
-          scrolled ? 'h-0' : 'h-8 bg-ocean-800/90 backdrop-blur-sm'
-        )}>
-          <div className="container-wide h-full flex items-center justify-between">
-            <span className="text-white/80 text-caption">
-              Government of Tamil Nadu — Department of Tourism
-            </span>
-            <div className="flex items-center gap-4 text-white/80 text-caption">
-              <Link href="/downloads" className="hover:text-white transition-colors">Downloads</Link>
-              <span>|</span>
-              <Link href="/emergency" className="hover:text-white transition-colors">Emergency</Link>
-            </div>
-          </div>
-        </div>
+
 
         {/* Main Navbar */}
         <nav className="container-wide">
           <div className="flex items-center justify-between h-16 lg:h-[72px]">
             
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 flex-shrink-0" onClick={closeMobileMenu}>
-              <div className="w-10 h-10 rounded-full bg-gradient-ocean flex items-center justify-center">
-                <span className="text-white font-serif font-bold text-lg">K</span>
-              </div>
+            <Link href="/" className="flex items-center gap-2 flex-shrink-0" onClick={closeMobileMenu}>
+              <img 
+                src="/images/logo.png" 
+                alt="Namma Kumari Logo" 
+                className="w-10 h-10 object-contain rounded-full bg-white p-0.5"
+              />
               <div className="hidden sm:block">
                 <h1 className={cn(
                   'font-serif font-bold text-lg leading-tight transition-colors',

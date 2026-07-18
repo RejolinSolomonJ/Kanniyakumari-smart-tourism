@@ -58,9 +58,11 @@ export default function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
           >
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-granite-100 px-6 py-4 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-ocean flex items-center justify-center">
-                <span className="text-white font-serif font-bold text-lg">K</span>
-              </div>
+              <img 
+                src="/images/logo.png" 
+                alt="Namma Kumari Logo" 
+                className="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-granite-100"
+              />
               <div>
                 <h2 className="font-serif font-bold text-ocean text-lg">Kanyakumari</h2>
                 <p className="text-caption text-granite-500">Tourism Portal</p>

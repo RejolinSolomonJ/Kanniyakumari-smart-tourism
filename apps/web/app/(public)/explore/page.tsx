@@ -208,10 +208,21 @@ function ExplorePageContent() {
                     <p className="text-caption text-granite-400 font-tamil mb-3">{dest.nameTa}</p>
                     
                     <div className="flex items-center justify-between mt-4 pt-3 border-t border-granite-100">
-                      <span className="flex items-center gap-1 text-caption text-granite-500">
-                        <MapPin className="w-3.5 h-3.5 text-ocean" />
-                        {dest.location || 'Kanyakumari'}
-                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          const url = dest.lat && dest.lng 
+                            ? `https://www.google.com/maps/dir/?api=1&destination=${dest.lat},${dest.lng}` 
+                            : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest.nameEn + ', Kanyakumari')}`
+                          window.open(url, '_blank')
+                        }}
+                        className="flex items-center gap-1 text-caption text-granite-500 hover:text-ocean transition-colors cursor-pointer group"
+                        title="Get Directions"
+                      >
+                        <MapPin className="w-3.5 h-3.5 text-ocean group-hover:scale-110 transition-transform" />
+                        <span className="hover:underline">{dest.location || 'Kanyakumari'}</span>
+                      </button>
                       <span className="flex items-center gap-1 text-caption text-gold-600 font-semibold">
                         <Star className="w-3.5 h-3.5 fill-gold text-gold" />
                         {dest.rating || '4.5'}

@@ -108,9 +108,16 @@ export default function EmergencyPage() {
                     </h3>
                     <p className="text-caption text-granite-400 font-tamil mb-1">{c.nameTa}</p>
                     {'address' in c && c.address && (
-                      <span className="flex items-center gap-1 text-[11px] text-granite-400">
-                        <MapPin className="w-3 h-3 text-ocean" /> {c.address}
-                      </span>
+                      <a 
+                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(c.nameEn + ', Kanyakumari')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[11px] text-granite-400 hover:text-ocean transition-colors cursor-pointer group"
+                        title="Get Directions"
+                      >
+                        <MapPin className="w-3 h-3 text-ocean group-hover:scale-110 transition-transform" />
+                        <span className="hover:underline">{c.address}</span>
+                      </a>
                     )}
                   </div>
                 </div>
