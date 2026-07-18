@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, X, Send, Compass, MessageSquare, Phone, AlertCircle } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false)
@@ -51,7 +52,7 @@ export default function AIAssistant() {
 
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }))
-      const res = await fetch('http://localhost:5000/api/ai/chat', {
+      const res = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: messageText, language: lang, history })
@@ -64,50 +65,10 @@ export default function AIAssistant() {
         throw new Error('API failed')
       }
     } catch (err) {
-      // Direct Gemini client-side fallback
-      const clientApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
-      if (clientApiKey) {
-        try {
-          const systemInstruction = `You are the official AI Tourism Assistant for Kanyakumari, Tamil Nadu Government Department of Tourism. Only answer questions about: Kanyakumari tourism, destinations, transport, culture, food, safety, emergencies, hotels, festivals. If asked unrelated questions, politely redirect to tourism topics. Always be professional, helpful and accurate. Respond in ${lang === 'ta' ? 'Tamil' : 'English'}.`
-          
-          const formattedContents = messages.map(m => ({
-            role: m.role === 'model' ? 'model' : 'user',
-            parts: [{ text: m.content }]
-          }))
-          formattedContents.push({ role: 'user', parts: [{ text: messageText }] })
-
-          const geminiRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${clientApiKey}`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: formattedContents,
-                systemInstruction: {
-                  parts: [{ text: systemInstruction }]
-                }
-              })
-            }
-          )
-          const geminiData = await geminiRes.json()
-          const reply = geminiData.candidates?.[0]?.content?.parts?.[0]?.text
-          if (reply) {
-            setMessages(prev => [...prev, { role: 'model', content: reply }])
-            setIsLoading(false)
-            return
-          }
-        } catch (apiErr) {
-          console.error('Direct Gemini call failed:', apiErr)
-        }
-      }
-
-      // Simulate answer offline if no key or API failed
-      setTimeout(() => {
-        const responseText = getOfflineAnswer(messageText, lang)
-        setMessages(prev => [...prev, { role: 'model', content: responseText }])
-        setIsLoading(false)
-      }, 1000)
-      return
+      console.error('Chat failed:', err)
+      // Simulate answer offline if API failed
+      const responseText = getOfflineAnswer(messageText, lang)
+      setMessages(prev => [...prev, { role: 'model', content: responseText }])
     }
     setIsLoading(false)
   }
@@ -192,7 +153,11 @@ export default function AIAssistant() {
                         : 'bg-granite-50 text-granite-750 border border-granite-100 rounded-tl-none'
                     }`}
                   >
-                    {m.content}
+                    <div className={`prose prose-sm max-w-none break-words ${m.role === 'user' ? 'prose-invert text-white' : 'text-granite-750'}`}>
+                      <ReactMarkdown>
+                        {m.content}
+                      </ReactMarkdown>
+                    </div>
                     {m.isEmergency && (
                       <div className="mt-3">
                         <a href="tel:108" className="btn-danger inline-flex items-center gap-2 py-1 px-3 text-caption font-semibold">

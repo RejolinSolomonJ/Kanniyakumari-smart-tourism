@@ -421,7 +421,7 @@ export const foods = [
     nameTa: 'மீன் குழம்பு',
     type: 'Seafood',
     location: 'Kanyakumari Town & Coastal Shacks',
-    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop',
+    image: '/images/food/meen_kuzhambu.png',
     description: 'A spicy and tangy fish curry prepared with fresh catch, coconut milk, tamarind, and raw mangoes. Reflects the local coastal heritage.',
     recipeInfo: 'Best paired with boiled red rice or tapioca.'
   },
@@ -430,7 +430,7 @@ export const foods = [
     nameTa: 'கொத்து பரோட்டா',
     type: 'Street Food',
     location: 'Nagercoil Street Vendors',
-    image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop',
+    image: '/images/food/kothu_parotta.png',
     description: 'Shredded flatbread cooked on a hot iron griddle with eggs, chicken gravy, onion, and spices, served with fresh salna.',
     recipeInfo: 'Rhythmic preparation sounds are famous in night markets.'
   },
@@ -439,7 +439,7 @@ export const foods = [
     nameTa: 'நண்டு மசாலா',
     type: 'Seafood',
     location: 'Colachel Harbour Shacks',
-    image: 'https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=400&h=300&fit=crop',
+    image: '/images/food/nandu_masala.png',
     description: 'Fresh crabs cooked in a rich, aromatic coconut gravy with black pepper, dry red chillies, and curry leaves.',
     recipeInfo: 'A spicy delicacy cooked by local fishing families.'
   },
@@ -448,7 +448,7 @@ export const foods = [
     nameTa: 'கப்ப & கடலை கறி',
     type: 'Vegetarian',
     location: 'Tea Shops throughout the District',
-    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
+    image: '/images/food/kappa_kadala.png',
     description: 'Boiled tapioca roots served with a spicy, thick chickpea curry, representing a unique culinary fusion with neighboring Kerala.',
     recipeInfo: 'Standard breakfast item for local farmers and laborers.'
   },
@@ -457,7 +457,7 @@ export const foods = [
     nameTa: 'நன்னாரி சர்பத்',
     type: 'Beverage',
     location: 'Beachside Vendors',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop',
+    image: '/images/food/nannari_sarbath.png',
     description: 'A cooling beverage made from sarsaparilla root extract, lemon juice, sugar syrup, and iced water.',
     recipeInfo: 'Popular summer drink, also available with tender coconut.'
   },
@@ -466,7 +466,7 @@ export const foods = [
     nameTa: 'புட்டு & கடலை கறி',
     type: 'Vegetarian',
     location: 'Morning Eateries across the District',
-    image: 'https://images.unsplash.com/photo-1567337710282-00832b415979?w=400&h=300&fit=crop',
+    image: '/images/food/puttu_kadala.png',
     description: 'Steamed cylindrical rice cake layered with grated coconut, served with a spicy black chickpea curry. A popular Kerala-influenced breakfast.',
     recipeInfo: 'Available in both rice flour and wheat flour variants.'
   },
@@ -475,7 +475,7 @@ export const foods = [
     nameTa: 'கருப்பட்டி காபி',
     type: 'Beverage',
     location: 'Traditional Tea Shops',
-    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop',
+    image: '/images/food/karupatti_coffee.png',
     description: 'Filter coffee sweetened with palm jaggery instead of sugar, giving it a unique caramel-like flavor. A specialty of the Kanyakumari district.',
     recipeInfo: 'Served in stainless steel tumblers and davara (saucer).'
   },
@@ -484,7 +484,7 @@ export const foods = [
     nameTa: 'இறால் வறுவல்',
     type: 'Seafood',
     location: 'Beach Road Restaurants',
-    image: 'https://images.unsplash.com/photo-1625943553852-781c6dd46faa?w=400&h=300&fit=crop',
+    image: '/images/food/prawn_fry.png',
     description: 'Crispy fried prawns marinated in a blend of red chilli, turmeric, and ginger-garlic paste. A must-try for seafood lovers.',
     recipeInfo: 'Freshest catch available early morning at the fish market.'
   },
@@ -493,7 +493,7 @@ export const foods = [
     nameTa: 'வாழைக்காய் சிப்ஸ்',
     type: 'Snacks',
     location: 'Sweet Shops & Street Stalls',
-    image: 'https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=400&h=300&fit=crop',
+    image: '/images/food/banana_chips.png',
     description: 'Thinly sliced raw bananas deep-fried in coconut oil with a pinch of salt. The Kerala-Kanyakumari border region specialty.',
     recipeInfo: 'Buy from local shops for the authentic coconut oil flavor.'
   },
@@ -502,7 +502,7 @@ export const foods = [
     nameTa: 'அல்வா',
     type: 'Sweets',
     location: 'Sweet Shops, Nagercoil',
-    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop',
+    image: '/images/food/halwa.png',
     description: 'A chewy, translucent sweet made from wheat, ghee, and sugar. The Tirunelveli-Kanyakumari region is famous for its unique halwa preparation.',
     recipeInfo: 'Comes in variations: plain, cashew-topped, and pineapple.'
   }

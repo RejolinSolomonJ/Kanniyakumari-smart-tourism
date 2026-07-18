@@ -11,7 +11,7 @@ const foods = [
     nameTa: 'மீன் குழம்பு',
     type: 'Seafood',
     location: 'Kanyakumari Town & Coastal Shacks',
-    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop',
+    image: '/images/food/meen_kuzhambu.png',
     description: 'A spicy and tangy fish curry prepared with fresh catch, coconut milk, tamarind, and raw mangoes. Reflects local coastal heritage.',
     recipeInfo: 'Best paired with boiled red rice or tapioca.'
   },
@@ -20,7 +20,7 @@ const foods = [
     nameTa: 'கொத்து பரோட்டா',
     type: 'Street Food',
     location: 'Nagercoil Street Vendors',
-    image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop',
+    image: '/images/food/kothu_parotta.png',
     description: 'Shredded flatbread cooked on a hot iron griddle with eggs, chicken gravy, onion, and spices, served with fresh salna.',
     recipeInfo: 'Rhythmic preparation sounds are famous in night markets.'
   },
@@ -29,7 +29,7 @@ const foods = [
     nameTa: 'நண்டு மசாலா',
     type: 'Seafood',
     location: 'Colachel Harbour Shacks',
-    image: 'https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=400&h=300&fit=crop',
+    image: '/images/food/nandu_masala.png',
     description: 'Fresh crabs cooked in a rich, aromatic coconut gravy with black pepper, dry red chillies, and curry leaves.',
     recipeInfo: 'A spicy delicacy cooked by local fishing families.'
   },
@@ -38,7 +38,7 @@ const foods = [
     nameTa: 'கப்ப & கடலை கறி',
     type: 'Vegetarian',
     location: 'Tea Shops throughout the District',
-    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
+    image: '/images/food/kappa_kadala.png',
     description: 'Boiled tapioca roots served with a spicy, thick chickpea curry, representing a unique culinary fusion with neighboring Kerala.',
     recipeInfo: 'Standard breakfast item for local farmers and laborers.'
   },
@@ -47,7 +47,7 @@ const foods = [
     nameTa: 'நன்னாரி சர்பத்',
     type: 'Beverage',
     location: 'Beachside Vendors',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop',
+    image: '/images/food/nannari_sarbath.png',
     description: 'A cooling beverage made from sarsaparilla root extract, lemon juice, sugar syrup, and iced water.',
     recipeInfo: 'Popular summer drink, also available with tender coconut.'
   }

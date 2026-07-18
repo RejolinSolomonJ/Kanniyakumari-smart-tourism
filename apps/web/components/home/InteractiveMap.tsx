@@ -24,6 +24,7 @@ const typeColors: Record<string, string> = {
 export default function InteractiveMap() {
   const [activeFilter, setActiveFilter] = useState('ALL')
   const [selectedMarker, setSelectedMarker] = useState<any>(null)
+  const [mapInitialized, setMapInitialized] = useState(false)
   const mapContainer = useRef<HTMLDivElement>(null)
   const googleMap = useRef<any>(null)
   const markersRef = useRef<any[]>([])
@@ -32,43 +33,46 @@ export default function InteractiveMap() {
     (m) => activeFilter === 'ALL' || m.type === activeFilter
   )
 
+  // 1. Load Google Maps Script
   useEffect(() => {
     if (!GOOGLE_MAPS_KEY) return
 
-    const loadGoogleMaps = () => {
-      const google = (window as any).google
-      if (google && google.maps && mapContainer.current) {
-        initMap(google)
-        return
-      }
-
-      // Check if script already exists
-      const existingScript = document.getElementById('google-maps-script')
-      if (existingScript) {
-        existingScript.addEventListener('load', () => {
-          const loadedGoogle = (window as any).google
-          if (loadedGoogle && mapContainer.current) initMap(loadedGoogle)
-        })
-        return
-      }
-
-      const script = document.createElement('script')
-      script.id = 'google-maps-script'
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}`
-      script.async = true
-      script.defer = true
-      script.onload = () => {
-        const loadedGoogle = (window as any).google
-        if (loadedGoogle && mapContainer.current) initMap(loadedGoogle)
-      }
-      document.head.appendChild(script)
+    const google = (window as any).google
+    if (google && google.maps) {
+      setMapInitialized(true)
+      return
     }
 
-    loadGoogleMaps()
-  }, [activeFilter])
+    // Check if script already exists
+    const existingScript = document.getElementById('google-maps-script')
+    if (existingScript) {
+      const loadedGoogle = (window as any).google
+      if (loadedGoogle && loadedGoogle.maps) {
+        setMapInitialized(true)
+      } else {
+        existingScript.addEventListener('load', () => {
+          setMapInitialized(true)
+        })
+      }
+      return
+    }
 
-  const initMap = (google: any) => {
-    if (!mapContainer.current) return
+    const script = document.createElement('script')
+    script.id = 'google-maps-script'
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}`
+    script.async = true
+    script.defer = true
+    script.onload = () => {
+      setMapInitialized(true)
+    }
+    document.head.appendChild(script)
+  }, [])
+
+  // 2. Initialize Google Map Object
+  useEffect(() => {
+    if (!mapInitialized || !mapContainer.current) return
+    const google = (window as any).google
+    if (!google || !google.maps) return
 
     googleMap.current = new google.maps.Map(mapContainer.current, {
       center: { lat: 8.0817, lng: 77.5562 },
@@ -79,6 +83,20 @@ export default function InteractiveMap() {
       zoomControl: true,
     })
 
+    // Trigger initial markers draw
+    drawMarkers(google)
+  }, [mapInitialized])
+
+  // 3. Redraw Markers when filter changes
+  useEffect(() => {
+    if (!googleMap.current) return
+    const google = (window as any).google
+    if (!google || !google.maps) return
+
+    drawMarkers(google)
+  }, [activeFilter])
+
+  const drawMarkers = (google: any) => {
     // Clear existing markers
     markersRef.current.forEach((m) => m.setMap(null))
     markersRef.current = []

@@ -3,12 +3,14 @@ import StatsCounter from '@/components/home/StatsCounter'
 import QuickActions from '@/components/home/QuickActions'
 import FeaturedDestinations from '@/components/home/FeaturedDestinations'
 import CategoryExplorer from '@/components/home/CategoryExplorer'
+import TimelessTreasures from '@/components/home/TimelessTreasures'
 import InteractiveMap from '@/components/home/InteractiveMap'
 import TravelStories from '@/components/home/TravelStories'
 import FoodTrails from '@/components/home/FoodTrails'
 import FestivalCalendar from '@/components/home/FestivalCalendar'
 import PhotoGalleryStrip from '@/components/home/PhotoGalleryStrip'
 import GovernmentAnnouncements from '@/components/home/GovernmentAnnouncements'
+import StoryGallery from '@/components/home/StoryGallery'
 
 export default function HomePage() {
   return (
@@ -17,12 +19,14 @@ export default function HomePage() {
       <StatsCounter />
       <QuickActions />
       <FeaturedDestinations />
+      <TimelessTreasures />
       <CategoryExplorer />
       <InteractiveMap />
       <TravelStories />
       <FoodTrails />
       <FestivalCalendar />
       <PhotoGalleryStrip />
+      <StoryGallery />
       <GovernmentAnnouncements />
     </>
   )

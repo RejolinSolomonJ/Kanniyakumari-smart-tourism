@@ -111,6 +111,42 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    // Define the translation element init function
+    (window as any).googleTranslateElementInit = () => {
+      if (!(window as any).google || !(window as any).google.translate) {
+        return // Prevent crash if script isn't fully compiled yet
+      }
+      const container = document.getElementById('google_translate_element')
+      if (container) {
+        container.innerHTML = '' // Clear duplicate widgets in React Strict Mode
+      }
+      new (window as any).google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'en,ta,hi,ml,fr,kn,ur', // English, Tamil, Hindi, Malayalam, French, Kannada, Urdu
+          layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        },
+        'google_translate_element'
+      )
+    }
+
+    // Load Google Translate script dynamically (preventing duplicates)
+    if (!document.getElementById('google-translate-script')) {
+      const script = document.createElement('script')
+      script.id = 'google-translate-script'
+      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+      script.async = true
+      document.body.appendChild(script)
+    } else {
+      // If script is already loaded, initialize manually only if Google Translate is ready
+      if ((window as any).google && (window as any).google.translate && (window as any).googleTranslateElementInit) {
+        (window as any).googleTranslateElementInit()
+      }
+    }
+  }, [])
+
   return (
     <>
       <header
@@ -246,18 +282,8 @@ export default function Navbar() {
                 <Search className="w-5 h-5" />
               </button>
 
-              {/* Language Toggle */}
-              <button
-                className={cn(
-                  'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-caption font-medium transition-all',
-                  scrolled
-                    ? 'text-granite-600 hover:bg-granite-100 border border-granite-200'
-                    : 'text-white/80 hover:bg-white/10 border border-white/20'
-                )}
-              >
-                <Globe className="w-3.5 h-3.5" />
-                தமிழ்
-              </button>
+              {/* Language Toggle with Google Translate */}
+              <div id="google_translate_element" className="hidden sm:inline-block"></div>
 
               {/* Profile / Login */}
               {mounted ? (

@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Search, MapPin, Star, Filter, Calendar } from 'lucide-react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { Search, MapPin, Star, Filter, Calendar, Map as MapIcon, Grid } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { destinations as allDestinations } from '@/lib/data'
+import InteractiveMap from '@/components/home/InteractiveMap'
 
 const categories = [
   { key: 'ALL', label: 'All Places' },
@@ -19,92 +21,15 @@ const categories = [
   { key: 'CULTURE', label: 'Culture' }
 ]
 
-// Use centralized data store
-const mockDestinations = [
-  {
-    id: '1',
-    slug: 'vivekananda-rock-memorial',
-    nameEn: 'Vivekananda Rock Memorial',
-    nameTa: 'விவேகானந்தர் பாறை நினைவகம்',
-    category: 'HERITAGE',
-    heroImage: '/images/Vivekananda_Memorial.jpg',
-    entryFeeAdult: 20,
-    rating: 4.8,
-    location: 'Offshore Kanyakumari'
-  },
-  {
-    id: '2',
-    slug: 'thiruvalluvar-statue',
-    nameEn: 'Thiruvalluvar Statue',
-    nameTa: 'திருவள்ளுவர் சிலை',
-    category: 'HERITAGE',
-    heroImage: '/images/thiruvalluvar-statue.jpg',
-    entryFeeAdult: 0,
-    rating: 4.7,
-    location: 'Offshore Kanyakumari'
-  },
-  {
-    id: '3',
-    slug: 'kanyakumari-beach',
-    nameEn: 'Kanyakumari Beach (Triveni Sangam)',
-    nameTa: 'கன்னியாகுமரி கடற்கரை',
-    category: 'BEACH',
-    heroImage: '/images/kanyakumari-beaches.jpg',
-    entryFeeAdult: 0,
-    rating: 4.6,
-    location: 'Beach Road'
-  },
-  {
-    id: '4',
-    slug: 'bhagavathi-amman-temple',
-    nameEn: 'Bhagavathi Amman Temple',
-    nameTa: 'பகவதி அம்மன் கோவில்',
-    category: 'TEMPLE',
-    heroImage: '/images/bhagavathi-amman-temple.jpg',
-    entryFeeAdult: 0,
-    rating: 4.8,
-    location: 'Temple Road'
-  },
-  {
-    id: '7',
-    slug: 'padmanabhapuram-palace',
-    nameEn: 'Padmanabhapuram Palace',
-    nameTa: 'பத்மநாபபுரம் அரண்மனை',
-    category: 'HERITAGE',
-    heroImage: '/images/padmanabhapuram-palace.jpg',
-    entryFeeAdult: 50,
-    rating: 4.9,
-    location: 'Padmanabhapuram'
-  },
-  {
-    id: '9',
-    slug: 'thirparappu-waterfalls',
-    nameEn: 'Thirparappu Waterfalls',
-    nameTa: 'திற்பரப்பு அருவி',
-    category: 'WATERFALL',
-    heroImage: '/images/Thirparappu_Waterfalls.jpg',
-    entryFeeAdult: 20,
-    rating: 4.5,
-    location: 'Thirparappu'
-  },
-  {
-    id: '11',
-    slug: 'mathoor-hanging-bridge',
-    nameEn: 'Mathoor Hanging Bridge',
-    nameTa: 'மத்தூர் தொங்கு பாலம்',
-    category: 'ADVENTURE',
-    heroImage: '/images/Mathur_aqueduct.jpg',
-    entryFeeAdult: 20,
-    rating: 4.7,
-    location: 'Mathoor'
-  }
-]
-
-export default function ExplorePage() {
+function ExplorePageContent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeCategory, setActiveCategory] = useState('ALL')
   const [feeFilter, setFeeFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL')
   const [destinations, setDestinations] = useState(allDestinations)
+  
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const viewMode = searchParams.get('view') || 'grid'
 
   // Fetch real destinations from API if backend is running
   useEffect(() => {
@@ -117,6 +42,16 @@ export default function ExplorePage() {
       })
       .catch(err => console.log('Using fallback mock destinations.'))
   }, [])
+
+  const setViewMode = (mode: 'grid' | 'map') => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (mode === 'grid') {
+      params.delete('view')
+    } else {
+      params.set('view', 'map')
+    }
+    router.push(`/explore?${params.toString()}`)
+  }
 
   const filteredDestinations = destinations.filter(dest => {
     const matchesSearch = dest.nameEn.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -159,48 +94,89 @@ export default function ExplorePage() {
         </div>
 
         {/* Filters Panel */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-12">
-          {/* Category Filter Pills */}
-          <div className="flex-1 overflow-x-auto scrollbar-hide py-2">
-            <div className="flex gap-2">
-              {categories.map(cat => (
-                <button
-                  key={cat.key}
-                  onClick={() => setActiveCategory(cat.key)}
-                  className={cn(
-                    'category-pill',
-                    activeCategory === cat.key && 'category-pill-active'
-                  )}
-                >
-                  {cat.label}
-                </button>
-              ))}
+        <div className="flex flex-col lg:flex-row gap-6 mb-12 justify-between items-center bg-white p-4 rounded-2xl border border-granite-100 shadow-sm">
+          {viewMode !== 'map' ? (
+            /* Category Filter Pills */
+            <div className="flex-1 overflow-x-auto scrollbar-hide py-2 max-w-full lg:max-w-[70%]">
+              <div className="flex gap-2">
+                {categories.map(cat => (
+                  <button
+                    key={cat.key}
+                    onClick={() => setActiveCategory(cat.key)}
+                    className={cn(
+                      'category-pill',
+                      activeCategory === cat.key && 'category-pill-active'
+                    )}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-body-sm font-semibold text-granite-500 flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-ocean animate-pulse" />
+              Interactive Exploration Map Active
+            </div>
+          )}
 
-          {/* Additional Filter Buttons */}
-          <div className="flex items-center gap-3">
-            <div className="flex bg-white rounded-full border border-granite-200 p-1">
-              {(['ALL', 'FREE', 'PAID'] as const).map(option => (
-                <button
-                  key={option}
-                  onClick={() => setFeeFilter(option)}
-                  className={cn(
-                    'px-4 py-1.5 rounded-full text-caption font-semibold transition-all',
-                    feeFilter === option
-                      ? 'bg-ocean text-white'
-                      : 'text-granite-600 hover:bg-granite-50'
-                  )}
-                >
-                  {option === 'ALL' ? 'All Entry' : option === 'FREE' ? 'Free Entry' : 'Paid Entry'}
-                </button>
-              ))}
+          {/* View Toggles & Entry Filters */}
+          <div className="flex items-center gap-4 flex-wrap">
+            {viewMode !== 'map' && (
+              <div className="flex bg-granite-50 rounded-full border border-granite-250 p-1">
+                {(['ALL', 'FREE', 'PAID'] as const).map(option => (
+                  <button
+                    key={option}
+                    onClick={() => setFeeFilter(option)}
+                    className={cn(
+                      'px-4 py-1.5 rounded-full text-caption font-semibold transition-all',
+                      feeFilter === option
+                        ? 'bg-ocean text-white shadow-sm'
+                        : 'text-granite-650 hover:bg-granite-100'
+                    )}
+                  >
+                    {option === 'ALL' ? 'All Entry' : option === 'FREE' ? 'Free Entry' : 'Paid Entry'}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Grid vs Map Toggle */}
+            <div className="flex bg-granite-50 rounded-full border border-granite-250 p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={cn(
+                  'flex items-center gap-1.5 px-4 py-1.5 rounded-full text-caption font-semibold transition-all',
+                  viewMode !== 'map'
+                    ? 'bg-ocean text-white shadow-sm'
+                    : 'text-granite-650 hover:bg-granite-100'
+                )}
+              >
+                <Grid className="w-3.5 h-3.5" />
+                Cards
+              </button>
+              <button
+                onClick={() => setViewMode('map')}
+                className={cn(
+                  'flex items-center gap-1.5 px-4 py-1.5 rounded-full text-caption font-semibold transition-all',
+                  viewMode === 'map'
+                    ? 'bg-ocean text-white shadow-sm'
+                    : 'text-granite-650 hover:bg-granite-100'
+                )}
+              >
+                <MapIcon className="w-3.5 h-3.5" />
+                Map
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Destination Grid */}
-        {filteredDestinations.length > 0 ? (
+        {/* View Mode Conditional Render */}
+        {viewMode === 'map' ? (
+          <div className="bg-white rounded-3xl overflow-hidden shadow-card border border-granite-100 p-4">
+            <InteractiveMap />
+          </div>
+        ) : filteredDestinations.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredDestinations.map((dest, index) => (
               <motion.div
@@ -263,5 +239,13 @@ export default function ExplorePage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center items-center h-screen"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean"></div></div>}>
+      <ExplorePageContent />
+    </Suspense>
   )
 }

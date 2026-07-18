@@ -26,6 +26,10 @@ export default function ItineraryPlannerPage() {
   const [itinerary, setItinerary] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
+  const [activeTab, setActiveTab] = useState('itinerary')
+  const [replanDay, setReplanDay] = useState(1)
+  const [replanPrompt, setReplanPrompt] = useState('')
+  const [isReplanning, setIsReplanning] = useState(false)
 
   const interestsList = [
     { id: 'Beach', label: 'Beaches 🌊' },
@@ -127,7 +131,7 @@ Respond ONLY with valid JSON in this exact structure (do not include any convers
 }`
 
           const geminiRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${clientApiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${clientApiKey}`,
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -213,6 +217,102 @@ Respond ONLY with valid JSON in this exact structure (do not include any convers
       { name: 'Tourism Info Center', phone: '04652-246276', type: 'TOURISM' }
     ]
   })
+
+  const handleReplan = async () => {
+    setIsReplanning(true)
+    const clientApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
+    
+    if (clientApiKey) {
+      try {
+        const prompt = `You are an expert tourism planner for Kanyakumari. 
+We have an existing itinerary day: ${JSON.stringify(itinerary.days[replanDay - 1])}. 
+Replan this day with this custom request: "${replanPrompt}". 
+Respond ONLY with valid JSON matching this exact structure (no conversational text or markdown formatting except the JSON object itself):
+{
+  "day": ${replanDay},
+  "theme": "string",
+  "slots": [
+    {
+      "time": "Morning|Afternoon|Evening|Night",
+      "place": "string",
+      "activity": "string",
+      "duration": "string",
+      "tips": "string",
+      "estimatedCost": number
+    }
+  ]
+}`
+
+        const geminiRes = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${clientApiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }]
+            })
+          }
+        )
+        const geminiData = await geminiRes.json()
+        const text = geminiData.candidates?.[0]?.content?.parts?.[0]?.text
+        if (text) {
+          const jsonMatch = text.match(/\{[\s\S]*\}/)
+          if (jsonMatch) {
+            const parsedDay = JSON.parse(jsonMatch[0])
+            const newDays = [...itinerary.days]
+            newDays[replanDay - 1] = parsedDay
+            setItinerary({ ...itinerary, days: newDays })
+            setIsReplanning(false)
+            setReplanPrompt('')
+            setActiveTab('itinerary')
+            return
+          }
+        }
+      } catch (err) {
+        console.error("Gemini replan failed, falling back to mock:", err)
+      }
+    }
+
+    // Mock replan fallback
+    setTimeout(() => {
+      const mockDay = {
+        day: replanDay,
+        theme: `Replanned: ${replanPrompt.length > 30 ? replanPrompt.slice(0, 30) + '...' : replanPrompt}`,
+        slots: [
+          {
+            time: 'Morning',
+            place: 'Sunrise Point & Cozy Cafe',
+            activity: `Enjoying a relaxed morning tailored to your request: "${replanPrompt}".`,
+            duration: '2 hours',
+            tips: 'Take it easy and enjoy the sights.',
+            estimatedCost: 150
+          },
+          {
+            time: 'Afternoon',
+            place: 'Kanyakumari Historical Museum',
+            activity: 'Indoor exhibits, local crafts and history, perfectly matching your custom request.',
+            duration: '2.5 hours',
+            tips: 'A pleasant and cool spot during mid-day.',
+            estimatedCost: 200
+          },
+          {
+            time: 'Evening',
+            place: 'Sunset Walk & Beachside Dinner',
+            activity: 'Unwind with a custom evening program designed just for you.',
+            duration: '3 hours',
+            tips: 'Try the local Pazha Bajji (banana fritters).',
+            estimatedCost: 250
+          }
+        ]
+      }
+      const newDays = [...itinerary.days]
+      newDays[replanDay - 1] = mockDay
+      setItinerary({ ...itinerary, days: newDays })
+      setIsReplanning(false)
+      setReplanPrompt('')
+      setActiveTab('itinerary')
+    }, 2000)
+  }
 
   return (
     <div className="pt-24 min-h-screen bg-granite-50 pb-20">
@@ -409,49 +509,137 @@ Respond ONLY with valid JSON in this exact structure (do not include any convers
             animate={{ opacity: 1 }}
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
-            {/* Left 2 Cols: Daily Timeline */}
+            {/* Left 2 Cols: Daily Timeline & Replan */}
             <div className="lg:col-span-2 space-y-6">
               
-              <div className="bg-white p-6 rounded-2xl border border-granite-100 shadow-sm">
-                <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-2">
-                  {itinerary.title}
-                </h1>
-                <p className="text-body-sm text-granite-600 leading-relaxed">
-                  {itinerary.summary}
-                </p>
+              {/* Tab Navigation */}
+              <div className="flex border border-granite-100 bg-white p-1 rounded-xl shadow-sm">
+                <button
+                  onClick={() => setActiveTab('itinerary')}
+                  className={`flex-1 py-2 text-center text-body-sm font-semibold rounded-lg transition-all ${
+                    activeTab === 'itinerary'
+                      ? 'bg-ocean text-white shadow-sm'
+                      : 'text-granite-600 hover:bg-granite-50'
+                  }`}
+                >
+                  Itinerary Timeline
+                </button>
+                <button
+                  onClick={() => setActiveTab('replan')}
+                  className={`flex-1 py-2 text-center text-body-sm font-semibold rounded-lg transition-all ${
+                    activeTab === 'replan'
+                      ? 'bg-ocean text-white shadow-sm'
+                      : 'text-granite-600 hover:bg-granite-50'
+                  }`}
+                >
+                  Custom Requests
+                </button>
               </div>
 
-              {/* Day accordion cards */}
-              {itinerary.days.map((dayData: any) => (
-                <div key={dayData.day} className="bg-white rounded-2xl border border-granite-100 shadow-sm overflow-hidden">
-                  <div className="bg-ocean-50/80 px-6 py-4 flex justify-between items-center border-b border-granite-100">
-                    <h3 className="font-serif text-heading-sm text-ocean font-bold">
-                      Day {dayData.day} : {dayData.theme}
-                    </h3>
+              {activeTab === 'itinerary' && (
+                <>
+                  <div className="bg-white p-6 rounded-2xl border border-granite-100 shadow-sm">
+                    <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-2">
+                      {itinerary.title}
+                    </h1>
+                    <p className="text-body-sm text-granite-600 leading-relaxed">
+                      {itinerary.summary}
+                    </p>
                   </div>
 
-                  <div className="p-6 divide-y divide-granite-100">
-                    {dayData.slots.map((slot: any, sIdx: number) => (
-                      <div key={sIdx} className="py-4 first:pt-0 last:pb-0 flex flex-col md:flex-row gap-4 items-start">
-                        <span className="badge-ocean text-[11px] font-bold md:w-24 text-center">
-                          {slot.time}
-                        </span>
-                        <div className="flex-1 space-y-1">
-                          <h4 className="font-semibold text-body text-granite-900 flex items-center gap-1.5">
-                            <MapPin className="w-4 h-4 text-gold" />
-                            {slot.place}
-                          </h4>
-                          <p className="text-body-sm text-granite-600">{slot.activity}</p>
-                          <div className="flex flex-wrap gap-4 text-caption text-granite-400 pt-1">
-                            <span>Duration: {slot.duration}</span>
-                            {slot.tips && <span>💡 Tip: {slot.tips}</span>}
-                          </div>
-                        </div>
+                  {/* Day accordion cards */}
+                  {itinerary.days.map((dayData: any) => (
+                    <div key={dayData.day} className="bg-white rounded-2xl border border-granite-100 shadow-sm overflow-hidden animate-fade-up">
+                      <div className="bg-ocean-50/80 px-6 py-4 flex justify-between items-center border-b border-granite-100">
+                        <h3 className="font-serif text-heading-sm text-ocean font-bold">
+                          Day {dayData.day} : {dayData.theme}
+                        </h3>
                       </div>
-                    ))}
+
+                      <div className="p-6 divide-y divide-granite-100">
+                        {dayData.slots.map((slot: any, sIdx: number) => (
+                          <div key={sIdx} className="py-4 first:pt-0 last:pb-0 flex flex-col md:flex-row gap-4 items-start">
+                            <span className="badge-ocean text-[11px] font-bold md:w-24 text-center">
+                              {slot.time}
+                            </span>
+                            <div className="flex-1 space-y-1">
+                              <h4 className="font-semibold text-body text-granite-900 flex items-center gap-1.5">
+                                <MapPin className="w-4 h-4 text-gold" />
+                                {slot.place}
+                              </h4>
+                              <p className="text-body-sm text-granite-600">{slot.activity}</p>
+                              <div className="flex flex-wrap gap-4 text-caption text-granite-400 pt-1">
+                                <span>Duration: {slot.duration}</span>
+                                {slot.tips && <span>💡 Tip: {slot.tips}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {activeTab === 'replan' && (
+                <div className="bg-white p-8 rounded-2xl border border-granite-100 shadow-sm space-y-6 animate-fade-up">
+                  <div>
+                    <h2 className="font-serif text-heading-lg font-bold text-granite-900 mb-1">
+                      Replan Specific Day
+                    </h2>
+                    <p className="text-body-sm text-granite-500">
+                      Update details for a single day of your trip by sending a custom request to the AI.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-caption font-semibold text-granite-600 mb-1.5">
+                        Select Day to Replan
+                      </label>
+                      <select
+                        className="input-field"
+                        value={replanDay}
+                        onChange={(e) => setReplanDay(Number(e.target.value))}
+                      >
+                        {Array.from({ length: itinerary.totalDays }, (_, i) => (
+                          <option key={i+1} value={i+1}>Day {i+1}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-caption font-semibold text-granite-600 mb-1.5">
+                        Tell us what to change for this day...
+                      </label>
+                      <textarea
+                        className="input-field min-h-[120px] py-3 px-4 resize-none focus:ring-1 focus:ring-ocean"
+                        placeholder="e.g. 'less walking', 'more local food spots', 'focus on temples'"
+                        value={replanPrompt}
+                        onChange={(e) => setReplanPrompt(e.target.value)}
+                      />
+                    </div>
+
+                    <button
+                      onClick={handleReplan}
+                      disabled={isReplanning || !replanPrompt.trim()}
+                      className="btn-gold w-full py-3.5 text-body-sm font-bold flex justify-center items-center gap-2 transition-all disabled:opacity-50"
+                    >
+                      {isReplanning ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                          Replanning Day {replanDay}...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4" />
+                          Update Day {replanDay}
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Right Column: Extras (Costs, Packing, Actions) */}

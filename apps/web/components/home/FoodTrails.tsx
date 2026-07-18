@@ -9,7 +9,7 @@ const foods = [
     nameTa: 'மீன் குழம்பு',
     type: 'Seafood',
     location: 'Kanyakumari Town',
-    image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&h=300&fit=crop',
+    image: '/images/food/meen_kuzhambu.png',
     description: 'Tangy fish curry with coconut milk',
   },
   {
@@ -17,7 +17,7 @@ const foods = [
     nameTa: 'கொத்து பரோட்டா',
     type: 'Street Food',
     location: 'Nagercoil',
-    image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&h=300&fit=crop',
+    image: '/images/food/kothu_parotta.png',
     description: 'Shredded parotta with spicy masala',
   },
   {
@@ -25,7 +25,7 @@ const foods = [
     nameTa: 'நண்டு மசாலா',
     type: 'Seafood',
     location: 'Colachel',
-    image: 'https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=300&h=300&fit=crop',
+    image: '/images/food/nandu_masala.png',
     description: 'Spicy crab masala with local spices',
   },
   {
@@ -33,7 +33,7 @@ const foods = [
     nameTa: 'கப்ப & கடலை கறி',
     type: 'Vegetarian',
     location: 'Throughout District',
-    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=300&fit=crop',
+    image: '/images/food/kappa_kadala.png',
     description: 'Boiled tapioca with chickpea curry',
   },
   {
@@ -41,16 +41,16 @@ const foods = [
     nameTa: 'நன்னாரி சர்பத்',
     type: 'Beverage',
     location: 'Beach Vendors',
-    image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&h=300&fit=crop',
+    image: '/images/food/nannari_sarbath.png',
     description: 'Refreshing sarsaparilla root drink',
   },
   {
-    name: 'Avial',
-    nameTa: 'அவியல்',
+    name: 'Puttu & Kadala Curry',
+    nameTa: 'புட்டு & கடலை கறி',
     type: 'Vegetarian',
     location: 'Local Restaurants',
-    image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=300&h=300&fit=crop',
-    description: 'Mixed vegetables in coconut & curd',
+    image: '/images/food/puttu_kadala.png',
+    description: 'Steamed rice rolls with chickpea curry',
   },
 ]
 

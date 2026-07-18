@@ -51,17 +51,22 @@ export default function StayPage() {
   const [bookingNights, setBookingNights] = useState(1)
   const [bookingSubmitted, setBookingSubmitted] = useState(false)
   const [activeType, setActiveType] = useState('ALL')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/hotels')
+    setIsLoading(true)
+    fetch(`/api/hotels?type=${activeType}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           setHotels(data)
+        } else {
+          setHotels([])
         }
       })
       .catch(() => console.log('Using mock hotels data.'))
-  }, [])
+      .finally(() => setIsLoading(false))
+  }, [activeType])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -121,8 +126,17 @@ export default function StayPage() {
         </div>
 
         {/* Hotel Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredHotels.map(hotel => (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean"></div>
+          </div>
+        ) : filteredHotels.length === 0 ? (
+          <div className="text-center py-20 text-granite-500">
+            No accommodations found for this category.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredHotels.map(hotel => (
             <div key={hotel.id} className="bg-white rounded-2xl overflow-hidden shadow-card border border-granite-100 flex flex-col justify-between">
               <div>
                 <div className="relative aspect-video overflow-hidden">
@@ -184,6 +198,7 @@ export default function StayPage() {
             </div>
           ))}
         </div>
+        )}
 
         {/* Booking Modal */}
         {bookingHotel && (
@@ -205,7 +220,28 @@ export default function StayPage() {
                   <button onClick={() => setBookingHotel(null)} className="btn-primary w-full py-2.5">Close</button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-4">
+                  {bookingHotel.website && (
+                    <div className="bg-ocean/10 p-4 rounded-xl border border-ocean/20">
+                      <p className="text-sm text-granite-600 mb-3 flex items-center gap-2">
+                        <Globe className="w-4 h-4 text-ocean shrink-0" />
+                        Book directly on the official website for the best rates and instant confirmation.
+                      </p>
+                      <a href={bookingHotel.website} target="_blank" rel="noreferrer" className="btn-primary w-full py-2.5 flex justify-center items-center gap-2 font-bold">
+                        Visit Official Website
+                      </a>
+                    </div>
+                  )}
+
+                  {bookingHotel.website && (
+                    <div className="flex items-center gap-3 my-4">
+                      <div className="flex-1 h-px bg-granite-200"></div>
+                      <span className="text-[10px] uppercase font-bold text-granite-400">Or Submit Inquiry</span>
+                      <div className="flex-1 h-px bg-granite-200"></div>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-caption font-semibold text-granite-600 mb-1">Full Name</label>
                     <input type="text" required placeholder="Your name" className="input-field" value={bookingName} onChange={(e) => setBookingName(e.target.value)} />
@@ -232,6 +268,7 @@ export default function StayPage() {
                   </div>
                   <button type="submit" className="btn-gold w-full py-3 text-body-sm font-bold">Submit Booking Inquiry</button>
                 </form>
+                </div>
               )}
             </div>
           </div>

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useAuthStore } from '@/lib/auth'
 import { 
   User, Ticket, Calendar, Clock, MapPin, 
-  Compass, ArrowRight, ShieldCheck, Mail, Phone, LogOut, CheckCircle2 
+  Compass, ArrowRight, ShieldCheck, Mail, Phone, LogOut, CheckCircle2, X 
 } from 'lucide-react'
 import Link from 'next/link'
 import { formatCurrency } from '@/lib/utils'
@@ -467,62 +467,159 @@ export default function TouristDashboard() {
 
       </div>
 
-      {/* Booking QR Modal */}
+      {/* Boarding Pass Modal */}
       {activeTicket && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-lg border text-center space-y-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-4xl flex flex-col md:flex-row bg-white rounded-[24px] shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in duration-300">
             
-            <div className="flex justify-between items-start border-b border-granite-100 pb-3 text-left">
-              <div>
-                <h3 className="font-serif text-heading text-granite-800">
-                  {activeTicket.type === 'hotel' ? 'Hotel Booking QR' : activeTicket.type === 'rental' ? 'Rental Booking QR' : 'Entry Ticket QR'}
-                </h3>
-                <p className="text-caption text-granite-400">ID: {activeTicket.id}</p>
+            {/* Close Button - Absolute */}
+            <button
+              onClick={() => setActiveTicket(null)}
+              className="absolute top-3 right-3 md:top-4 md:right-4 text-white hover:text-gray-200 font-bold z-10 p-2 bg-black/20 rounded-full md:text-granite-400 md:bg-white md:hover:bg-granite-100 md:hover:text-granite-600 transition-colors shadow-sm"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Left Section (Main Ticket Body) */}
+            <div className="flex-1 flex flex-col relative bg-white min-w-0">
+              {/* Red Header */}
+              <div className="bg-[#D32F2F] text-white px-6 py-5 md:px-8 md:py-6 flex justify-between items-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="bg-white/20 p-2 rounded-full">
+                    <Ticket className="w-5 h-5 rotate-[-45deg]" />
+                  </div>
+                  <h2 className="font-bold text-lg md:text-xl tracking-widest">KANYAKUMARI PASS</h2>
+                </div>
+                <div className="border border-white/40 px-3 py-1 rounded text-[10px] md:text-xs font-bold tracking-widest uppercase relative z-10 bg-black/10">
+                   {activeTicket.type === 'hotel' ? 'STAY PASS' : activeTicket.type === 'rental' ? 'RENTAL PASS' : 'ENTRY PASS'}
+                </div>
               </div>
-              <button
-                onClick={() => setActiveTicket(null)}
-                className="text-granite-400 hover:text-granite-600 font-bold"
-              >
-                ✕
-              </button>
+
+              {/* Ticket Details */}
+              <div className="p-6 md:p-8 space-y-8">
+                
+                <div className="flex flex-col sm:flex-row gap-6 md:gap-12">
+                  {/* Passenger Name */}
+                  <div className="space-y-1.5 min-w-[140px]">
+                    <p className="text-[10px] md:text-[11px] font-bold text-granite-400 tracking-widest uppercase">PASSENGER NAME</p>
+                    <p className="font-bold text-lg md:text-xl text-granite-900 uppercase tracking-wide">{user.name}</p>
+                  </div>
+                  
+                  {/* Destination Equivalent */}
+                  <div className="space-y-1.5 flex-1">
+                    <p className="text-[10px] md:text-[11px] font-bold text-granite-400 tracking-widest uppercase">
+                       {activeTicket.type === 'hotel' ? 'HOTEL / ACCOMMODATION' : activeTicket.type === 'rental' ? 'VEHICLE / VENDOR' : 'DESTINATION / MONUMENT'}
+                    </p>
+                    <p className="font-bold text-lg md:text-xl text-granite-900 uppercase truncate tracking-wide">
+                      {activeTicket.type === 'hotel' 
+                        ? activeTicket.hotelName 
+                        : activeTicket.type === 'rental' 
+                          ? `${activeTicket.rentalType} Rental` 
+                          : activeTicket.destination?.nameEn || 'Destination'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 border-t border-granite-100">
+                   {/* Date */}
+                   <div className="space-y-1.5">
+                     <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">
+                       {activeTicket.type === 'hotel' ? 'CHECK-IN' : activeTicket.type === 'rental' ? 'START DATE' : 'VISIT DATE'}
+                     </p>
+                     <p className="font-bold text-base md:text-lg text-granite-900">
+                       {new Date(activeTicket.checkInDate || activeTicket.startDate || activeTicket.visitDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                     </p>
+                   </div>
+                   
+                   {/* Time or Duration */}
+                   <div className="space-y-1.5">
+                     <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">
+                        {activeTicket.type === 'hotel' ? 'DURATION' : 'TIME'}
+                     </p>
+                     <p className="font-bold text-base md:text-lg text-granite-900 uppercase">
+                        {activeTicket.type === 'hotel' ? `${activeTicket.nights} NIGHTS` : '09:00 AM'}
+                     </p>
+                   </div>
+
+                   {/* Type */}
+                   <div className="space-y-1.5">
+                     <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">
+                        {activeTicket.type === 'rental' ? 'TYPE' : 'CLASS'}
+                     </p>
+                     <p className="font-bold text-base md:text-lg text-granite-900 uppercase">
+                        {activeTicket.ticketType || 'STANDARD'}
+                     </p>
+                   </div>
+
+                   {/* Quantity */}
+                   <div className="space-y-1.5">
+                     <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">QTY / GUEST</p>
+                     <p className="font-bold text-base md:text-lg text-granite-900 uppercase">
+                       {activeTicket.quantity || 1} PAX
+                     </p>
+                   </div>
+                </div>
+
+                {/* Ticket ID */}
+                <div className="pt-4 flex items-center justify-between border-t border-granite-100">
+                   <div>
+                     <p className="text-[10px] md:text-xs font-bold text-granite-400 tracking-widest uppercase mb-1">UNIQUE TICKET ID NO.</p>
+                     <p className="font-mono font-bold text-lg md:text-xl text-granite-800 tracking-widest">{activeTicket.id}</p>
+                   </div>
+                   <div className="hidden sm:flex flex-col gap-1 opacity-20">
+                     {/* Fake Barcode Lines for aesthetics */}
+                     <div className="flex gap-1 h-8">
+                       {[...Array(15)].map((_, i) => (
+                         <div key={i} className={`bg-black ${i % 2 === 0 ? 'w-1' : 'w-2'} ${i % 3 === 0 ? 'w-0.5' : ''}`}></div>
+                       ))}
+                     </div>
+                   </div>
+                </div>
+              </div>
             </div>
 
-            {/* QR Code Container */}
-            <div className="bg-granite-50 p-4 rounded-xl border border-granite-200 inline-block">
-              <img
-                src={activeTicket.qrCodeUrl}
-                alt="Booking QR Code"
-                className="w-48 h-48 mx-auto"
-              />
+            {/* Dashed Divider */}
+            <div className="hidden md:flex flex-col items-center justify-center w-10 relative bg-white">
+              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-0 border-l-2 border-dashed border-granite-200"></div>
+              {/* Semi-circle cutouts (colored as background to look cut out) */}
+              <div className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-10 h-10 bg-[#333] opacity-60 rounded-full mix-blend-overlay"></div>
+              <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-10 h-10 bg-[#333] opacity-60 rounded-full mix-blend-overlay"></div>
+            </div>
+            
+            {/* Mobile Divider */}
+            <div className="md:hidden flex items-center justify-center h-10 relative w-full overflow-hidden bg-white">
+               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-0 border-t-2 border-dashed border-granite-200"></div>
+               <div className="absolute left-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-[#333] opacity-60 rounded-full mix-blend-overlay"></div>
+               <div className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-10 h-10 bg-[#333] opacity-60 rounded-full mix-blend-overlay"></div>
             </div>
 
-            <div className="space-y-1">
-              <h4 className="font-bold text-body-sm text-granite-800">
-                {activeTicket.type === 'hotel' 
-                  ? activeTicket.hotelName 
-                  : activeTicket.type === 'rental' 
-                    ? `${activeTicket.rentalType} Rental` 
-                    : `${activeTicket.ticketType || 'Adult'} Ticket × ${activeTicket.quantity || 1} Qty`}
-              </h4>
-              <p className="text-caption text-granite-500">
-                {activeTicket.type === 'hotel' 
-                  ? `Check-in: ${new Date(activeTicket.checkInDate).toLocaleDateString('en-IN')} (${activeTicket.nights} Nights)`
-                  : activeTicket.type === 'rental'
-                    ? `Start Date: ${new Date(activeTicket.startDate).toLocaleDateString('en-IN')}`
-                    : `Visit Date: ${new Date(activeTicket.visitDate).toLocaleDateString('en-IN')}`
-                }
-              </p>
+            {/* Right Section (Stub & QR) */}
+            <div className="w-full md:w-64 flex-shrink-0 bg-granite-50 flex flex-col">
+               <div className="bg-[#D32F2F] text-white p-4 h-[64px] md:h-[88px] flex items-center justify-center border-l border-white/20">
+                  <p className="font-bold text-sm tracking-widest uppercase">BOARDING PASS</p>
+               </div>
+               
+               <div className="flex-1 p-4 md:p-6 flex flex-col items-center justify-center space-y-5">
+                  <div className="bg-white p-3 rounded-2xl border border-granite-200 shadow-sm inline-block">
+                    <img
+                      src={activeTicket.qrCodeUrl}
+                      alt="Booking QR Code"
+                      className="w-32 h-32 md:w-36 md:h-36 mx-auto mix-blend-multiply"
+                    />
+                  </div>
+                  <div className="text-center w-full">
+                    <p className="text-[10px] font-bold text-[#D32F2F] uppercase tracking-widest mb-1.5">SCAN AT ENTRY GATE</p>
+                    <div className="flex gap-1 justify-center h-6 opacity-30 mb-2">
+                       {[...Array(20)].map((_, i) => (
+                         <div key={i} className={`bg-black ${i % 2 === 0 ? 'w-0.5' : 'w-[3px]'} ${i % 5 === 0 ? 'w-1' : ''}`}></div>
+                       ))}
+                    </div>
+                    <p className="font-mono text-xs font-bold text-granite-600 tracking-[0.2em]">{activeTicket.id.split('-').pop()}</p>
+                  </div>
+               </div>
             </div>
-
-            <p className="text-[10px] text-granite-400">
-              {activeTicket.type === 'hotel'
-                ? 'Present this QR code at the hotel reception upon check-in.'
-                : activeTicket.type === 'rental'
-                  ? 'Present this QR code to the vehicle vendor to coordinate pickup.'
-                  : 'Present this QR code at the monument entry gate. It will be scanned by the Site Manager.'
-              }
-            </p>
-
+            
           </div>
         </div>
       )}

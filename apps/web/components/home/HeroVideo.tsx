@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     if (videoRef.current) {
@@ -94,7 +95,10 @@ export default function HeroVideo() {
           <Link href="/bookings/tickets" className="btn-glass px-8 py-3.5 text-body">
             Book Tickets
           </Link>
-          <button className="btn-glass px-6 py-3.5 text-body gap-2">
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="btn-glass px-6 py-3.5 text-body gap-2"
+          >
             <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
               ▶
             </span>
@@ -114,7 +118,27 @@ export default function HeroVideo() {
       </motion.div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FAFAFA] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FAFAFA] to-transparent pointer-events-none" />
+
+      {/* Watch Story Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-5xl aspect-video rounded-xl shadow-2xl bg-black">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute -top-10 right-0 text-white hover:text-gold-400 font-bold z-10"
+            >
+              Close ✕
+            </button>
+            <video
+              className="w-full h-full rounded-xl"
+              src="/videos/Story.mp4"
+              controls
+              autoPlay
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

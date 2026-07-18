@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { Sun, Cloud, CloudRain, Wind, Droplets, Sunrise, Sunset, Waves } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sun, Cloud, CloudRain, Wind, Droplets, Sunrise, Sunset, Waves, CloudLightning, CloudSnow, Loader2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const FORECAST = [
@@ -30,6 +30,30 @@ const MONTHLY_DATA = [
 ];
 
 export default function WeatherPage() {
+  const [currentWeather, setCurrentWeather] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/weather')
+      .then(res => res.json())
+      .then(data => {
+        if (data.current) setCurrentWeather(data.current);
+      })
+      .catch(err => console.error('Failed to fetch weather', err));
+  }, []);
+
+  const getWeatherIcon = (condition: string) => {
+    switch (condition?.toLowerCase()) {
+      case 'clear': return <Sun size={48} className="text-yellow-400 drop-shadow-lg" />;
+      case 'rain': 
+      case 'drizzle': return <CloudRain size={48} className="text-blue-400 drop-shadow-lg" />;
+      case 'thunderstorm': return <CloudLightning size={48} className="text-yellow-300 drop-shadow-lg" />;
+      case 'snow': return <CloudSnow size={48} className="text-white drop-shadow-lg" />;
+      case 'clouds': 
+      default:
+        return <Cloud size={48} className="text-gray-300 drop-shadow-lg" />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Hero Section */}
@@ -45,32 +69,41 @@ export default function WeatherPage() {
             </div>
             
             {/* Current Weather Widget */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 w-full max-w-sm shrink-0">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <div className="text-gray-300 text-sm font-medium">KANYAKUMARI, TN</div>
-                  <div className="text-4xl font-bold mt-1">28°C</div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 w-full max-w-sm shrink-0 min-h-[200px] flex flex-col justify-center">
+              {!currentWeather ? (
+                <div className="flex flex-col items-center justify-center h-full">
+                   <Loader2 className="animate-spin text-white mb-2" size={32} />
+                   <p className="text-white/80 text-sm">Loading Live Weather...</p>
                 </div>
-                <Sun size={48} className="text-yellow-400 drop-shadow-lg" />
-              </div>
-              <div className="text-xl font-medium mb-6">Partly Cloudy</div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-black/20 rounded-xl p-3 flex items-center">
-                  <Droplets size={20} className="text-blue-300 mr-2" />
-                  <div>
-                    <div className="text-xs text-gray-300">Humidity</div>
-                    <div className="font-bold">78%</div>
+              ) : (
+                <>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <div className="text-gray-300 text-sm font-medium">KANYAKUMARI, TN</div>
+                      <div className="text-4xl font-bold mt-1">{currentWeather.temp}°C</div>
+                    </div>
+                    {getWeatherIcon(currentWeather.condition)}
                   </div>
-                </div>
-                <div className="bg-black/20 rounded-xl p-3 flex items-center">
-                  <Wind size={20} className="text-gray-300 mr-2" />
-                  <div>
-                    <div className="text-xs text-gray-300">Wind</div>
-                    <div className="font-bold">14 km/h</div>
+                  <div className="text-xl font-medium mb-6 capitalize">{currentWeather.description}</div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-black/20 rounded-xl p-3 flex items-center">
+                      <Droplets size={20} className="text-blue-300 mr-2" />
+                      <div>
+                        <div className="text-xs text-gray-300">Humidity</div>
+                        <div className="font-bold">{currentWeather.humidity}%</div>
+                      </div>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-3 flex items-center">
+                      <Wind size={20} className="text-gray-300 mr-2" />
+                      <div>
+                        <div className="text-xs text-gray-300">Wind</div>
+                        <div className="font-bold">{currentWeather.windSpeed} km/h</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </>
+              )}
             </div>
           </div>
         </div>

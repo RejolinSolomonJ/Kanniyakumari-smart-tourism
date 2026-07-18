@@ -41,3 +41,10 @@ next-env.d.ts
 postgres_local/
 postgres.zip
 backend/mongodb_data/
+
+# Giant Video Files (GitHub 100MB limit)
+Story.mp4
+apps/web/public/videos/Story.mp4
+
+# Temporary test files
+apps/web/test-*.js
