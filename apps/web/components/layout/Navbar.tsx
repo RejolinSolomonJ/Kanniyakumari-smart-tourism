@@ -10,9 +10,9 @@ import {
   Church, Mountain, TreePine, Palette,
   Map as MapIcon, Bus, UserCheck, Car,
   Camera, Video, BookOpen, Download,
-  Shield, Glasses, CloudSun, Star, Flag, ImageIcon
+  Shield, Glasses, CloudSun, Star, Flag, ImageIcon, User
 } from 'lucide-react'
-import { useUIStore } from '@/lib/auth'
+import { useAuthStore, useUIStore } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import MobileNav from './MobileNav'
 
@@ -101,8 +101,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useUIStore()
+  const { isAuthenticated, user, logout } = useAuthStore()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -256,18 +259,59 @@ export default function Navbar() {
                 தமிழ்
               </button>
 
-              {/* Login */}
-              <Link
-                href="/login"
-                className={cn(
-                  'hidden md:flex items-center px-5 py-2 rounded-full text-body-sm font-medium transition-all duration-300',
-                  scrolled
-                    ? 'border-2 border-ocean text-ocean hover:bg-ocean hover:text-white'
-                    : 'border border-white/40 text-white hover:bg-white/10'
-                )}
-              >
-                Login
-              </Link>
+              {/* Profile / Login */}
+              {mounted ? (
+                isAuthenticated ? (
+                  <div className="relative hidden md:block group">
+                    <Link
+                      href="/tourist"
+                      className={cn(
+                        'flex items-center gap-2 px-4 py-2 rounded-full text-body-sm font-medium transition-all duration-300',
+                        scrolled
+                          ? 'border-2 border-ocean text-ocean hover:bg-ocean-50'
+                          : 'border border-white/40 text-white hover:bg-white/10'
+                      )}
+                    >
+                      <div className={cn(
+                        "w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs",
+                        scrolled ? "bg-ocean/10 text-ocean" : "bg-white/20 text-white"
+                      )}>
+                        {user?.name?.charAt(0) || 'U'}
+                      </div>
+                      <span className="max-w-[100px] truncate">{user?.name || 'Profile'}</span>
+                    </Link>
+                    {/* Dropdown */}
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-granite-100 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                      <Link href="/tourist" className="block px-4 py-3 text-sm text-granite-700 hover:bg-ocean-50 hover:text-ocean transition-colors">
+                        My Dashboard
+                      </Link>
+                      <button
+                        onClick={() => {
+                          logout();
+                          window.location.href = '/';
+                        }}
+                        className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors border-t border-granite-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className={cn(
+                      'hidden md:flex items-center px-5 py-2 rounded-full text-body-sm font-medium transition-all duration-300',
+                      scrolled
+                        ? 'border-2 border-ocean text-ocean hover:bg-ocean hover:text-white'
+                        : 'border border-white/40 text-white hover:bg-white/10'
+                    )}
+                  >
+                    Login
+                  </Link>
+                )
+              ) : (
+                <div className="hidden md:block w-[88px] h-[38px]"></div>
+              )}
 
               {/* Mobile Menu Toggle */}
               <button
