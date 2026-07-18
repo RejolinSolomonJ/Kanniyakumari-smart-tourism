@@ -27,7 +27,7 @@ const mockDestinations = [
     nameEn: 'Vivekananda Rock Memorial',
     nameTa: 'விவேகானந்தர் பாறை நினைவகம்',
     category: 'HERITAGE',
-    heroImage: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=600&h=400&fit=crop',
+    heroImage: '/images/Vivekananda_Memorial.jpg',
     entryFeeAdult: 20,
     rating: 4.8,
     location: 'Offshore Kanyakumari'
@@ -38,7 +38,7 @@ const mockDestinations = [
     nameEn: 'Thiruvalluvar Statue',
     nameTa: 'திருவள்ளுவர் சிலை',
     category: 'HERITAGE',
-    heroImage: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop',
+    heroImage: '/images/thiruvalluvar-statue.jpg',
     entryFeeAdult: 0,
     rating: 4.7,
     location: 'Offshore Kanyakumari'
@@ -49,7 +49,7 @@ const mockDestinations = [
     nameEn: 'Kanyakumari Beach (Triveni Sangam)',
     nameTa: 'கன்னியாகுமரி கடற்கரை',
     category: 'BEACH',
-    heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop',
+    heroImage: '/images/kanyakumari-beaches.jpg',
     entryFeeAdult: 0,
     rating: 4.6,
     location: 'Beach Road'
@@ -60,7 +60,7 @@ const mockDestinations = [
     nameEn: 'Bhagavathi Amman Temple',
     nameTa: 'பகவதி அம்மன் கோவில்',
     category: 'TEMPLE',
-    heroImage: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=400&fit=crop',
+    heroImage: '/images/bhagavathi-amman-temple.jpg',
     entryFeeAdult: 0,
     rating: 4.8,
     location: 'Temple Road'
@@ -71,7 +71,7 @@ const mockDestinations = [
     nameEn: 'Padmanabhapuram Palace',
     nameTa: 'பத்மநாபபுரம் அரண்மனை',
     category: 'HERITAGE',
-    heroImage: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=400&fit=crop',
+    heroImage: '/images/padmanabhapuram-palace.jpg',
     entryFeeAdult: 50,
     rating: 4.9,
     location: 'Padmanabhapuram'
@@ -82,7 +82,7 @@ const mockDestinations = [
     nameEn: 'Thirparappu Waterfalls',
     nameTa: 'திற்பரப்பு அருவி',
     category: 'WATERFALL',
-    heroImage: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba5854?w=600&h=400&fit=crop',
+    heroImage: '/images/Thirparappu_Waterfalls.jpg',
     entryFeeAdult: 20,
     rating: 4.5,
     location: 'Thirparappu'
@@ -93,7 +93,7 @@ const mockDestinations = [
     nameEn: 'Mathoor Hanging Bridge',
     nameTa: 'மத்தூர் தொங்கு பாலம்',
     category: 'ADVENTURE',
-    heroImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
+    heroImage: '/images/Mathur_aqueduct.jpg',
     entryFeeAdult: 20,
     rating: 4.7,
     location: 'Mathoor'
