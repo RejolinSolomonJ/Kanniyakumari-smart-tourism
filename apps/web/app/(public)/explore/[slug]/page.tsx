@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
@@ -8,36 +8,10 @@ import {
   Printer, Star, Compass, AlertCircle, Info, CheckCircle 
 } from 'lucide-react'
 import { cn, formatCurrency } from '@/lib/utils'
+import { destinations as allDestinations } from '@/lib/data'
 
-const mockDestinations: Record<string, any> = {
-  'vivekananda-rock-memorial': {
-    id: '1',
-    slug: 'vivekananda-rock-memorial',
-    nameEn: 'Vivekananda Rock Memorial',
-    nameTa: 'விவேகானந்தர் பாறை நினைவகம்',
-    category: 'HERITAGE',
-    descriptionEn: 'An iconic monument built in 1970 on a rock island where Swami Vivekananda meditated in 1892. Accessible only by ferry, it features the Vivekananda Mandapam and Dhyana Mandapam (meditation hall). One of India\'s most visited monuments.',
-    descriptionTa: 'சுவாமி விவேகானந்தர் 1892 இல் தியானம் செய்த பாறை தீவில் 1970 இல் கட்டப்பட்ட ஒரு சின்னமான நினைவுச்சின்னம். படகு மூலம் மட்டுமே அணுக முடியும், இது விவேகானந்தர் மண்டபம் மற்றும் தியான மண்டபம் ஆகியவற்றைக் கொண்டுள்ளது. இந்தியாவின் அதிகம் பார்வையிடப்படும் தலம்.',
-    historyEn: 'Swami Vivekananda swam to this rock and meditated for three days, realizing his mission for India. The memorial was constructed through nationwide contributions under Eknath Ranade.',
-    historyTa: 'சுவாமி விவேகானந்தர் இந்தப் பாறைக்கு நீந்திச் சென்று மூன்று நாட்கள் தியானம் செய்து இந்தியாவின் தனது பணியை உணர்ந்தார். ஏக்நாத் ரானடேயின் வழிகாட்டுதலின் கீழ் இந்த நினைவுச்சின்னம் கட்டப்பட்டது.',
-    heroImage: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=1200&h=600&fit=crop',
-    images: [
-      'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=400&fit=crop'
-    ],
-    latitude: 8.0795,
-    longitude: 77.5583,
-    entryFeeAdult: 20,
-    entryFeeChild: 10,
-    rating: 4.8,
-    location: 'Offshore Kanyakumari',
-    openingHours: { open: '08:00 AM', close: '04:00 PM' }
-  }
-}
-
-export default function DestinationDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params)
-  const { slug } = resolvedParams
+export default function DestinationDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'gallery' | 'reviews'>('overview')
   const [destination, setDestination] = useState<any>(null)
   
@@ -56,11 +30,13 @@ export default function DestinationDetailPage({ params }: { params: Promise<{ sl
         if (data && !data.error) {
           setDestination(data)
         } else {
-          setDestination(mockDestinations[slug] || mockDestinations['vivekananda-rock-memorial'])
+          const found = allDestinations.find(d => d.slug === slug)
+          setDestination(found || allDestinations[0])
         }
       })
       .catch(() => {
-        setDestination(mockDestinations[slug] || mockDestinations['vivekananda-rock-memorial'])
+        const found = allDestinations.find(d => d.slug === slug)
+        setDestination(found || allDestinations[0])
       })
   }, [slug])
 
@@ -155,13 +131,75 @@ export default function DestinationDetailPage({ params }: { params: Promise<{ sl
 
       const verifyData = await verifyRes.json()
       if (verifyData.success) {
+        // Save to local storage for profile page integration
+        const bookingId = bookingData.booking.id;
+        const ticketsList = ticketsArray.map((t, idx) => ({
+          id: `TK-${bookingId}-${idx}`,
+          visitDate,
+          ticketType: t.type,
+          quantity: t.quantity,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_${t.type}_${t.quantity}`,
+          destination: {
+            nameEn: destination.nameEn || destination.name || 'Destination'
+          }
+        }));
+        const localBooking = {
+          id: bookingId,
+          type: 'ticket',
+          status: 'CONFIRMED',
+          totalAmount: totalCost,
+          tickets: ticketsList,
+          createdAt: new Date().toISOString()
+        };
+        const existing = JSON.parse(localStorage.getItem('local_bookings') || '[]');
+        localStorage.setItem('local_bookings', JSON.stringify([localBooking, ...existing]));
+
         setBookingSuccess(true)
       } else {
         alert('Payment verification failed.')
       }
     } catch (err) {
       console.error(err)
-      alert('An error occurred during booking. Running in simulation mode.')
+      
+      // Save simulated booking to localStorage
+      const bookingId = 'BK-' + Math.floor(1000 + Math.random() * 9000);
+      const ticketsList = [];
+      if (adultQty > 0) {
+        ticketsList.push({
+          id: 'TK-AD-' + Math.floor(1000 + Math.random() * 9000),
+          visitDate,
+          ticketType: 'ADULT',
+          quantity: adultQty,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_AD_${adultQty}`,
+          destination: {
+            nameEn: destination.nameEn || destination.name || 'Destination'
+          }
+        });
+      }
+      if (childQty > 0) {
+        ticketsList.push({
+          id: 'TK-CH-' + Math.floor(1000 + Math.random() * 9000),
+          visitDate,
+          ticketType: 'CHILD',
+          quantity: childQty,
+          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_CH_${childQty}`,
+          destination: {
+            nameEn: destination.nameEn || destination.name || 'Destination'
+          }
+        });
+      }
+      const localBooking = {
+        id: bookingId,
+        type: 'ticket',
+        status: 'CONFIRMED',
+        totalAmount: totalCost,
+        tickets: ticketsList,
+        createdAt: new Date().toISOString()
+      };
+      const existing = JSON.parse(localStorage.getItem('local_bookings') || '[]');
+      localStorage.setItem('local_bookings', JSON.stringify([localBooking, ...existing]));
+
+      alert('An error occurred during booking. Running in simulation mode. Your booking has been saved to your profile.')
       setBookingSuccess(true)
     } finally {
       setIsLoading(false)
@@ -211,7 +249,7 @@ export default function DestinationDetailPage({ params }: { params: Promise<{ sl
           <div className="flex flex-wrap gap-6 text-body-sm text-granite-600">
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-ocean" />
-              Hours: <strong>{destination.openingHours?.open || '08:00 AM'} - {destination.openingHours?.close || '04:00 PM'}</strong>
+              Hours: <strong>{typeof destination.openingHours === 'string' ? destination.openingHours : (destination.openingHours?.open ? `${destination.openingHours.open} - ${destination.openingHours.close}` : '08:00 AM - 04:00 PM')}</strong>
             </span>
             <span className="flex items-center gap-1.5">
               <Ticket className="w-4 h-4 text-ocean" />

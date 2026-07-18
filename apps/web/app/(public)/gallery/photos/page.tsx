@@ -1,22 +1,29 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Camera, Image as ImageIcon } from 'lucide-react'
-
-const photos = [
-  { src: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=800', title: 'Vivekananda Rock Memorial', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Thiruvalluvar Statue', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800', title: 'Kanyakumari Beach Sunset', category: 'Beach' },
-  { src: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800', title: 'Padmanabhapuram Palace Murals', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba5854?w=800', title: 'Thirparappu Waterfalls', category: 'Waterfall' },
-  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', title: 'Western Ghats Scenic View', category: 'Nature' }
-]
+import { motion, AnimatePresence } from 'framer-motion'
+import { Camera, Image as ImageIcon, X, ArrowLeft, ArrowRight } from 'lucide-react'
+import { galleryPhotos } from '@/lib/data'
 
 export default function PhotosGalleryPage() {
   const [filter, setFilter] = useState('ALL')
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
-  const filteredPhotos = filter === 'ALL' ? photos : photos.filter(p => p.category === filter)
+  const filteredPhotos = filter === 'ALL' 
+    ? galleryPhotos 
+    : galleryPhotos.filter(p => p.category === filter)
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index)
+  }
+
+  const navigateLightbox = (direction: 'next' | 'prev') => {
+    if (lightboxIndex === null) return
+    let nextIdx = direction === 'next' ? lightboxIndex + 1 : lightboxIndex - 1
+    if (nextIdx >= filteredPhotos.length) nextIdx = 0
+    if (nextIdx < 0) nextIdx = filteredPhotos.length - 1
+    setLightboxIndex(nextIdx)
+  }
 
   return (
     <div className="pt-24 min-h-screen bg-granite-50 pb-16">
@@ -36,7 +43,7 @@ export default function PhotosGalleryPage() {
           {['ALL', 'Heritage', 'Beach', 'Waterfall', 'Nature'].map(cat => (
             <button
               key={cat}
-              onClick={() => setFilter(cat)}
+              onClick={() => { setFilter(cat); setLightboxIndex(null); }}
               className={`px-5 py-2 rounded-full border text-body-sm font-semibold transition-all ${
                 filter === cat
                   ? 'bg-ocean border-ocean text-white'
@@ -51,7 +58,11 @@ export default function PhotosGalleryPage() {
         {/* Staggered Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
           {filteredPhotos.map((photo, idx) => (
-            <div key={idx} className="break-inside-avoid bg-white rounded-2xl overflow-hidden shadow-sm border border-granite-100 group cursor-pointer">
+            <div 
+              key={idx} 
+              onClick={() => openLightbox(idx)}
+              className="break-inside-avoid bg-white rounded-2xl overflow-hidden shadow-sm border border-granite-100 group cursor-pointer"
+            >
               <div className="relative overflow-hidden">
                 <img
                   src={photo.src}
@@ -69,6 +80,55 @@ export default function PhotosGalleryPage() {
             </div>
           ))}
         </div>
+
+        {/* Lightbox Modal */}
+        <AnimatePresence>
+          {lightboxIndex !== null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/95 z-55 flex items-center justify-center p-4"
+              onClick={() => setLightboxIndex(null)}
+            >
+              <button 
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+                className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 p-2 rounded-full border border-white/20 transition-all cursor-pointer z-56"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <button
+                onClick={(e) => { e.stopPropagation(); navigateLightbox('prev'); }}
+                className="absolute left-6 text-white bg-white/10 hover:bg-white/20 p-3 rounded-full border border-white/20 transition-all cursor-pointer z-56"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+
+              <div 
+                className="relative max-w-4xl max-h-[80vh] flex flex-col items-center gap-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img 
+                  src={filteredPhotos[lightboxIndex].src} 
+                  alt={filteredPhotos[lightboxIndex].title} 
+                  className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/10"
+                />
+                <div className="text-center text-white">
+                  <h3 className="font-serif text-lg font-bold">{filteredPhotos[lightboxIndex].title}</h3>
+                  <span className="text-xs text-gold font-bold uppercase tracking-widest">{filteredPhotos[lightboxIndex].category}</span>
+                </div>
+              </div>
+
+              <button
+                onClick={(e) => { e.stopPropagation(); navigateLightbox('next'); }}
+                className="absolute right-6 text-white bg-white/10 hover:bg-white/20 p-3 rounded-full border border-white/20 transition-all cursor-pointer z-56"
+              >
+                <ArrowRight className="w-6 h-6" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </div>

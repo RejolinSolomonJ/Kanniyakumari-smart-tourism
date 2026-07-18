@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Info } from 'lucide-react'
+import { foods as allFoods } from '@/lib/data'
 
 const foods = [
   {
@@ -55,7 +56,7 @@ const foods = [
 export default function FoodTrailsPage() {
   const [filter, setFilter] = useState('ALL')
 
-  const filteredFoods = filter === 'ALL' ? foods : foods.filter(f => f.type === filter)
+  const filteredFoods = filter === 'ALL' ? allFoods : allFoods.filter(f => f.type === filter)
 
   return (
     <div className="pt-24 min-h-screen bg-granite-50 pb-16">
@@ -72,7 +73,7 @@ export default function FoodTrailsPage() {
 
         {/* Filters */}
         <div className="flex justify-center gap-3 mb-10">
-          {['ALL', 'Seafood', 'Street Food', 'Vegetarian', 'Beverage'].map(cat => (
+          {['ALL', 'Seafood', 'Street Food', 'Vegetarian', 'Beverage', 'Snacks', 'Sweets'].map(cat => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}

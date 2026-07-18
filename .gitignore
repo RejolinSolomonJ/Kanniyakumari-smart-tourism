@@ -40,3 +40,4 @@ next-env.d.ts
 # Local DB
 postgres_local/
 postgres.zip
+backend/mongodb_data/

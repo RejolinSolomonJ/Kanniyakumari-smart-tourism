@@ -1,177 +1,101 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Ticket, Calendar, Users, MapPin, CreditCard, ChevronDown, Minus, Plus, CheckCircle2 } from 'lucide-react'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { Ticket, MapPin, Clock, ArrowRight, ShieldCheck } from 'lucide-react'
+import { destinations } from '@/lib/data'
 import { formatCurrency } from '@/lib/utils'
 
-const destinations = [
-  { id: '1', name: 'Vivekananda Rock Memorial', slug: 'vivekananda-rock', adultFee: 20, childFee: 10, image: 'https://images.unsplash.com/photo-1598463283737-124b1757835f?q=80&w=400' },
-  { id: '2', name: 'Thiruvalluvar Statue', slug: 'thiruvalluvar-statue', adultFee: 20, childFee: 10, image: 'https://images.unsplash.com/photo-1623547285973-19cb9e28fba1?q=80&w=400' },
-  { id: '3', name: 'Padmanabhapuram Palace', slug: 'padmanabhapuram-palace', adultFee: 50, childFee: 25, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=400' },
-  { id: '4', name: 'Thirparappu Waterfalls', slug: 'thirparappu-waterfalls', adultFee: 20, childFee: 10, image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=400' },
-  { id: '5', name: 'Wax Museum', slug: 'wax-museum', adultFee: 100, childFee: 50, image: 'https://images.unsplash.com/photo-1575223970966-76ae61ee7838?q=80&w=400' },
-  { id: '6', name: 'Mathoor Hanging Bridge', slug: 'mathoor-hanging-bridge', adultFee: 20, childFee: 10, image: 'https://images.unsplash.com/photo-1545893835-abaa50cbe628?q=80&w=400' },
-]
-
 export default function BookTicketsPage() {
-  const [selected, setSelected] = useState<string | null>(null)
-  const [visitDate, setVisitDate] = useState('')
-  const [adults, setAdults] = useState(1)
-  const [children, setChildren] = useState(0)
-  const [step, setStep] = useState<'select' | 'details' | 'confirm'>('select')
-
-  const dest = destinations.find(d => d.id === selected)
-  const total = dest ? (dest.adultFee * adults) + (dest.childFee * children) : 0
-
-  const handleBook = () => {
-    alert('🎉 Booking confirmed! In production, this connects to the Razorpay payment gateway.')
-    setStep('select')
-    setSelected(null)
-    setAdults(1)
-    setChildren(0)
-  }
+  // Only show destinations that have entry fees (ticketed)
+  const ticketedDestinations = destinations.filter(
+    d => d.entryFeeAdult !== undefined && d.entryFeeAdult > 0
+  )
 
   return (
-    <div className="pt-24 min-h-screen bg-granite-50 pb-20">
-      <div className="container-wide">
+    <div className="pt-24 min-h-screen bg-granite-50 pb-16">
+      <div className="container-wide max-w-4xl">
         
-        {/* Header */}
-        <div className="mb-10">
-          <h1 className="font-serif text-4xl font-bold text-granite-900">Book Entry Tickets</h1>
-          <p className="text-granite-500 mt-2">Skip the queue — book digital tickets for monuments and attractions across Kanyakumari</p>
-        </div>
-
-        {/* Step Progress */}
-        <div className="flex items-center gap-4 mb-10">
-          {['Select Place', 'Visitor Details', 'Confirm & Pay'].map((label, i) => {
-            const stepKey = ['select', 'details', 'confirm'][i]
-            const isActive = step === stepKey
-            const isPast = ['select', 'details', 'confirm'].indexOf(step) > i
-            return (
-              <div key={label} className="flex items-center gap-2">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                  isActive ? 'bg-ocean text-white' : isPast ? 'bg-emerald-500 text-white' : 'bg-granite-200 text-granite-500'
-                }`}>
-                  {isPast ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
-                </div>
-                <span className={`text-sm font-semibold hidden sm:inline ${isActive ? 'text-ocean' : 'text-granite-400'}`}>{label}</span>
-                {i < 2 && <div className="w-8 sm:w-16 h-0.5 bg-granite-200" />}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Step 1: Select Destination */}
-        {step === 'select' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {destinations.map(d => (
-              <button
-                key={d.id}
-                onClick={() => { setSelected(d.id); setStep('details') }}
-                className={`group text-left bg-white rounded-2xl overflow-hidden border-2 transition-all shadow-sm hover:shadow-lg ${
-                  selected === d.id ? 'border-ocean ring-2 ring-ocean/20' : 'border-granite-100 hover:border-ocean/50'
-                }`}
-              >
-                <div className="relative h-40 overflow-hidden">
-                  <img src={d.image} alt={d.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-3 right-3 px-3 py-1 bg-black/60 backdrop-blur-sm text-white text-xs font-bold rounded-full">
-                    From {formatCurrency(d.adultFee)}
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-serif font-bold text-granite-900 group-hover:text-ocean transition-colors">{d.name}</h3>
-                  <div className="flex items-center gap-4 mt-2 text-xs text-granite-400">
-                    <span>Adult: {formatCurrency(d.adultFee)}</span>
-                    <span>Child: {formatCurrency(d.childFee)}</span>
-                  </div>
-                </div>
-              </button>
-            ))}
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <div className="w-12 h-12 bg-gold-50 text-gold-700 rounded-full flex items-center justify-center mx-auto mb-3">
+            <Ticket className="w-6 h-6" />
           </div>
-        )}
+          <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-2">
+            Online Ticket Booking
+          </h1>
+          <p className="text-body-sm text-granite-500">
+            Pre-book entry tickets for historical monuments, reserves, and waterfalls in Kanyakumari. Skip the long ticket queues.
+          </p>
+        </div>
 
-        {/* Step 2: Visitor Details */}
-        {step === 'details' && dest && (
-          <div className="max-w-2xl mx-auto bg-white rounded-2xl p-8 shadow-sm border border-granite-100">
-            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-granite-100">
-              <img src={dest.image} alt={dest.name} className="w-20 h-20 rounded-xl object-cover" />
-              <div>
-                <h2 className="font-serif text-xl font-bold text-granite-900">{dest.name}</h2>
-                <p className="text-sm text-granite-400">Adult: {formatCurrency(dest.adultFee)} · Child: {formatCurrency(dest.childFee)}</p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <label className="text-sm font-semibold text-granite-700 mb-2 block">Visit Date</label>
-                <input
-                  type="date"
-                  value={visitDate}
-                  onChange={e => setVisitDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-3 rounded-xl border border-granite-200 bg-granite-50 text-sm focus:outline-none focus:ring-2 focus:ring-ocean"
+        {/* List of Ticketed Places */}
+        <div className="space-y-6">
+          {ticketedDestinations.map((dest) => (
+            <div 
+              key={dest.id} 
+              className="bg-white p-6 rounded-2xl border border-granite-100 shadow-sm flex flex-col md:flex-row gap-5 items-start justify-between group"
+            >
+              <div className="flex gap-4 items-start">
+                <img 
+                  src={dest.heroImage} 
+                  alt={dest.nameEn} 
+                  className="w-24 h-24 rounded-xl object-cover border border-granite-200 flex-shrink-0"
                 />
-              </div>
-
-              <div className="grid grid-cols-2 gap-6">
-                <div>
-                  <label className="text-sm font-semibold text-granite-700 mb-2 block">Adults</label>
-                  <div className="flex items-center gap-3">
-                    <button onClick={() => setAdults(Math.max(1, adults - 1))} className="w-10 h-10 rounded-xl bg-granite-100 flex items-center justify-center hover:bg-granite-200"><Minus className="w-4 h-4" /></button>
-                    <span className="text-xl font-bold w-8 text-center">{adults}</span>
-                    <button onClick={() => setAdults(adults + 1)} className="w-10 h-10 rounded-xl bg-granite-100 flex items-center justify-center hover:bg-granite-200"><Plus className="w-4 h-4" /></button>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-serif text-heading-sm text-granite-900 group-hover:text-ocean transition-colors">
+                      {dest.nameEn}
+                    </h3>
+                    <span className="badge bg-ocean-50 text-ocean text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                      {dest.category}
+                    </span>
+                  </div>
+                  <p className="text-caption text-granite-400 font-tamil leading-none">
+                    {dest.nameTa}
+                  </p>
+                  <p className="text-body-sm text-granite-650 line-clamp-2">
+                    {dest.descriptionEn}
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-caption text-granite-400 font-semibold pt-1">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-ocean" /> {dest.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-gold" /> {dest.openingHours}
+                    </span>
                   </div>
                 </div>
+              </div>
+
+              <div className="md:text-right flex flex-col justify-between h-full w-full md:w-auto mt-4 md:mt-0 gap-3 border-t md:border-t-0 pt-4 md:pt-0">
                 <div>
-                  <label className="text-sm font-semibold text-granite-700 mb-2 block">Children</label>
-                  <div className="flex items-center gap-3">
-                    <button onClick={() => setChildren(Math.max(0, children - 1))} className="w-10 h-10 rounded-xl bg-granite-100 flex items-center justify-center hover:bg-granite-200"><Minus className="w-4 h-4" /></button>
-                    <span className="text-xl font-bold w-8 text-center">{children}</span>
-                    <button onClick={() => setChildren(children + 1)} className="w-10 h-10 rounded-xl bg-granite-100 flex items-center justify-center hover:bg-granite-200"><Plus className="w-4 h-4" /></button>
-                  </div>
+                  <span className="block text-caption text-granite-400">Adult Entry Fee</span>
+                  <span className="text-body-lg font-bold text-granite-900">
+                    {formatCurrency(dest.entryFeeAdult || 0)}
+                  </span>
                 </div>
+                <Link 
+                  href={`/explore/${dest.slug}#booking-section`}
+                  className="btn-gold py-2 px-5 text-body-sm font-semibold whitespace-nowrap flex items-center gap-1"
+                >
+                  Book Tickets <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
+          ))}
+        </div>
 
-            <div className="mt-8 pt-6 border-t border-granite-100 flex items-center justify-between">
-              <div>
-                <p className="text-xs text-granite-400">Total Amount</p>
-                <p className="text-3xl font-bold text-granite-900">{formatCurrency(total)}</p>
-              </div>
-              <div className="flex gap-3">
-                <button onClick={() => setStep('select')} className="px-6 py-3 bg-granite-100 text-granite-600 font-bold rounded-xl hover:bg-granite-200 transition-colors">Back</button>
-                <button onClick={() => visitDate ? setStep('confirm') : alert('Please select a visit date')} className="px-8 py-3 bg-ocean text-white font-bold rounded-xl hover:bg-ocean/90 transition-colors flex items-center gap-2">
-                  <CreditCard className="w-4 h-4" /> Proceed to Pay
-                </button>
-              </div>
-            </div>
+        {/* Info box */}
+        <div className="mt-12 bg-blue-50 border border-blue-200/50 p-6 rounded-2xl flex gap-4 items-start max-w-4xl mx-auto">
+          <ShieldCheck className="w-6 h-6 text-ocean flex-shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-semibold text-body-sm text-ocean">Secure Digital Ticketing</h4>
+            <p className="text-caption text-granite-600 leading-relaxed">
+              All bookings are processed securely. Digital QR passes will be generated instantly in your profile dashboard upon successful payment. Present the QR code on your phone at entry gates.
+            </p>
           </div>
-        )}
-
-        {/* Step 3: Confirm */}
-        {step === 'confirm' && dest && (
-          <div className="max-w-lg mx-auto bg-white rounded-2xl p-8 shadow-sm border border-granite-100 text-center">
-            <div className="w-16 h-16 rounded-full bg-gold/10 text-gold flex items-center justify-center mx-auto mb-6">
-              <Ticket className="w-8 h-8" />
-            </div>
-            <h2 className="font-serif text-2xl font-bold text-granite-900 mb-2">Confirm Your Booking</h2>
-            <p className="text-granite-500 text-sm mb-8">Review the details and proceed to payment</p>
-
-            <div className="bg-granite-50 rounded-xl p-5 text-left space-y-3 mb-8">
-              <div className="flex justify-between text-sm"><span className="text-granite-500">Destination</span><span className="font-semibold text-granite-800">{dest.name}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-granite-500">Visit Date</span><span className="font-semibold text-granite-800">{new Date(visitDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-granite-500">Adults × {adults}</span><span className="font-semibold text-granite-800">{formatCurrency(dest.adultFee * adults)}</span></div>
-              {children > 0 && <div className="flex justify-between text-sm"><span className="text-granite-500">Children × {children}</span><span className="font-semibold text-granite-800">{formatCurrency(dest.childFee * children)}</span></div>}
-              <div className="border-t border-granite-200 pt-3 flex justify-between font-bold"><span>Total</span><span className="text-ocean text-lg">{formatCurrency(total)}</span></div>
-            </div>
-
-            <div className="flex gap-3">
-              <button onClick={() => setStep('details')} className="flex-1 py-3 bg-granite-100 text-granite-600 font-bold rounded-xl hover:bg-granite-200 transition-colors">Back</button>
-              <button onClick={handleBook} className="flex-1 py-3 bg-gold text-black font-bold rounded-xl hover:bg-gold/80 transition-colors">Pay {formatCurrency(total)}</button>
-            </div>
-          </div>
-        )}
+        </div>
 
       </div>
     </div>

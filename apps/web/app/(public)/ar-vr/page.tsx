@@ -3,33 +3,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Play, Maximize2, MapPin, Info } from 'lucide-react'
-
-const tours = [
-  {
-    id: 'vivekananda-rock',
-    title: 'Vivekananda Rock Memorial',
-    description: 'Immersive 360° view from the iconic rock memorial.',
-    image: 'https://images.unsplash.com/photo-1590766940554-634e880d0e44?q=80&w=1920',
-    tag: 'VR Ready'
-  },
-  {
-    id: 'thiruvalluvar-statue',
-    title: 'Thiruvalluvar Statue',
-    description: 'Explore the 133-feet tall stone sculpture up close.',
-    image: 'https://images.unsplash.com/photo-1598463283737-124b1757835f?q=80&w=2070',
-    tag: 'AR Enhanced'
-  },
-  {
-    id: 'padmanabhapuram',
-    title: 'Padmanabhapuram Palace',
-    description: 'Walk through the ancient wooden architecture.',
-    image: 'https://images.unsplash.com/photo-1623547285973-19cb9e28fba1?q=80&w=2070',
-    tag: '360° Tour'
-  }
-]
+import { arvrTours } from '@/lib/data'
 
 export default function ARVRPage() {
-  const [activeTour, setActiveTour] = useState(tours[0])
+  const [activeTour, setActiveTour] = useState(arvrTours[0])
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
@@ -96,8 +73,8 @@ export default function ARVRPage() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {tours.map((tour) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {arvrTours.map((tour) => (
             <button
               key={tour.id}
               onClick={() => setActiveTour(tour)}

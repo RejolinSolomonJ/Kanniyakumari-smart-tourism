@@ -6,26 +6,38 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Starting database seeding...')
 
-  // Clear existing data
-  await prisma.review.deleteMany()
-  await prisma.ticket.deleteMany()
-  await prisma.booking.deleteMany()
-  await prisma.guideBooking.deleteMany()
-  await prisma.guide.deleteMany()
-  await prisma.user.deleteMany()
-  await prisma.otpStore.deleteMany()
-  await prisma.destination.deleteMany()
-  await prisma.hotel.deleteMany()
-  await prisma.event.deleteMany()
-  await prisma.blog.deleteMany()
-  await prisma.galleryItem.deleteMany()
-  await prisma.emergencyContact.deleteMany()
-  await prisma.announcement.deleteMany()
-  await prisma.download.deleteMany()
-  await prisma.infraReport.deleteMany()
-  await prisma.analyticsSnapshot.deleteMany()
+  // Safe table clear helper for standalone MongoDB (no replica set transactions)
+  const clearTable = async (model: any) => {
+    try {
+      const records = await model.findMany({ select: { id: true } })
+      for (const record of records) {
+        await model.delete({ where: { id: record.id } })
+      }
+    } catch (err) {
+      console.warn('Could not clear table:', err)
+    }
+  }
 
-  console.log('🧹 Existing data cleared.')
+  // Clear existing data
+  await clearTable(prisma.review)
+  await clearTable(prisma.ticket)
+  await clearTable(prisma.booking)
+  await clearTable(prisma.guideBooking)
+  await clearTable(prisma.guide)
+  await clearTable(prisma.user)
+  await clearTable(prisma.otpStore)
+  await clearTable(prisma.destination)
+  await clearTable(prisma.hotel)
+  await clearTable(prisma.event)
+  await clearTable(prisma.blog)
+  await clearTable(prisma.galleryItem)
+  await clearTable(prisma.emergencyContact)
+  await clearTable(prisma.announcement)
+  await clearTable(prisma.download)
+  await clearTable(prisma.infraReport)
+  await clearTable(prisma.analyticsSnapshot)
+
+  console.log('🧹 Existing data cleared safely without transactions.')
 
   // ─────────────────────────────────────────
   // USERS

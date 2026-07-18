@@ -1,14 +1,18 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+// ─────────────────────────────────────────
+// USERS & AUTH
+// ─────────────────────────────────────────
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   name          String
   email         String    @unique
   phone         String?   @unique
@@ -20,12 +24,11 @@ model User {
   language      String    @default("en")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
   bookings      Booking[]
   reviews       Review[]
   itineraries   Itinerary[]
   guideBookings GuideBooking[]
-  @@index([email])
-  @@index([phone])
 }
 
 enum Role {
@@ -45,26 +48,31 @@ enum Provider {
 }
 
 model OtpStore {
-  id        String   @id @default(cuid())
+  id        String   @id @default(cuid()) @map("_id")
   phone     String
   email     String?
   otp       String
   expiresAt DateTime
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
+
   @@index([phone])
 }
 
+// ─────────────────────────────────────────
+// DESTINATIONS
+// ─────────────────────────────────────────
+
 model Destination {
-  id            String      @id @default(cuid())
+  id            String      @id @default(cuid()) @map("_id")
   slug          String      @unique
   nameEn        String
   nameTa        String
   category      Category
-  descriptionEn String      @db.Text
-  descriptionTa String      @db.Text
-  historyEn     String?     @db.Text
-  historyTa     String?     @db.Text
+  descriptionEn String
+  descriptionTa String
+  historyEn     String?
+  historyTa     String?
   heroImage     String
   images        String[]
   videoUrl      String?
@@ -77,8 +85,10 @@ model Destination {
   isActive      Boolean     @default(true)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+
   tickets       Ticket[]
   reviews       Review[]
+
   @@index([category])
   @@index([isFeatured])
 }
@@ -98,8 +108,12 @@ enum Category {
   PHOTOGRAPHY
 }
 
+// ─────────────────────────────────────────
+// TICKET BOOKING
+// ─────────────────────────────────────────
+
 model Ticket {
-  id              String        @id @default(cuid())
+  id              String        @id @default(cuid()) @map("_id")
   destinationId   String
   destination     Destination   @relation(fields: [destinationId], references: [id])
   bookingId       String
@@ -115,7 +129,7 @@ model Ticket {
   scannedAt       DateTime?
   scannedBy       String?
   createdAt       DateTime      @default(now())
-  @@index([qrCode])
+
   @@index([destinationId])
 }
 
@@ -126,8 +140,12 @@ enum TicketType {
   FOREIGNER
 }
 
+// ─────────────────────────────────────────
+// BOOKING (Unified)
+// ─────────────────────────────────────────
+
 model Booking {
-  id              String        @id @default(cuid())
+  id              String        @id @default(cuid()) @map("_id")
   userId          String
   user            User          @relation(fields: [userId], references: [id])
   type            BookingType
@@ -141,6 +159,7 @@ model Booking {
   tickets         Ticket[]
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+
   @@index([userId])
   @@index([status])
 }
@@ -166,13 +185,17 @@ enum PaymentStatus {
   REFUNDED
 }
 
+// ─────────────────────────────────────────
+// HOTELS
+// ─────────────────────────────────────────
+
 model Hotel {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   nameEn        String
   nameTa        String
   type          HotelType
-  descriptionEn String    @db.Text
-  descriptionTa String    @db.Text
+  descriptionEn String
+  descriptionTa String
   address       String
   latitude      Float
   longitude     Float
@@ -185,36 +208,43 @@ model Hotel {
   isActive      Boolean   @default(true)
   isFeatured    Boolean   @default(false)
   createdAt     DateTime  @default(now())
+
   reviews       Review[]
+
   @@index([type])
 }
 
 enum HotelType {
   GOVERNMENT
+  RESORT
   LUXURY
   MID_RANGE
   BUDGET
   HOMESTAY
-  RESORT
 }
 
+// ─────────────────────────────────────────
+// EVENTS
+// ─────────────────────────────────────────
+
 model Event {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   titleEn       String
   titleTa       String
-  descriptionEn String    @db.Text
-  descriptionTa String    @db.Text
+  descriptionEn String
+  descriptionTa String
   type          EventType
   venue         String
   latitude      Float?
   longitude     Float?
   startDate     DateTime
-  endDate       DateTime
+  endDate     DateTime
   image         String?
   isGovernment  Boolean   @default(false)
   isFeatured    Boolean   @default(false)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
+
   @@index([startDate])
   @@index([type])
 }
@@ -229,13 +259,17 @@ enum EventType {
   MUSIC
 }
 
+// ─────────────────────────────────────────
+// BLOGS
+// ─────────────────────────────────────────
+
 model Blog {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   slug          String    @unique
   titleEn       String
   titleTa       String
-  contentEn     String    @db.Text
-  contentTa     String    @db.Text
+  contentEn     String
+  contentTa     String
   excerpt       String
   coverImage    String
   category      BlogCategory
@@ -246,7 +280,7 @@ model Blog {
   viewCount     Int       @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  @@index([slug])
+
   @@index([isPublished])
 }
 
@@ -260,8 +294,12 @@ enum BlogCategory {
   REVIEW
 }
 
+// ─────────────────────────────────────────
+// GALLERY
+// ─────────────────────────────────────────
+
 model GalleryItem {
-  id          String      @id @default(cuid())
+  id          String      @id @default(cuid()) @map("_id")
   type        MediaType
   url         String
   thumbnail   String?
@@ -273,6 +311,7 @@ model GalleryItem {
   isFeatured  Boolean     @default(false)
   uploadedBy  String?
   createdAt   DateTime    @default(now())
+
   @@index([type])
 }
 
@@ -282,12 +321,16 @@ enum MediaType {
   DRONE
 }
 
+// ─────────────────────────────────────────
+// GUIDES
+// ─────────────────────────────────────────
+
 model Guide {
-  id          String    @id @default(cuid())
+  id          String    @id @default(cuid()) @map("_id")
   userId      String    @unique
   nameEn      String
   nameTa      String
-  bio         String    @db.Text
+  bio         String
   languages   String[]
   experience  Int
   photo       String?
@@ -296,13 +339,15 @@ model Guide {
   ratePerDay  Float
   isAvailable Boolean   @default(true)
   createdAt   DateTime  @default(now())
+
   bookings    GuideBooking[]
   reviews     Review[]
+
   @@index([isVerified, isAvailable])
 }
 
 model GuideBooking {
-  id          String        @id @default(cuid())
+  id          String        @id @default(cuid()) @map("_id")
   guideId     String
   guide       Guide         @relation(fields: [guideId], references: [id])
   userId      String
@@ -312,12 +357,17 @@ model GuideBooking {
   status      BookingStatus @default(PENDING)
   totalAmount Float
   createdAt   DateTime      @default(now())
+
   @@index([guideId])
   @@index([userId])
 }
 
+// ─────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────
+
 model Review {
-  id              String    @id @default(cuid())
+  id              String    @id @default(cuid()) @map("_id")
   userId          String
   user            User      @relation(fields: [userId], references: [id])
   destinationId   String?
@@ -327,15 +377,20 @@ model Review {
   guideId         String?
   guide           Guide?    @relation(fields: [guideId], references: [id])
   rating          Int
-  comment         String    @db.Text
+  comment         String
   isApproved      Boolean   @default(false)
   createdAt       DateTime  @default(now())
+
   @@index([destinationId])
   @@index([hotelId])
 }
 
+// ─────────────────────────────────────────
+// ITINERARY (AI Generated)
+// ─────────────────────────────────────────
+
 model Itinerary {
-  id          String    @id @default(cuid())
+  id          String    @id @default(cuid()) @map("_id")
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   title       String
@@ -343,11 +398,16 @@ model Itinerary {
   data        Json
   budget      Float?
   createdAt   DateTime  @default(now())
+
   @@index([userId])
 }
 
+// ─────────────────────────────────────────
+// EMERGENCY CONTACTS
+// ─────────────────────────────────────────
+
 model EmergencyContact {
-  id        String          @id @default(cuid())
+  id        String          @id @default(cuid()) @map("_id")
   nameEn    String
   nameTa    String
   type      EmergencyType
@@ -356,6 +416,7 @@ model EmergencyContact {
   latitude  Float?
   longitude Float?
   isActive  Boolean         @default(true)
+
   @@index([type])
 }
 
@@ -368,20 +429,28 @@ enum EmergencyType {
   AMBULANCE
 }
 
+// ─────────────────────────────────────────
+// GOVERNMENT ANNOUNCEMENTS
+// ─────────────────────────────────────────
+
 model Announcement {
-  id          String    @id @default(cuid())
+  id          String    @id @default(cuid()) @map("_id")
   titleEn     String
   titleTa     String
-  contentEn   String    @db.Text
-  contentTa   String    @db.Text
+  contentEn   String
+  contentTa   String
   type        String
   isActive    Boolean   @default(true)
   publishedAt DateTime  @default(now())
   createdAt   DateTime  @default(now())
 }
 
+// ─────────────────────────────────────────
+// DOWNLOADS
+// ─────────────────────────────────────────
+
 model Download {
-  id          String    @id @default(cuid())
+  id          String    @id @default(cuid()) @map("_id")
   titleEn     String
   titleTa     String
   fileUrl     String
@@ -392,18 +461,23 @@ model Download {
   createdAt   DateTime  @default(now())
 }
 
+// ─────────────────────────────────────────
+// INFRASTRUCTURE REPORT (Report Infra Tab)
+// ─────────────────────────────────────────
+
 model InfraReport {
-  id          String          @id @default(cuid())
+  id          String          @id @default(cuid()) @map("_id")
   userId      String?
   location    String
   type        InfraIssueType
-  description String          @db.Text
+  description String
   images      String[]
   status      ReportStatus    @default(OPEN)
   latitude    Float?
   longitude   Float?
   resolvedAt  DateTime?
   createdAt   DateTime        @default(now())
+
   @@index([status])
 }
 
@@ -424,8 +498,12 @@ enum ReportStatus {
   REJECTED
 }
 
+// ─────────────────────────────────────────
+// ADMIN ANALYTICS SNAPSHOT (lightweight)
+// ─────────────────────────────────────────
+
 model AnalyticsSnapshot {
-  id              String    @id @default(cuid())
+  id              String    @id @default(cuid()) @map("_id")
   date            DateTime  @unique @default(now())
   totalVisitors   Int       @default(0)
   ticketsSold     Int       @default(0)

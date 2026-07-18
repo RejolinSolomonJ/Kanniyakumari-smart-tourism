@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Search, MapPin, Star, Filter, Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { destinations as allDestinations } from '@/lib/data'
 
 const categories = [
   { key: 'ALL', label: 'All Places' },
@@ -14,10 +15,11 @@ const categories = [
   { key: 'WATERFALL', label: 'Waterfalls' },
   { key: 'ADVENTURE', label: 'Adventure' },
   { key: 'MUSEUM', label: 'Museums' },
+  { key: 'WILDLIFE', label: 'Wildlife' },
   { key: 'CULTURE', label: 'Culture' }
 ]
 
-// Real seeded destination list for pilot mode fallback
+// Use centralized data store
 const mockDestinations = [
   {
     id: '1',
@@ -102,7 +104,7 @@ export default function ExplorePage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeCategory, setActiveCategory] = useState('ALL')
   const [feeFilter, setFeeFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL')
-  const [destinations, setDestinations] = useState(mockDestinations)
+  const [destinations, setDestinations] = useState(allDestinations)
 
   // Fetch real destinations from API if backend is running
   useEffect(() => {

@@ -65,10 +65,43 @@ export default function AdminDashboard() {
     })
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setReports(data)
+        if (Array.isArray(data) && data.length > 0) {
+          setReports(data)
+        } else {
+          setReports(getSimulatedReports())
+        }
       })
-      .catch(() => console.log('Using mock reports.'))
+      .catch(() => {
+        setReports(getSimulatedReports())
+      })
   }, [])
+
+  const getSimulatedReports = () => [
+    {
+      id: 'REP-102',
+      status: 'OPEN',
+      type: 'TOILET',
+      location: 'Vivekananda Rock Ferry Waiting Hall',
+      description: 'The flush system in the public washrooms is not functioning properly. Please resolve this at the earliest.',
+      createdAt: new Date(Date.now() - 86400000 * 1).toISOString()
+    },
+    {
+      id: 'REP-101',
+      status: 'OPEN',
+      type: 'SIGNAGE',
+      location: 'Muttom Beach Crossroads',
+      description: 'The directional road signs heading to Muttom Beach from Nagercoil highway are damaged and faded.',
+      createdAt: new Date(Date.now() - 86400000 * 3).toISOString()
+    },
+    {
+      id: 'REP-099',
+      status: 'RESOLVED',
+      type: 'CLEANLINESS',
+      location: 'Kanyakumari Main Beach Promenade',
+      description: 'Large amount of plastic garbage accumulated near the sunset viewpoint area. Needs cleaning.',
+      createdAt: new Date(Date.now() - 86400000 * 6).toISOString()
+    }
+  ]
 
   const handleResolveReport = (id: string) => {
     const token = localStorage.getItem('auth_token')

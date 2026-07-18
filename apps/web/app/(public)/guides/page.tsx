@@ -4,34 +4,10 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ShieldCheck, Star, Calendar, MessageSquare, Compass, Phone } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
-
-const mockGuides = [
-  {
-    id: '1',
-    nameEn: 'Muthu Swamy',
-    nameTa: 'முத்துசாமி',
-    bio: 'Specialist in Vivekananda Rock & Gandhi Mandapam history. Over 8 years of guiding experience.',
-    languages: ['English', 'Tamil', 'Malayalam'],
-    experience: 8,
-    ratePerDay: 1500,
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
-    isVerified: true
-  },
-  {
-    id: '2',
-    nameEn: 'Selvan Pillai',
-    nameTa: 'செல்வன் பிள்ளை',
-    bio: 'Expert in Padmanabhapuram wooden architecture and Suchindram Thanumalayan temple mythology.',
-    languages: ['English', 'Tamil'],
-    experience: 5,
-    ratePerDay: 1200,
-    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
-    isVerified: true
-  }
-]
+import { guides as allGuides } from '@/lib/data'
 
 export default function GuidesPage() {
-  const [guides, setGuides] = useState(mockGuides)
+  const [guides, setGuides] = useState(allGuides)
   const [activeGuide, setActiveGuide] = useState<any>(null)
   
   // Booking Form State

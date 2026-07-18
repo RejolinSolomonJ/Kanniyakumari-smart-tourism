@@ -3,30 +3,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FileText, Download, Eye, Tag } from 'lucide-react'
-
-const mockDownloads = [
-  {
-    id: '1',
-    titleEn: 'Official Kanyakumari Tourist Map',
-    titleTa: 'அதிகாரப்பூர்வ சுற்றுலா வரைபடம்',
-    fileUrl: '/downloads/tourist_map.pdf',
-    fileType: 'PDF',
-    category: 'Maps',
-    downloadCount: 420
-  },
-  {
-    id: '2',
-    titleEn: 'Tamil Nadu Tourism Guide - Kanyakumari Edition',
-    titleTa: 'தமிழ்நாடு சுற்றுலா வழிகாட்டி - கன்னியாகுமரி பதிப்பு',
-    fileUrl: '/downloads/tourist_guide.pdf',
-    fileType: 'PDF',
-    category: 'Brochures',
-    downloadCount: 185
-  }
-]
+import { downloads as allDownloads } from '@/lib/data'
 
 export default function DownloadsPage() {
-  const [downloads, setDownloads] = useState(mockDownloads)
+  const [downloads, setDownloads] = useState(allDownloads)
 
   useEffect(() => {
     fetch('http://localhost:5000/api/downloads')

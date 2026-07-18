@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Phone, ShieldAlert, HeartPulse, Flame, HelpCircle, MapPin, Compass } from 'lucide-react'
+import { emergencyContacts as allContacts } from '@/lib/data'
 
 const mockContacts = [
   {
@@ -60,7 +61,7 @@ const typeColors: Record<string, string> = {
 }
 
 export default function EmergencyPage() {
-  const [contacts, setContacts] = useState(mockContacts)
+  const [contacts, setContacts] = useState(allContacts)
 
   useEffect(() => {
     fetch('http://localhost:5000/api/emergency/contacts')

@@ -75,14 +75,93 @@ export default function ItineraryPlannerPage() {
         throw new Error('AI Planner request failed')
       }
     } catch (err) {
-      console.warn('AI integration error, loading simulated itinerary', err)
-      // Wait 3 seconds to show simulation loading
+      console.warn('AI integration error, attempting direct Gemini client-side fallback...', err)
+      const clientApiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
+      if (clientApiKey) {
+        try {
+          const prompt = `You are an expert tourism planner for Kanyakumari, Tamil Nadu, India.
+Generate a detailed ${days}-day travel itinerary.
+
+Parameters:
+- Budget: ₹${budget} total
+- Travel Type: ${travelType}
+- Interests: ${selectedInterests.length > 0 ? selectedInterests.join(', ') : 'Beach, Heritage'}
+- Hotel: ${hotelPref}
+- Diet: ${dietary}
+- Language: English
+- Accessibility: ${accessibility ? 'Required' : 'Not required'}
+
+Respond ONLY with valid JSON in this exact structure (do not include any conversational text or markdown formatting except the JSON object itself):
+{
+  "title": "string",
+  "summary": "string",
+  "totalDays": number,
+  "estimatedBudget": {
+    "accommodation": number,
+    "food": number,
+    "transport": number,
+    "tickets": number,
+    "total": number
+  },
+  "days": [
+    {
+      "day": number,
+      "theme": "string",
+      "slots": [
+        {
+          "time": "Morning|Afternoon|Evening|Night",
+          "place": "string",
+          "activity": "string",
+          "duration": "string",
+          "tips": "string",
+          "estimatedCost": number
+        }
+      ]
+    }
+  ],
+  "packingList": ["string"],
+  "weatherNote": "string",
+  "emergencyContacts": [
+    { "name": "string", "phone": "string", "type": "string" }
+  ]
+}`
+
+          const geminiRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${clientApiKey}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }]
+              })
+            }
+          )
+          const geminiData = await geminiRes.json()
+          const text = geminiData.candidates?.[0]?.content?.parts?.[0]?.text
+          if (text) {
+            const jsonMatch = text.match(/\{[\s\S]*\}/)
+            if (jsonMatch) {
+              const parsedItinerary = JSON.parse(jsonMatch[0])
+              setItinerary(parsedItinerary)
+              setStep(3)
+              setIsLoading(false)
+              return
+            }
+          }
+        } catch (apiErr) {
+          console.error('Direct Gemini itinerary generation failed:', apiErr)
+        }
+      }
+
+      // Wait 3 seconds to show simulation loading as fallback
       setTimeout(() => {
         setItinerary(getSimulatedItinerary())
         setStep(3)
+        setIsLoading(false)
       }, 3000)
+      return
     } finally {
-      setIsLoading(false)
+      // Note: we control setIsLoading within success/error branches above
     }
   }
 

@@ -3,27 +3,7 @@
 import { motion } from 'framer-motion'
 import { Leaf, Map, Camera, ShieldAlert } from 'lucide-react'
 import Link from 'next/link'
-
-const zones = [
-  {
-    name: 'Keeriparai Reserve Forest',
-    type: 'Trekking & Streams',
-    image: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074',
-    status: 'Open'
-  },
-  {
-    name: 'Maramalai',
-    type: 'Hill Safari',
-    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2070',
-    status: 'Pass Required'
-  },
-  {
-    name: 'Kalikesam',
-    type: 'Waterfalls & Dense Forest',
-    image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=1887',
-    status: 'Restricted'
-  }
-]
+import { wildlifeZones } from '@/lib/data'
 
 export default function WildlifePage() {
   return (
@@ -90,7 +70,7 @@ export default function WildlifePage() {
         {/* Zones */}
         <h2 className="font-serif text-3xl font-bold mb-8">Explore Zones</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {zones.map((zone, index) => (
+          {wildlifeZones.map((zone, index) => (
             <motion.div
               key={zone.name}
               initial={{ opacity: 0, y: 20 }}

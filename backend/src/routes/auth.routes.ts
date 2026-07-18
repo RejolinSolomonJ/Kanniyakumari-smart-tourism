@@ -230,6 +230,70 @@ authRouter.post('/logout', (req, res) => {
   return res.json({ success: true, message: 'Logged out successfully' })
 })
 
+// POST /api/auth/google
+authRouter.post('/google', async (req, res) => {
+  const { credential } = req.body
+  if (!credential) {
+    return res.status(400).json({ error: 'Credential token is required' })
+  }
+
+  try {
+    const response = await (globalThis as any).fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`)
+    const payload = await response.json()
+
+    if (payload.error_description || !payload.email) {
+      return res.status(400).json({ error: 'Invalid Google token' })
+    }
+
+    const { email, name, sub } = payload
+
+    let user = await prisma.user.findUnique({ where: { email } })
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          name: name || email.split('@')[0],
+          email,
+          role: Role.TOURIST,
+          provider: Provider.GOOGLE,
+          providerId: sub,
+          isVerified: true
+        }
+      })
+    } else if (user.provider !== Provider.GOOGLE) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          provider: Provider.GOOGLE,
+          providerId: sub,
+          isVerified: true
+        }
+      })
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET || 'fallback-secret-for-pilot',
+      { expiresIn: (process.env.JWT_EXPIRES_IN as any) || '7d' }
+    )
+
+    return res.json({
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        isVerified: user.isVerified
+      },
+      token
+    })
+  } catch (error) {
+    console.error('Google login error:', error)
+    return res.status(500).json({ error: 'Google login failed' })
+  }
+})
+
 // GET /api/auth/me
 authRouter.get('/me', authenticate, async (req: AuthRequest, res) => {
   if (!req.user) {

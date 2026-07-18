@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Tag } from 'lucide-react'
+import { events as allEvents } from '@/lib/data'
 
 const mockEvents = [
   {
@@ -32,7 +33,8 @@ const mockEvents = [
 ]
 
 export default function EventsPage() {
-  const [events, setEvents] = useState(mockEvents)
+  const [events, setEvents] = useState(allEvents)
+  const [activeType, setActiveType] = useState('ALL')
 
   useEffect(() => {
     fetch('http://localhost:5000/api/events')
@@ -58,9 +60,26 @@ export default function EventsPage() {
           </p>
         </div>
 
+        {/* Type Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {['ALL', 'CULTURAL', 'TEMPLE', 'SPORTS'].map(type => (
+            <button
+              key={type}
+              onClick={() => setActiveType(type)}
+              className={`px-5 py-2 rounded-full border text-body-sm font-semibold transition-all ${
+                activeType === type
+                  ? 'bg-ocean border-ocean text-white'
+                  : 'bg-white border-granite-200 text-granite-600 hover:border-granite-300'
+              }`}
+            >
+              {type === 'ALL' ? 'All Events' : type.charAt(0) + type.slice(1).toLowerCase()}
+            </button>
+          ))}
+        </div>
+
         {/* Events list */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {events.map(event => (
+          {events.filter(e => activeType === 'ALL' || e.type === activeType).map(event => (
             <div key={event.id} className="bg-white rounded-2xl overflow-hidden shadow-card border border-granite-100 flex flex-col justify-between group">
               <div>
                 <div className="relative h-60 overflow-hidden">

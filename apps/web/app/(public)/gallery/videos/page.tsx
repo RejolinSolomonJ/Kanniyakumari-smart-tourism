@@ -3,23 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Video, Play, ExternalLink } from 'lucide-react'
-
-const videos = [
-  {
-    title: 'Kanyakumari Drone View 🌊✨',
-    desc: 'Breathtaking 4K aerial shots of Thiruvalluvar Statue & Vivekananda Rock Memorial.',
-    thumbnail: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800',
-    duration: '2:15',
-    src: '/videos/kanyakumari-hero.mp4'
-  },
-  {
-    title: 'Sunrise over Triveni Sangam 🌅',
-    desc: 'Time-lapse video of the unique sunrise where three oceans converge.',
-    thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
-    duration: '1:45',
-    src: '/videos/kanyakumari-hero.mp4' // Fallback
-  }
-]
+import { galleryVideos } from '@/lib/data'
 
 export default function VideosGalleryPage() {
   const [activeVideo, setActiveVideo] = useState<any>(null)
@@ -39,7 +23,7 @@ export default function VideosGalleryPage() {
 
         {/* Videos Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {videos.map((vid, idx) => (
+          {galleryVideos.map((vid, idx) => (
             <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-card border border-granite-100 group flex flex-col justify-between">
               <div>
                 <div className="relative aspect-video overflow-hidden bg-black flex items-center justify-center cursor-pointer" onClick={() => setActiveVideo(vid)}>
@@ -90,18 +74,28 @@ export default function VideosGalleryPage() {
             <div className="bg-transparent max-w-3xl w-full flex flex-col items-end gap-3">
               <button
                 onClick={() => setActiveVideo(null)}
-                className="text-white hover:text-granite-300 font-bold bg-white/10 w-9 h-9 rounded-full flex items-center justify-center border border-white/25"
+                className="text-white hover:text-granite-300 font-bold bg-white/10 w-9 h-9 rounded-full flex items-center justify-center border border-white/25 cursor-pointer"
               >
                 ✕
               </button>
               
               <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-white/10">
-                <video
-                  src={activeVideo.src}
-                  controls
-                  autoPlay
-                  className="w-full h-full object-contain"
-                />
+                {activeVideo.youtubeId ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1`}
+                    title={activeVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                ) : (
+                  <video
+                    src={activeVideo.src}
+                    controls
+                    autoPlay
+                    className="w-full h-full object-contain"
+                  />
+                )}
               </div>
             </div>
           </div>

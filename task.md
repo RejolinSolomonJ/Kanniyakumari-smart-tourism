@@ -1,0 +1,28 @@
+# Tasks
+
+- `[x]` Create centralized data store (lib/data.ts)
+- `[x]` Create .env.local with API key placeholders
+- `[x]` Make Interactive Map real with Mapbox GL
+- `[x]` Make AI Assistant work with direct Gemini API
+- `[x]` Make AI Itinerary Planner work with direct Gemini API
+- `[x]` Expand & fix Explore page
+- `[x]` Create working Explore detail page
+- `[x]` Expand & fix Stay page with booking modal
+- `[x]` Expand Food page
+- `[x]` Expand Events page with filters
+- `[x]` Expand Blogs page with filters
+- `[x]` Create working Blog detail page
+- `[x]` Expand Gallery Photos with lightbox
+- `[x]` Expand Gallery Videos with YouTube embeds
+- `[x]` Expand Guides page
+- `[x]` Expand Emergency page
+- `[x]` Expand Religious page
+- `[x]` Expand Downloads page
+- `[x]` Expand Transport page (standard data is good, nothing to fix)
+- `[x]` Fix Rentals page with inquiry modal
+- `[x]` Expand Wildlife page
+- `[x]` Enhance AR/VR page
+- `[x]` Push Prisma schema to MongoDB (`npx prisma db push`)
+- `[/]` Seed the MongoDB database (`npm run seed`), is good)
+- `[x]` Populate Tourist dashboard
+- `[x]` Populate Admin dashboard

@@ -1,28 +1,13 @@
 'use client'
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Calendar, User, Eye, ArrowLeft, Clock } from 'lucide-react'
+import { blogs as allBlogs } from '@/lib/data'
 
-const mockBlogs: Record<string, any> = {
-  'spiritual-dawn-southern-tip': {
-    id: '1',
-    slug: 'spiritual-dawn-southern-tip',
-    titleEn: 'A Spiritual Dawn at the Southern Tip',
-    titleTa: 'தென்கோடி முனையில் ஒரு ஆன்மீக விடியல்',
-    contentEn: 'Watching the sunrise from where three oceans converge was a transformative experience. The colors painted across the sky at Kanyakumari Beach made every early morning wake-up call worthwhile. As the first rays hit the Vivekananda Rock Memorial, a wave of serenity swept over the gathered crowd. It is easy to see why Swami Vivekananda chose this specific rock for his meditation in 1892; the sheer raw power of the ocean meeting the absolute stillness of the rock creates a sacred atmosphere unlike anywhere else on earth.',
-    contentTa: 'மூன்று கடல்கள் சங்கமிக்கும் இடத்திலிருந்து சூரிய உதயத்தைப் பார்ப்பது ஒரு புதிய அனுபவமாக இருந்தது. கன்னியாகுமரி கடற்கரையில் வானத்தில் வரையப்பட்ட வண்ணங்கள் அதிகாலையில் எழுந்ததற்கு முற்றிலும் தகுதியானதாக இருந்தது. விவேகானந்தர் பாறை நினைவகத்தின் மீது முதல் ஒளிக்கதிர்கள் படும்போது, கூடியிருந்த மக்களிடையே ஒரு அமைதி அலை பரவியது.',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=500&fit=crop',
-    category: 'TRAVEL_STORY',
-    publishedAt: '2026-07-16',
-    viewCount: 154
-  }
-}
-
-export default function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params)
-  const { slug } = resolvedParams
+export default function BlogDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const [blog, setBlog] = useState<any>(null)
 
   useEffect(() => {
@@ -32,11 +17,13 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
         if (data && !data.error) {
           setBlog(data)
         } else {
-          setBlog(mockBlogs[slug] || mockBlogs['spiritual-dawn-southern-tip'])
+          const found = allBlogs.find(b => b.slug === slug)
+          setBlog(found || allBlogs[0])
         }
       })
       .catch(() => {
-        setBlog(mockBlogs[slug] || mockBlogs['spiritual-dawn-southern-tip'])
+        const found = allBlogs.find(b => b.slug === slug)
+        setBlog(found || allBlogs[0])
       })
   }, [slug])
 

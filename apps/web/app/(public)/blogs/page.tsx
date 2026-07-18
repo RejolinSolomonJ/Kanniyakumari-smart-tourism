@@ -4,34 +4,17 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Calendar, User, Clock, ArrowRight } from 'lucide-react'
-
-const mockBlogs = [
-  {
-    id: '1',
-    slug: 'spiritual-dawn-southern-tip',
-    titleEn: 'A Spiritual Dawn at the Southern Tip',
-    titleTa: 'தென்கோடி முனையில் ஒரு ஆன்மீக விடியல்',
-    excerpt: 'Watching the sunrise from Kanyakumari Beach is a lifetime experience.',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
-    category: 'TRAVEL_STORY',
-    publishedAt: '2026-07-16',
-    viewCount: 154
-  }
-]
+import { blogs as allBlogs } from '@/lib/data'
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState(mockBlogs)
+  const [blogs, setBlogs] = useState(allBlogs)
+  const [activeCategory, setActiveCategory] = useState('ALL')
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/blogs')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setBlogs(data)
-        }
-      })
-      .catch(() => console.log('Using mock blogs.'))
-  }, [])
+  const categories = ['ALL', 'TRAVEL_STORY', 'HISTORY', 'CULTURE', 'FOOD', 'GUIDE']
+
+  const filteredBlogs = activeCategory === 'ALL' 
+    ? blogs 
+    : blogs.filter(b => b.category === activeCategory)
 
   return (
     <div className="pt-24 min-h-screen bg-granite-50 pb-16">
@@ -46,9 +29,26 @@ export default function BlogsPage() {
           </p>
         </div>
 
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 rounded-full border text-body-sm font-semibold transition-all ${
+                activeCategory === cat
+                  ? 'bg-ocean border-ocean text-white'
+                  : 'bg-white border-granite-200 text-granite-600 hover:border-granite-300'
+              }`}
+            >
+              {cat === 'ALL' ? 'All Stories' : cat.replace('_', ' ').charAt(0) + cat.replace('_', ' ').slice(1).toLowerCase()}
+            </button>
+          ))}
+        </div>
+
         {/* Blog listing */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogs.map(blog => (
+          {filteredBlogs.map(blog => (
             <div key={blog.id} className="bg-white rounded-2xl overflow-hidden shadow-card border border-granite-100 flex flex-col justify-between group">
               <div>
                 <img

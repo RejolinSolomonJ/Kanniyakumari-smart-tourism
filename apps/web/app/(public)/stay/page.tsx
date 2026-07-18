@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Star, Phone, Globe, ShieldCheck } from 'lucide-react'
+import { MapPin, Star, Phone, Globe, ShieldCheck, X } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
+import { hotels as allHotels } from '@/lib/data'
 
 const mockHotels = [
   {
@@ -42,7 +43,13 @@ const mockHotels = [
 ]
 
 export default function StayPage() {
-  const [hotels, setHotels] = useState(mockHotels)
+  const [hotels, setHotels] = useState(allHotels)
+  const [bookingHotel, setBookingHotel] = useState<any>(null)
+  const [bookingName, setBookingName] = useState('')
+  const [bookingPhone, setBookingPhone] = useState('')
+  const [bookingDate, setBookingDate] = useState('')
+  const [bookingNights, setBookingNights] = useState(1)
+  const [bookingSubmitted, setBookingSubmitted] = useState(false)
   const [activeType, setActiveType] = useState('ALL')
 
   useEffect(() => {
@@ -55,6 +62,30 @@ export default function StayPage() {
       })
       .catch(() => console.log('Using mock hotels data.'))
   }, [])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!bookingHotel) return
+
+    const bookingId = 'BK-HTL-' + Math.floor(1000 + Math.random() * 9000);
+    const localBooking = {
+      id: bookingId,
+      type: 'hotel',
+      status: 'CONFIRMED',
+      hotelName: bookingHotel.nameEn,
+      name: bookingName,
+      phone: bookingPhone,
+      checkInDate: bookingDate,
+      nights: bookingNights,
+      totalAmount: bookingHotel.pricePerNight * bookingNights,
+      createdAt: new Date().toISOString(),
+      qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_${bookingHotel.id}`
+    };
+    const existing = JSON.parse(localStorage.getItem('local_bookings') || '[]');
+    localStorage.setItem('local_bookings', JSON.stringify([localBooking, ...existing]));
+
+    setBookingSubmitted(true)
+  }
 
   const filteredHotels = hotels.filter(h => activeType === 'ALL' || h.type === activeType)
 
@@ -143,7 +174,7 @@ export default function StayPage() {
                   <span className="text-body-lg font-bold text-granite-900">{formatCurrency(hotel.pricePerNight)}<span className="text-caption font-normal">/night</span></span>
                 </div>
                 <button
-                  onClick={() => alert('Direct booking integration will be live in Pilot Phase 1')}
+                  onClick={() => { setBookingHotel(hotel); setBookingSubmitted(false); setBookingName(''); setBookingPhone(''); }}
                   className="btn-gold py-2 px-5 text-body-sm font-semibold"
                 >
                   Book Stay
@@ -153,6 +184,58 @@ export default function StayPage() {
             </div>
           ))}
         </div>
+
+        {/* Booking Modal */}
+        {bookingHotel && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-lg border space-y-5">
+              <div className="flex justify-between items-start border-b border-granite-100 pb-3">
+                <div>
+                  <h3 className="font-serif text-heading text-granite-800">Book {bookingHotel.nameEn}</h3>
+                  <p className="text-caption text-granite-500">{formatCurrency(bookingHotel.pricePerNight)}/night</p>
+                </div>
+                <button onClick={() => setBookingHotel(null)} className="text-granite-400 hover:text-granite-600"><X className="w-5 h-5" /></button>
+              </div>
+
+              {bookingSubmitted ? (
+                <div className="text-center py-6 space-y-3">
+                  <div className="w-12 h-12 bg-sea-50 rounded-full flex items-center justify-center mx-auto text-sea"><ShieldCheck className="w-8 h-8" /></div>
+                  <h4 className="font-serif text-heading-sm text-granite-900">Inquiry Submitted!</h4>
+                  <p className="text-body-sm text-granite-500">Your booking inquiry for {bookingHotel.nameEn} has been recorded. You will receive a confirmation call shortly.</p>
+                  <button onClick={() => setBookingHotel(null)} className="btn-primary w-full py-2.5">Close</button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-caption font-semibold text-granite-600 mb-1">Full Name</label>
+                    <input type="text" required placeholder="Your name" className="input-field" value={bookingName} onChange={(e) => setBookingName(e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="block text-caption font-semibold text-granite-600 mb-1">Phone Number</label>
+                    <input type="tel" required placeholder="10-digit mobile" className="input-field" value={bookingPhone} onChange={(e) => setBookingPhone(e.target.value)} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-caption font-semibold text-granite-600 mb-1">Check-in Date</label>
+                      <input type="date" required min={new Date().toISOString().split('T')[0]} className="input-field" value={bookingDate} onChange={(e) => setBookingDate(e.target.value)} />
+                    </div>
+                    <div>
+                      <label className="block text-caption font-semibold text-granite-600 mb-1">Nights</label>
+                      <select className="input-field" value={bookingNights} onChange={(e) => setBookingNights(Number(e.target.value))}>
+                        {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n} Night{n > 1 ? 's' : ''}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="bg-granite-50 p-3 rounded-xl text-center">
+                    <span className="text-caption text-granite-500">Estimated Total: </span>
+                    <span className="font-bold text-granite-900">{formatCurrency(bookingHotel.pricePerNight * bookingNights)}</span>
+                  </div>
+                  <button type="submit" className="btn-gold w-full py-3 text-body-sm font-bold">Submit Booking Inquiry</button>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
