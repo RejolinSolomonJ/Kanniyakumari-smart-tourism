@@ -141,7 +141,7 @@ function ExplorePageContent() {
 
         {/* Category Explorer */}
         <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
-          <CategoryExplorer />
+          <CategoryExplorer hideHeader={true} />
         </div>
 
         {/* Filters Panel */}
