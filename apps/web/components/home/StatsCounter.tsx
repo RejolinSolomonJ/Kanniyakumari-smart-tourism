@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { MapPin, Users, Clock, Maximize, Compass, Ticket, Hotel, AlertTriangle, Headset, Volume2, VolumeX } from 'lucide-react'
+import { MapPin, Users, Clock, Maximize, Sparkles, Ticket, Hotel, Headset, Landmark, Mountain, Volume2, VolumeX } from 'lucide-react'
 import Link from 'next/link'
 
 const stats = [
@@ -13,11 +13,12 @@ const stats = [
 ]
 
 const actions = [
-  { icon: Compass,       label: 'Plan Trip',    href: '/plan',             bg: 'from-blue-600 to-blue-800' },
-  { icon: Ticket,        label: 'Book Tickets', href: '/bookings/tickets', bg: 'from-amber-500 to-yellow-700' },
-  { icon: Hotel,         label: 'Find Hotels',  href: '/stay',             bg: 'from-teal-500 to-teal-700' },
-  { icon: AlertTriangle, label: 'Emergency',    href: '/emergency',        bg: 'from-red-500 to-red-700' },
-  { icon: Headset,       label: 'AR / VR',      href: '/ar-vr',            bg: 'from-orange-500 to-red-600' },
+  { icon: Sparkles,  label: 'AI Trip Plan',    href: '/plan',             bg: 'from-violet-600 to-purple-800' },
+  { icon: Ticket,    label: 'Book Tickets',    href: '/bookings/tickets', bg: 'from-amber-500 to-yellow-700' },
+  { icon: Hotel,     label: 'Find Hotels',     href: '/stay',             bg: 'from-teal-500 to-teal-700' },
+  { icon: Landmark,  label: 'Religious Tour',  href: '/religious',        bg: 'from-yellow-600 to-orange-700' },
+  { icon: Mountain,  label: 'Adventure',       href: '/explore',          bg: 'from-green-600 to-emerald-800' },
+  { icon: Headset,   label: 'AR / VR',         href: '/ar-vr',            bg: 'from-orange-500 to-red-600' },
 ]
 
 function AnimatedCounter({ target, suffix, inView }: { target: number; suffix: string; inView: boolean }) {
