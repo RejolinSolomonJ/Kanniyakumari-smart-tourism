@@ -69,8 +69,11 @@ export default function WildlifePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group relative h-80 rounded-2xl overflow-hidden cursor-pointer"
+              className={`group relative h-80 rounded-2xl overflow-hidden ${zone.status !== 'Restricted' ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             >
+              {zone.status !== 'Restricted' && (
+                <Link href={zone.status === 'Pass Required' ? '/bookings/tickets' : '/explore'} className="absolute inset-0 z-20" />
+              )}
               <img 
                 src={zone.image} 
                 alt={zone.name}
@@ -78,7 +81,7 @@ export default function WildlifePage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
               
-              <div className="absolute top-4 right-4">
+              <div className="absolute top-4 right-4 z-10">
                 <span className={`px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md border ${
                   zone.status === 'Open' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' :
                   zone.status === 'Restricted' ? 'bg-rose-500/20 text-rose-300 border-rose-500/30' :
@@ -88,11 +91,11 @@ export default function WildlifePage() {
                 </span>
               </div>
 
-              <div className="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300 group-hover:-translate-y-4">
+              <div className="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300 group-hover:-translate-y-4 z-10">
                 <p className="text-emerald-400 font-bold text-sm mb-1">{zone.type}</p>
                 <h3 className="font-serif text-white text-2xl font-bold mb-3">{zone.name}</h3>
                 <div className="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-gold transition-colors">
-                  {zone.action} <ArrowRight className="w-4 h-4" />
+                  {(zone as any).action} {zone.status !== 'Restricted' && <ArrowRight className="w-4 h-4" />}
                 </div>
               </div>
             </motion.div>
