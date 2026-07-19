@@ -66,15 +66,7 @@ export default function RegisterPage() {
       }
     } catch (err) {
       console.error(err)
-      setAuth({
-        id: 'google-sim-1002',
-        name: 'Google Explorer',
-        email: email || 'googleuser@example.com',
-        role: 'TOURIST',
-        language: 'en',
-        isVerified: true
-      }, 'simulated_jwt_token')
-      window.location.href = '/'
+      alert('Connecting to the secure server (this may take up to 50 seconds if the server is waking up). Please try clicking again!')
     } finally {
       setIsLoading(false)
     }
