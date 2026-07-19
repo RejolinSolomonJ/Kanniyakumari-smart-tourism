@@ -186,7 +186,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="/images/rural/Vaikundam Rubber Plantation & Estate.jpg" 
+                src="/images/rural/cover/FARMS, PLANTATIONS & ESTATES.jpg" 
                 alt="Agri-Tourism"
                 className="w-full h-full object-cover"
               />
@@ -219,7 +219,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="/images/rural/Thovalai Flower Market.jpg" 
+                src="/images/rural/cover/Rural Villages & Local Crafts.jpg" 
                 alt="Rural Villages"
                 className="w-full h-full object-cover"
               />
@@ -252,7 +252,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="/images/rural/Mathur Aqueduct Village Walk.jpg" 
+                src="/images/rural/cover/CANALS & WINDMILLS.jpg" 
                 alt="Countryside Walks"
                 className="w-full h-full object-cover"
               />
