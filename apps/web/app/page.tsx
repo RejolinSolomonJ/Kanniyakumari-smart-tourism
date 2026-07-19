@@ -15,9 +15,9 @@ export default function HomePage() {
   return (
     <>
       <HeroVideo />
+      <FeaturedDestinations />
       <StatsCounter />
       <QuickActions />
-      <FeaturedDestinations />
       <TimelessTreasures />
       <FoodTrails />
       <FestivalCalendar />

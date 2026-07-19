@@ -20,6 +20,7 @@ const listings = {
     items: [
       {
         name: "Anantya Wellness Retreat",
+        image: "/images/medical/Anantya Wellness Retreat.jpg",
         location: "Chittar Lake, Kaliyal, Kanyakumari District",
         hours: "Open 24 hours (Reservations Required)",
         phone: "+91 4651 211111",
@@ -28,6 +29,7 @@ const listings = {
       },
       {
         name: "Vivekananda Kendra Spiritual Retreat",
+        image: "/images/medical/Vivekananda Kendra Spiritual Retreat.jpg",
         location: "Vivekanandapuram, Kanyakumari",
         hours: "06:00 AM - 08:00 PM",
         phone: "+91 4652 247012",
@@ -36,6 +38,7 @@ const listings = {
       },
       {
         name: "Santhigiri Ashram Wellness Center",
+        image: "/images/medical/Santhigiri Ashram Wellness Center.jpg",
         location: "Leepuram Beach Road, Kanyakumari",
         hours: "08:00 AM - 06:00 PM",
         phone: "+91 4652 246990",
@@ -55,6 +58,7 @@ const listings = {
     items: [
       {
         name: "Sudha Saseendran Siddha Hospital",
+        image: "/images/medical/Sudha Saseendran Siddha Hospital.jpg",
         location: "Mecode Vaidhyasalai, near Marthandam",
         hours: "09:00 AM - 05:00 PM",
         phone: "+91 4651 270258",
@@ -63,6 +67,7 @@ const listings = {
       },
       {
         name: "Golden Leaf Siddha and Ayurveda Hospital",
+        image: "/images/medical/Golden Leaf Siddha and Ayurveda Hospital.jpg",
         location: "Allumoodu, Nagercoil",
         hours: "09:00 AM - 08:00 PM",
         phone: "+91 94431 35002",
@@ -71,6 +76,7 @@ const listings = {
       },
       {
         name: "Kumari Ayurvedic Resort & Healing Center",
+        image: "/images/medical/Kumari Ayurvedic Resort & Healing Center.jpg",
         location: "Chunkankadai, Nagercoil",
         hours: "08:30 AM - 06:30 PM",
         phone: "+91 4652 230154",
@@ -90,6 +96,7 @@ const listings = {
     items: [
       {
         name: "Govt. Kanyakumari Medical College Hospital",
+        image: "/images/medical/Govt. Kanyakumari Medical College Hospital.jpg",
         location: "Asaripallam, Nagercoil",
         hours: "Emergency Care 24/7",
         phone: "04652-223201",
@@ -98,6 +105,7 @@ const listings = {
       },
       {
         name: "Holy Cross Multi-Specialty Hospital",
+        image: "/images/medical/Holy Cross Multi-Specialty Hospital.jpg",
         location: "Holy Cross College Road, Nagercoil",
         hours: "Emergency Care 24/7",
         phone: "+91 4652 230681",
@@ -106,6 +114,7 @@ const listings = {
       },
       {
         name: "Sree Mookambika Institute of Medical Sciences",
+        image: "/images/medical/Sree Mookambika Institute of Medical Sciences.jpg",
         location: "Kulasekharam, Kanyakumari District",
         hours: "Emergency Care 24/7",
         phone: "+91 4651 280742",
@@ -223,7 +232,7 @@ export default function MedicalWellnessPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1611073123048-388a174f7474?w=600&auto=format&fit=crop" 
+                src="/images/medical/sidhha ayurvedha.jpg" 
                 alt="Siddha & Ayurveda"
                 className="w-full h-full object-cover"
               />
@@ -310,64 +319,75 @@ export default function MedicalWellnessPage() {
                 {currentCategory.items.map((item, index) => (
                   <div 
                     key={index}
-                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-150 shadow-sm flex flex-col justify-between gap-6 hover:shadow-md transition-shadow"
+                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-150 shadow-sm flex flex-col md:flex-row gap-8 hover:shadow-md transition-shadow"
                   >
-                    <div className="space-y-4">
-                      {/* Name & Badge */}
-                      <div className="flex justify-between items-start gap-4 flex-wrap">
-                        <h3 className="font-serif text-heading font-bold text-slate-900">
-                          {item.name}
-                        </h3>
-                        <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100 uppercase tracking-wide">
-                          {activeCategory === 'retreats' ? 'Retreat Campus' : activeCategory === 'siddha' ? 'Healing Center' : 'Tertiary Care'}
-                        </span>
+                    {item.image && (
+                      <div className="w-full md:w-1/3 h-48 md:h-auto rounded-xl overflow-hidden shrink-0">
+                        <img 
+                          src={item.image} 
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-
-                      {/* Description */}
-                      <p className="text-body-sm text-slate-600 leading-relaxed">
-                        {item.description}
-                      </p>
-
-                      {/* Highlights / Features */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {item.features.map((feat, fIdx) => (
-                          <span 
-                            key={fIdx}
-                            className={`px-3 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1 bg-slate-50 text-slate-600 border border-slate-150`}
-                          >
-                            <CheckCircle className="w-3 h-3 text-slate-400" />
-                            {feat}
+                    )}
+                    <div className="flex-1 flex flex-col justify-between gap-6">
+                      <div className="space-y-4">
+                        {/* Name & Badge */}
+                        <div className="flex justify-between items-start gap-4 flex-wrap">
+                          <h3 className="font-serif text-heading font-bold text-slate-900">
+                            {item.name}
+                          </h3>
+                          <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100 uppercase tracking-wide">
+                            {activeCategory === 'retreats' ? 'Retreat Campus' : activeCategory === 'siddha' ? 'Healing Center' : 'Tertiary Care'}
                           </span>
-                        ))}
+                        </div>
+  
+                        {/* Description */}
+                        <p className="text-body-sm text-slate-600 leading-relaxed">
+                          {item.description}
+                        </p>
+  
+                        {/* Highlights / Features */}
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {item.features.map((feat, fIdx) => (
+                            <span 
+                              key={fIdx}
+                              className={`px-3 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1 bg-slate-50 text-slate-600 border border-slate-150`}
+                            >
+                              <CheckCircle className="w-3 h-3 text-slate-400" />
+                              {feat}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Metadata and Directions Actions */}
-                    <div className="border-t border-slate-100 pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div className="flex flex-wrap gap-6 text-caption text-slate-400 font-semibold">
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="w-4 h-4 text-ocean" />
-                          {item.location}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-4 h-4 text-gold" />
-                          {item.hours}
-                        </span>
-                        <a href={`tel:${item.phone.replace(/[^+\d]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-600 transition-colors">
-                          <Phone className="w-4 h-4 text-slate-400" />
-                          {item.phone}
+  
+                      {/* Metadata and Directions Actions */}
+                      <div className="border-t border-slate-100 pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex flex-wrap gap-6 text-caption text-slate-400 font-semibold">
+                          <span className="flex items-center gap-1.5">
+                            <MapPin className="w-4 h-4 text-ocean" />
+                            {item.location}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="w-4 h-4 text-gold" />
+                            {item.hours}
+                          </span>
+                          <a href={`tel:${item.phone.replace(/[^+\d]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-600 transition-colors">
+                            <Phone className="w-4 h-4 text-slate-400" />
+                            {item.phone}
+                          </a>
+                        </div>
+  
+                        <a 
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.name + ', Kanyakumari')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 rounded-xl bg-ocean hover:bg-ocean-700 text-white font-bold text-body-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer self-start md:self-auto"
+                          title="Get directions to the center"
+                        >
+                          <MapPin className="w-4 h-4" /> Get Directions
                         </a>
                       </div>
-
-                      <a 
-                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.name + ', Kanyakumari')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-ocean hover:bg-ocean-700 text-white font-bold text-body-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer self-start md:self-auto"
-                        title="Get directions to the center"
-                      >
-                        <MapPin className="w-4 h-4" /> Get Directions
-                      </a>
                     </div>
                   </div>
                 ))}

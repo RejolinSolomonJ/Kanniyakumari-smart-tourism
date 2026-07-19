@@ -22,7 +22,7 @@ const treasures = [
   {
     title: 'Wellness & Medical Tourism',
     desc: 'Rejuvenate your mind and body with world-class healthcare, traditional Siddha medicine, and peaceful yoga retreats.',
-    image: '/images/explore',
+    image: '/images/medical_tourism.jpg',
     link: '/medical',
     icon: Activity
   }

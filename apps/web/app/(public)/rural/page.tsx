@@ -15,6 +15,7 @@ const listings = {
     items: [
       {
         name: "Vaikundam Rubber Plantation & Estate",
+        image: "/images/rural/Vaikundam Rubber Plantation & Estate.jpg",
         location: "Vaikundam, Kanyakumari District",
         hours: "09:00 AM - 05:00 PM (Prior Booking Recommended)",
         phone: "+91 4651 230221",
@@ -23,6 +24,7 @@ const listings = {
       },
       {
         name: "Government Horticulture Farm (Pechiparai)",
+        image: "/images/rural/Government Horticulture Farm (Pechiparai).webp",
         location: "Pechiparai Dam Road, Kanyakumari District",
         hours: "09:00 AM - 04:30 PM",
         phone: "+91 4651 281258",
@@ -31,6 +33,7 @@ const listings = {
       },
       {
         name: "Kumari Organic Coconut Groves",
+        image: "/images/rural/Kumari Organic Coconut Groves.jpg",
         location: "Erachakulam Village, near Nagercoil",
         hours: "08:00 AM - 05:00 PM",
         phone: "+91 94421 89001",
@@ -46,6 +49,7 @@ const listings = {
     items: [
       {
         name: "Thovalai Flower Market",
+        image: "/images/rural/Thovalai Flower Market.jpg",
         location: "Thovalai Village (12 km from Nagercoil)",
         hours: "04:00 AM - 09:00 AM (Best morning hours)",
         phone: "+91 94431 82991",
@@ -54,6 +58,7 @@ const listings = {
       },
       {
         name: "Marungoor Coir Making Village",
+        image: "/images/rural/Marungoor Coir Making Village.jpg",
         location: "Marungoor, Kanyakumari",
         hours: "09:00 AM - 05:30 PM",
         phone: "Local Self-Help Cooperative",
@@ -62,6 +67,7 @@ const listings = {
       },
       {
         name: "Suchindram Potter's Quarter",
+        image: "/images/rural/Suchindram Potter's Quarter.jpg",
         location: "Temple Street, Suchindram",
         hours: "09:30 AM - 06:00 PM",
         phone: "Suchindram Pottery Association",
@@ -77,6 +83,7 @@ const listings = {
     items: [
       {
         name: "Mathur Aqueduct Village Walk",
+        image: "/images/rural/Mathur Aqueduct Village Walk.jpg",
         location: "Mathur, near Thiruvattar",
         hours: "07:00 AM - 06:30 PM",
         phone: "Tourist Desk, Mathur",
@@ -85,6 +92,7 @@ const listings = {
       },
       {
         name: "Muppandal Windmill Plains",
+        image: "/images/rural/Muppandal Windmill Plains.jpg",
         location: "Muppandal, Aralvaimozhi Pass",
         hours: "Best visited during sunrise/sunset",
         phone: "Wind Energy Info Office",
@@ -93,6 +101,7 @@ const listings = {
       },
       {
         name: "Pechiparai Canal Trails",
+        image: "/images/rural/Pechiparai Canal Trails.jpg",
         location: "Pechiparai, Kanyakumari",
         hours: "08:00 AM - 05:00 PM",
         phone: "Forest Range Office, Pechiparai",
@@ -177,7 +186,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=600&auto=format&fit=crop" 
+                src="/images/rural/cover/FARMS, PLANTATIONS & ESTATES.jpg" 
                 alt="Agri-Tourism"
                 className="w-full h-full object-cover"
               />
@@ -210,7 +219,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop" 
+                src="/images/rural/cover/Rural Villages & Local Crafts.jpg" 
                 alt="Rural Villages"
                 className="w-full h-full object-cover"
               />
@@ -243,7 +252,7 @@ export default function AgriRuralPage() {
           >
             <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600&auto=format&fit=crop" 
+                src="/images/rural/cover/CANALS & WINDMILLS.jpg" 
                 alt="Countryside Walks"
                 className="w-full h-full object-cover"
               />
@@ -297,66 +306,78 @@ export default function AgriRuralPage() {
                 {currentCategory.items.map((item, index) => (
                   <div 
                     key={index}
-                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-150 shadow-sm flex flex-col justify-between gap-6 hover:shadow-md transition-shadow"
+                    className="bg-white rounded-2xl p-6 md:p-8 border border-slate-150 shadow-sm flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow"
                   >
-                    <div className="space-y-4">
-                      {/* Name & Badge */}
-                      <div className="flex justify-between items-start gap-4 flex-wrap">
-                        <h3 className="font-serif text-heading font-bold text-slate-900">
-                          {item.name}
-                        </h3>
-                        <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100 uppercase tracking-wide">
-                          {activeCategory === 'farms' ? 'Agro Site' : activeCategory === 'villages' ? 'Heritage Trade' : 'Hiking Path'}
-                        </span>
+                    {item.image && (
+                      <div className="w-full md:w-64 lg:w-72 h-52 md:h-auto rounded-xl overflow-hidden shrink-0 relative bg-slate-100 group">
+                        <img 
+                          src={item.image} 
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                       </div>
+                    )}
 
-                      {/* Description */}
-                      <p className="text-body-sm text-slate-600 leading-relaxed">
-                        {item.description}
-                      </p>
-
-                      {/* Highlights / Features */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {item.features.map((feat, fIdx) => (
-                          <span 
-                            key={fIdx}
-                            className={`px-3 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1 bg-slate-50 text-slate-600 border border-slate-150`}
-                          >
-                            <CheckCircle className="w-3 h-3 text-slate-400" />
-                            {feat}
+                    <div className="flex-1 flex flex-col justify-between gap-6">
+                      <div className="space-y-4">
+                        {/* Name & Badge */}
+                        <div className="flex justify-between items-start gap-4 flex-wrap">
+                          <h3 className="font-serif text-heading font-bold text-slate-900">
+                            {item.name}
+                          </h3>
+                          <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100 uppercase tracking-wide shrink-0">
+                            {activeCategory === 'farms' ? 'Agro Site' : activeCategory === 'villages' ? 'Heritage Trade' : 'Hiking Path'}
                           </span>
-                        ))}
-                      </div>
-                    </div>
+                        </div>
 
-                    {/* Metadata and Directions Actions */}
-                    <div className="border-t border-slate-100 pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                      <div className="flex flex-wrap gap-6 text-caption text-slate-400 font-semibold">
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="w-4 h-4 text-ocean" />
-                          {item.location}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-4 h-4 text-gold" />
-                          {item.hours}
-                        </span>
-                        {item.phone !== 'Local Self-Help Cooperative' && item.phone !== 'Suchindram Pottery Association' && item.phone !== 'Tourist Desk, Mathur' && item.phone !== 'Wind Energy Info Office' && item.phone !== 'Forest Range Office, Pechiparai' && (
-                          <a href={`tel:${item.phone.replace(/[^+\d]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-600 transition-colors">
-                            <Phone className="w-4 h-4 text-slate-400" />
-                            {item.phone}
-                          </a>
-                        )}
+                        {/* Description */}
+                        <p className="text-body-sm text-slate-600 leading-relaxed">
+                          {item.description}
+                        </p>
+
+                        {/* Highlights / Features */}
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {item.features.map((feat, fIdx) => (
+                            <span 
+                              key={fIdx}
+                              className={`px-3 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1 bg-slate-50 text-slate-600 border border-slate-150`}
+                            >
+                              <CheckCircle className="w-3 h-3 text-slate-400" />
+                              {feat}
+                            </span>
+                          ))}
+                        </div>
                       </div>
 
-                      <a 
-                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.name + ', Kanyakumari')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-ocean hover:bg-ocean-700 text-white font-bold text-body-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer self-start md:self-auto"
-                        title="Get directions to the center"
-                      >
-                        <MapPin className="w-4 h-4" /> Get Directions
-                      </a>
+                      {/* Metadata and Directions Actions */}
+                      <div className="border-t border-slate-100 pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex flex-wrap gap-6 text-caption text-slate-400 font-semibold">
+                          <span className="flex items-center gap-1.5">
+                            <MapPin className="w-4 h-4 text-ocean" />
+                            {item.location}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Clock className="w-4 h-4 text-gold" />
+                            {item.hours}
+                          </span>
+                          {item.phone !== 'Local Self-Help Cooperative' && item.phone !== 'Suchindram Pottery Association' && item.phone !== 'Tourist Desk, Mathur' && item.phone !== 'Wind Energy Info Office' && item.phone !== 'Forest Range Office, Pechiparai' && (
+                            <a href={`tel:${item.phone.replace(/[^+\d]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-600 transition-colors">
+                              <Phone className="w-4 h-4 text-slate-400" />
+                              {item.phone}
+                            </a>
+                          )}
+                        </div>
+
+                        <a 
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(item.name + ', Kanyakumari')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2.5 rounded-xl bg-ocean hover:bg-ocean-700 text-white font-bold text-body-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer self-start md:self-auto shrink-0"
+                          title="Get directions to the center"
+                        >
+                          <MapPin className="w-4 h-4" /> Get Directions
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ))}
