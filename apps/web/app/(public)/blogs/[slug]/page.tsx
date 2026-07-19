@@ -11,7 +11,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
   const [blog, setBlog] = useState<any>(null)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${slug}`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api'}/blogs/${slug}`)
       .then(res => res.json())
       .then(data => {
         if (data && !data.error) {

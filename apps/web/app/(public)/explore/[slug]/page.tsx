@@ -33,7 +33,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
   useEffect(() => {
     // Attempt local API fetch
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations/${slug}`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api'}/destinations/${slug}`)
       .then(res => res.json())
       .then(data => {
         if (data && !data.error) {
@@ -106,7 +106,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
         ticketsArray.push({ type: 'PARKING_BIKE', quantity: bikeQty, unitPrice: bikePrice })
       }
 
-      const bookingRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings/ticket/create`, {
+      const bookingRes = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api'}/bookings/ticket/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       }
 
       // Order creation
-      const orderRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/create-order`, {
+      const orderRes = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api'}/payments/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       const orderData = await orderRes.json()
 
       // Pilot Stage: Auto-Verify payment simulation
-      const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/verify`, {
+      const verifyRes = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api'}/payments/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
