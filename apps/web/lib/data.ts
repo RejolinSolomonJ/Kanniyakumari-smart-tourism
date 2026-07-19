@@ -1419,28 +1419,60 @@ export const galleryVideos = [
 // ─── WILDLIFE ZONES ─────────────────────────────────────────────
 export const wildlifeZones = [
   {
-    name: 'Keeriparai Reserve Forest',
-    type: 'Trekking & Streams',
+    name: 'Kalikesam Eco Zone',
+    type: 'Eco Zone',
+    image: '/images/waterfalls/kalikesam-waterfall.jpg',
+    status: 'Open',
+    action: 'Explore'
+  },
+  {
+    name: 'Keeriparai Eco Camp',
+    type: 'Eco Camp',
     image: '/images/wildlife/Keeriparai Reserve Forest.jpg',
     status: 'Open',
-    description: 'Dense tropical forest with guided stream walks. Home to Indian Bison, Nilgiri Tahr, and over 200 bird species.',
-    species: ['Indian Bison (Gaur)', 'Nilgiri Tahr', 'Lion-tailed Macaque', 'Malabar Giant Squirrel']
+    action: 'Visit'
   },
   {
-    name: 'Maramalai',
-    type: 'Hill Safari',
-    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2070',
+    name: 'Udayagiri Biodiversity Park',
+    type: 'Biodiversity Park',
+    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013',
+    status: 'Open',
+    action: 'Explore'
+  },
+  {
+    name: 'Kothaiyar Twin Falls',
+    type: 'Waterfalls',
+    image: '/images/waterfalls/Kodayar Twin Falls.jpg',
     status: 'Pass Required',
-    description: 'Hill trek through shola grasslands with panoramic Arabian Sea views. Special forest department permit required.',
-    species: ['Asian Elephant', 'Sambar Deer', 'Great Indian Hornbill', 'King Cobra']
+    action: 'Apply for Pass'
   },
   {
-    name: 'Kalikesam',
-    type: 'Waterfalls & Dense Forest',
-    image: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?q=80&w=1887',
+    name: 'Wildlife Sanctuary Buffer Zone',
+    type: 'Buffer Zone',
+    image: 'https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2000',
+    status: 'Permission Required',
+    action: 'Learn More'
+  },
+  {
+    name: 'Core Wildlife Conservation Zone',
+    type: 'Conservation Area',
+    image: 'https://images.unsplash.com/photo-1518182170546-076616fd4025?q=80&w=2070',
     status: 'Restricted',
-    description: 'Pristine waterfall region in the deepest part of the sanctuary. Restricted access for conservation.',
-    species: ['Bengal Tiger (Rare)', 'Indian Leopard', 'Malabar Trogon', 'Sri Lanka Frogmouth']
+    action: 'Conservation Area'
+  },
+  {
+    name: 'Elephant Corridors',
+    type: 'Restricted Corridor',
+    image: 'https://images.unsplash.com/photo-1579737877660-f4728f325d7c?q=80&w=2070',
+    status: 'Restricted',
+    action: 'No Public Entry'
+  },
+  {
+    name: 'Interior Reserve Forests',
+    type: 'Protected Area',
+    image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070',
+    status: 'Restricted',
+    action: 'Protected Area'
   }
 ]
 

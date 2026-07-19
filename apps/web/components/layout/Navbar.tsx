@@ -328,9 +328,6 @@ export default function Navbar() {
                     <Phone className="w-3.5 h-3.5" /> Emergency
                   </Link>
 
-                  <button className="p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-all" aria-label="Search">
-                    <Search className="w-5 h-5" />
-                  </button>
 
                   <div id="google_translate_element" className="hidden sm:inline-block"></div>
 

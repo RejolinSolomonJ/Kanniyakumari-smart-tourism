@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Leaf, Map, Camera, ShieldAlert } from 'lucide-react'
+import { Leaf, Map, Camera, ShieldAlert, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { wildlifeZones } from '@/lib/data'
 
@@ -31,14 +31,6 @@ export default function WildlifePage() {
             <p className="text-xl text-white/90 leading-relaxed mb-8">
               A biodiversity hotspot in the Western Ghats. Home to tigers, elephants, and endemic flora. Discover the pristine beauty of India's southernmost forests.
             </p>
-            <div className="flex gap-4">
-              <Link href="/bookings/tickets" className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-600/25">
-                Book Safari Pass
-              </Link>
-              <button className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl transition-all">
-                View Trail Map
-              </button>
-            </div>
           </div>
         </div>
 
@@ -96,9 +88,12 @@ export default function WildlifePage() {
                 </span>
               </div>
 
-              <div className="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300">
+              <div className="absolute bottom-0 left-0 p-6 w-full transform transition-transform duration-300 group-hover:-translate-y-4">
                 <p className="text-emerald-400 font-bold text-sm mb-1">{zone.type}</p>
-                <h3 className="font-serif text-white text-2xl font-bold">{zone.name}</h3>
+                <h3 className="font-serif text-white text-2xl font-bold mb-3">{zone.name}</h3>
+                <div className="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-gold transition-colors">
+                  {zone.action} <ArrowRight className="w-4 h-4" />
+                </div>
               </div>
             </motion.div>
           ))}

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { Megaphone, ArrowRight, Info } from 'lucide-react'
 
 const announcements = [
@@ -11,6 +12,7 @@ const announcements = [
     type: 'Service Update',
     date: 'July 15, 2026',
     isNew: true,
+    link: '/bookings/tickets',
   },
   {
     title: 'Cape Festival 2026 — Registration Open',
@@ -19,6 +21,7 @@ const announcements = [
     type: 'Event',
     date: 'July 10, 2026',
     isNew: true,
+    link: '/events',
   },
 ]
 
@@ -74,25 +77,29 @@ export default function GovernmentAnnouncements() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="p-6 rounded-xl border border-granite-100 hover:border-ocean/20 hover:shadow-card transition-all duration-300 group cursor-pointer"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="badge-ocean text-[11px]">{item.type}</span>
-                {item.isNew && (
-                  <span className="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full animate-pulse">
-                    NEW
-                  </span>
-                )}
-                <span className="text-caption text-granite-400 ml-auto">{item.date}</span>
-              </div>
-              <h3 className="font-semibold text-granite-900 mb-1 group-hover:text-ocean transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-caption text-granite-400 font-tamil mb-2">{item.titleTa}</p>
-              <p className="text-body-sm text-granite-500">{item.content}</p>
-              <div className="mt-3 inline-flex items-center gap-1 text-ocean text-body-sm font-medium group-hover:gap-2 transition-all">
-                Read More <ArrowRight className="w-3.5 h-3.5" />
-              </div>
+              <Link 
+                href={item.link} 
+                className="block p-6 rounded-xl border border-granite-100 hover:border-ocean/20 hover:shadow-card transition-all duration-300 group cursor-pointer h-full"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="badge-ocean text-[11px]">{item.type}</span>
+                  {item.isNew && (
+                    <span className="text-[10px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full animate-pulse">
+                      NEW
+                    </span>
+                  )}
+                  <span className="text-caption text-granite-400 ml-auto">{item.date}</span>
+                </div>
+                <h3 className="font-semibold text-granite-900 mb-1 group-hover:text-ocean transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-caption text-granite-400 font-tamil mb-2">{item.titleTa}</p>
+                <p className="text-body-sm text-granite-500">{item.content}</p>
+                <div className="mt-3 inline-flex items-center gap-1 text-ocean text-body-sm font-medium group-hover:gap-2 transition-all">
+                  Read More <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>

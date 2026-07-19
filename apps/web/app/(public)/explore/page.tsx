@@ -134,7 +134,7 @@ function ExplorePageContent() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    document.getElementById('explore-results')?.scrollIntoView({ behavior: 'smooth' })
                   }
                 }}
               />
@@ -150,7 +150,7 @@ function ExplorePageContent() {
         </div>
 
         {/* Filters Panel */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-12 justify-between items-center bg-white p-4 rounded-2xl border border-granite-100 shadow-sm">
+        <div id="explore-results" className="flex flex-col lg:flex-row gap-6 mb-12 justify-between items-center bg-white p-4 rounded-2xl border border-granite-100 shadow-sm">
           {viewMode !== 'map' ? (
             /* Category Filter Pills */
             <div className="flex-1 overflow-x-auto scrollbar-hide py-2 max-w-full lg:max-w-[70%]">
