@@ -27,10 +27,11 @@ export async function generateTicketQR(payload: {
   quantity: number
 }): Promise<{ qrCode: string; qrCodeUrl: string }> {
   
-  const data = Buffer.from(JSON.stringify(payload)).toString('base64')
+  // Encode just the ticketId to make the QR code extremely fast and easy to scan
+  const data = payload.ticketId
   
   const qrBuffer = await QRCode.toBuffer(data, {
-    errorCorrectionLevel: 'H',
+    errorCorrectionLevel: 'M',
     width: 400,
     margin: 2,
     color: { dark: '#0B4F8A', light: '#FFFFFF' }
