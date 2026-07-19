@@ -376,55 +376,12 @@ export default function CRMDashboard() {
       setScanResult(data)
       fetchLogs()
       fetchCheckerStats()
-    } catch {
-      // Simulation mode if backend fails
-      setTimeout(() => {
-        // Mock restriction logic
-        if (checkerStats && checkerStats.hasAssignedGate && code.includes('rock')) {
-          setScanResult({
-            valid: false,
-            message: `Authorized Location Conflict. This ticket is for "Vivekananda Rock Memorial". You are only assigned to validate entries at "${checkerStats.destinationName}".`
-          })
-        } else if (code.includes('fail') || code.length < 5) {
-          setScanResult({
-            valid: false,
-            message: 'Invalid ticket payload. Code does not correspond to any active booking.'
-          })
-        } else {
-          setScanResult({
-            valid: true,
-            message: 'Ticket scanned successfully. Access granted.',
-            ticketDetails: {
-              id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
-              destination: checkerStats?.hasAssignedGate ? checkerStats.destinationName : 'Padmanabhapuram Palace',
-              visitorName: 'Naveen Kumar',
-              ticketType: 'ADULT',
-              quantity: 3,
-              visitDate: new Date()
-            }
-          })
-          
-          setScanLogs(prev => [
-            {
-              id: 'log-' + Math.random(),
-              scannedAt: new Date().toISOString(),
-              destination: { nameEn: checkerStats?.hasAssignedGate ? checkerStats.destinationName : 'Padmanabhapuram Palace' },
-              booking: { user: { name: 'Naveen Kumar' } },
-              ticketType: 'ADULT',
-              quantity: 3
-            },
-            ...prev
-          ])
-          
-          if (checkerStats) {
-            setCheckerStats({
-              ...checkerStats,
-              scannedEntriesToday: checkerStats.scannedEntriesToday + 3
-            })
-          }
-        }
-        setIsValidating(false)
-      }, 1000)
+    } catch (err) {
+      setScanResult({
+        valid: false,
+        message: 'Connection Failed: Could not securely connect to the backend server. Please check your internet connection or try again.'
+      })
+      setIsValidating(false)
       return
     }
     setIsValidating(false)
@@ -1267,6 +1224,12 @@ export default function CRMDashboard() {
                         <span className="opacity-75">Category / Qty:</span>
                         <span>{scanResult.ticketDetails.ticketType} / {scanResult.ticketDetails.quantity} Pax</span>
                       </div>
+                      {scanResult.ticketDetails.timeSlot && (
+                        <div className="flex justify-between border-b border-white/5 pb-1.5">
+                          <span className="opacity-75">Time Slot:</span>
+                          <span className="font-bold text-[#FFD54F]">{scanResult.ticketDetails.timeSlot}</span>
+                        </div>
+                      )}
                     </div>
                   )}
 

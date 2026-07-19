@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Menu, X, Search, ChevronDown, 
@@ -124,10 +125,13 @@ function DropdownMenu({ children }: { children: any[] }) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const pathname = usePathname()
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useUIStore()
   const { isAuthenticated, user, logout } = useAuthStore()
   const [mounted, setMounted] = useState(false)
+
+  const hasDarkHero = pathname === '/' || pathname === '/ar-vr'
+  const isNavbarSolid = scrolled || !hasDarkHero
 
   useEffect(() => {
     setMounted(true)
@@ -163,7 +167,7 @@ export default function Navbar() {
     <>
       {/* ── TOP NAVBAR – full-width dark bar at top of page ── */}
       <AnimatePresence>
-        {!scrolled && (
+        {!isNavbarSolid && (
           <motion.header
             key="top-navbar"
             initial={{ opacity: 0, y: -20 }}
@@ -189,30 +193,21 @@ export default function Navbar() {
                   {pillLinks.map((link) => (
                     <div
                       key={link.label}
-                      className="relative"
-                      onMouseEnter={() => link.children && setActiveDropdown(link.label)}
-                      onMouseLeave={() => setActiveDropdown(null)}
+                      className="relative group py-2"
                     >
                       <Link
                         href={link.href}
                         className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
                       >
                         {link.label}
-                        {link.children && <ChevronDown className="w-3 h-3 opacity-50" />}
+                        {link.children && <ChevronDown className="w-3 h-3 opacity-50 group-hover:rotate-180 transition-transform" />}
                       </Link>
 
-                      <AnimatePresence>
-                        {link.children && activeDropdown === link.label && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 6 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 6 }}
-                            transition={{ duration: 0.15 }}
-                          >
-                            <DropdownMenu children={link.children} />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {link.children && (
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                          <DropdownMenu children={link.children} />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -268,7 +263,7 @@ export default function Navbar() {
 
       {/* ── FULL NAVBAR – appears on scroll ── */}
       <AnimatePresence>
-        {scrolled && (
+        {isNavbarSolid && (
           <motion.header
             key="full-navbar"
             initial={{ opacity: 0, y: -24 }}
@@ -294,27 +289,19 @@ export default function Navbar() {
                   {navLinks.map((link) => (
                     <div
                       key={link.label}
-                      className="relative"
-                      onMouseEnter={() => link.children && setActiveDropdown(link.label)}
-                      onMouseLeave={() => setActiveDropdown(null)}
+                      className="relative group py-2"
                     >
                       <Link
                         href={link.href}
                         className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-700 hover:bg-blue-50 transition-all duration-200"
                       >
                         {link.label}
-                        {link.children && <ChevronDown className="w-3.5 h-3.5 opacity-50" />}
+                        {link.children && <ChevronDown className="w-3.5 h-3.5 opacity-50 group-hover:rotate-180 transition-transform" />}
                       </Link>
 
-                      <AnimatePresence>
-                        {link.children && activeDropdown === link.label && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 8 }}
-                            transition={{ duration: 0.15 }}
-                            className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden py-2 z-50"
-                          >
+                      {link.children && (
+                        <div className="absolute top-[calc(100%-4px)] left-0 mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                          <div className="w-56 bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden py-2">
                             {link.children.map((child: any) => (
                               <Link
                                 key={child.label}
@@ -328,9 +315,9 @@ export default function Navbar() {
                                 )}
                               </Link>
                             ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

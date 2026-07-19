@@ -13,7 +13,8 @@ const ticketBookingSchema = z.object({
   tickets: z.array(z.object({
     type: z.nativeEnum(TicketType),
     quantity: z.number().min(1),
-    unitPrice: z.number()
+    unitPrice: z.number(),
+    timeSlot: z.string().optional()
   }))
 })
 
@@ -66,6 +67,7 @@ bookingsRouter.post('/ticket/create', authenticate, async (req: AuthRequest, res
           unitPrice: t.unitPrice,
           totalPrice: t.quantity * t.unitPrice,
           visitDate: new Date(data.visitDate),
+          timeSlot: t.timeSlot,
           qrCode,
           qrCodeUrl,
         }

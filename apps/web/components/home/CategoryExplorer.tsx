@@ -9,19 +9,21 @@ import {
   ShoppingBag, UtensilsCrossed, BookHeart, Camera 
 } from 'lucide-react'
 
+import { destinations } from '@/lib/data'
+
 const categories = [
-  { key: 'BEACH', label: 'Beaches', icon: Waves, count: 4, color: 'bg-blue-50 text-blue-600' },
-  { key: 'TEMPLE', label: 'Temples', icon: Church, count: 3, color: 'bg-orange-50 text-orange-600' },
-  { key: 'HERITAGE', label: 'Heritage', icon: Landmark, count: 6, color: 'bg-amber-50 text-amber-700' },
-  { key: 'WATERFALL', label: 'Waterfalls', icon: Droplets, count: 2, color: 'bg-cyan-50 text-cyan-600' },
-  { key: 'ADVENTURE', label: 'Adventure', icon: Mountain, count: 1, color: 'bg-green-50 text-green-600' },
-  { key: 'WILDLIFE', label: 'Wildlife', icon: TreePine, count: 1, color: 'bg-emerald-50 text-emerald-600' },
-  { key: 'MUSEUM', label: 'Museums', icon: Building, count: 2, color: 'bg-purple-50 text-purple-600' },
-  { key: 'CULTURE', label: 'Culture', icon: Palette, count: 2, color: 'bg-pink-50 text-pink-600' },
-  { key: 'RELIGIOUS', label: 'Religious', icon: BookHeart, count: 1, color: 'bg-red-50 text-red-600' },
-  { key: 'FOOD', label: 'Food', icon: UtensilsCrossed, count: 3, color: 'bg-yellow-50 text-yellow-700' },
-  { key: 'SHOPPING', label: 'Shopping', icon: ShoppingBag, count: 2, color: 'bg-indigo-50 text-indigo-600' },
-  { key: 'PHOTOGRAPHY', label: 'Photography', icon: Camera, count: 5, color: 'bg-teal-50 text-teal-600' },
+  { key: 'BEACH', label: 'Beaches', icon: Waves, count: destinations.filter(d => d.category === 'BEACH').length, color: 'bg-blue-50 text-blue-600' },
+  { key: 'TEMPLE', label: 'Temples', icon: Church, count: destinations.filter(d => d.category === 'TEMPLE').length, color: 'bg-orange-50 text-orange-600' },
+  { key: 'HERITAGE', label: 'Heritage', icon: Landmark, count: destinations.filter(d => d.category === 'HERITAGE').length, color: 'bg-amber-50 text-amber-700' },
+  { key: 'WATERFALL', label: 'Waterfalls', icon: Droplets, count: destinations.filter(d => d.category === 'WATERFALL').length, color: 'bg-cyan-50 text-cyan-600' },
+  { key: 'ADVENTURE', label: 'Adventure', icon: Mountain, count: destinations.filter(d => d.category === 'ADVENTURE').length, color: 'bg-green-50 text-green-600' },
+  { key: 'WILDLIFE', label: 'Wildlife', icon: TreePine, count: destinations.filter(d => d.category === 'WILDLIFE').length, color: 'bg-emerald-50 text-emerald-600' },
+  { key: 'MUSEUM', label: 'Museums', icon: Building, count: destinations.filter(d => d.category === 'MUSEUM').length, color: 'bg-purple-50 text-purple-600' },
+  { key: 'CULTURE', label: 'Culture', icon: Palette, count: destinations.filter(d => d.category === 'CULTURE').length, color: 'bg-pink-50 text-pink-600' },
+  { key: 'RELIGIOUS', label: 'Religious', icon: BookHeart, count: destinations.filter(d => d.category === 'RELIGIOUS').length, color: 'bg-red-50 text-red-600' },
+  { key: 'FOOD', label: 'Food', icon: UtensilsCrossed, count: destinations.filter(d => d.category === 'FOOD').length, color: 'bg-yellow-50 text-yellow-700' },
+  { key: 'SHOPPING', label: 'Shopping', icon: ShoppingBag, count: destinations.filter(d => d.category === 'SHOPPING').length, color: 'bg-indigo-50 text-indigo-600' },
+  { key: 'PHOTOGRAPHY', label: 'Photography', icon: Camera, count: destinations.filter(d => d.category === 'PHOTOGRAPHY').length, color: 'bg-teal-50 text-teal-600' },
 ]
 
 export default function CategoryExplorer({ hideHeader = false }: { hideHeader?: boolean }) {

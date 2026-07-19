@@ -142,7 +142,7 @@ function ExplorePageContent() {
           </div>
         </div>
 
-      <div className="container-wide">
+      <div id="results-section" className="container-wide">
 
         {/* Category Explorer */}
         <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">

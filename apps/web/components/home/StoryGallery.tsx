@@ -59,7 +59,7 @@ export default function StoryGallery() {
           <video
             ref={videoRef}
             className="w-full h-full absolute inset-0 object-cover"
-            src="/videos/Story.mp4"
+            src="/videos/Storycc.mp4"
             loop
             playsInline
             controls

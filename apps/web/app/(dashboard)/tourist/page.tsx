@@ -578,10 +578,10 @@ export default function TouristDashboard() {
                    {/* Time or Duration */}
                    <div className="space-y-1.5">
                      <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">
-                        {activeTicket.type === 'hotel' ? 'DURATION' : 'TIME'}
+                        {activeTicket.type === 'hotel' ? 'DURATION' : activeTicket.timeSlot ? 'BOARDING SLOT' : 'TIME'}
                      </p>
-                     <p className="font-bold text-base md:text-lg text-granite-900 uppercase">
-                        {activeTicket.type === 'hotel' ? `${activeTicket.nights} NIGHTS` : '09:00 AM'}
+                     <p className={`font-bold text-granite-900 uppercase ${activeTicket.timeSlot ? 'text-xs md:text-sm' : 'text-base md:text-lg'}`}>
+                        {activeTicket.type === 'hotel' ? `${activeTicket.nights} NIGHTS` : activeTicket.timeSlot || '09:00 AM'}
                      </p>
                    </div>
 
@@ -665,12 +665,24 @@ export default function TouristDashboard() {
                </div>
                
                <div className="flex-1 p-4 md:p-6 flex flex-col items-center justify-center space-y-5">
-                  <div className="bg-white p-3 rounded-2xl border border-granite-200 shadow-sm inline-block print:border-none print:shadow-none">
+                  <div className="bg-white p-3 rounded-2xl border border-granite-200 shadow-sm inline-block relative print:border-none print:shadow-none">
                     <img
                       src={activeTicket.qrCodeUrl}
                       alt="Booking QR Code"
-                      className="w-32 h-32 md:w-36 md:h-36 mx-auto mix-blend-multiply"
+                      className={`w-32 h-32 md:w-36 md:h-36 mx-auto mix-blend-multiply ${activeTicket.isScanned ? 'opacity-20' : ''}`}
                     />
+                    {activeTicket.isScanned && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center font-sans">
+                         <div className="transform -rotate-12 border-4 border-[#D32F2F] text-[#D32F2F] font-black text-xl px-2 py-1 rounded shadow-sm bg-white/50">
+                           EXPIRED
+                         </div>
+                         {activeTicket.scannedAt && (
+                           <span className="text-[10px] font-bold text-[#D32F2F] bg-white px-2 mt-2 border border-[#D32F2F] rounded uppercase">
+                             Scanned: {new Date(activeTicket.scannedAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                           </span>
+                         )}
+                      </div>
+                    )}
                   </div>
                   <div className="text-center w-full font-sans">
                     <p className="text-[10px] font-bold text-[#D32F2F] uppercase tracking-widest mb-1.5">SCAN AT ENTRY GATE</p>
