@@ -9,7 +9,7 @@ export default function DownloadsPage() {
   const [downloads, setDownloads] = useState(allDownloads)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/downloads`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/downloads`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
@@ -21,7 +21,7 @@ export default function DownloadsPage() {
 
   const handleDownload = (id: string, fileUrl: string) => {
     // Record download count
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/downloads/${id}/count`, { method: 'POST' })
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/downloads/${id}/count`, { method: 'POST' })
       .then(() => {
         // Increment count locally
         setDownloads(prev =>
@@ -99,3 +99,4 @@ export default function DownloadsPage() {
     </div>
   )
 }
+

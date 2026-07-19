@@ -12,7 +12,7 @@ export default function ComparePage() {
 
   // Fetch real destinations from API if backend is running, otherwise fall back to local lib/data
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/destinations`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
@@ -334,3 +334,4 @@ export default function ComparePage() {
     </div>
   );
 }
+

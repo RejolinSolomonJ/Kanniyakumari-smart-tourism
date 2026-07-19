@@ -53,7 +53,7 @@ export default function ItineraryPlannerPage() {
 
     try {
       const token = localStorage.getItem('auth_token')
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/itinerary`, {
+      const response = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/ai/itinerary`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -818,3 +818,4 @@ Respond ONLY with valid JSON matching this exact structure (no conversational te
     </div>
   )
 }
+

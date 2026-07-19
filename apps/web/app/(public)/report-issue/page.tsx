@@ -32,7 +32,7 @@ export default function ReportIssuePage() {
   const [recentReports, setRecentReports] = useState<any[]>([]);
 
   const fetchRecentReports = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reports/infra/public`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/reports/infra/public`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -60,7 +60,7 @@ export default function ReportIssuePage() {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reports/infra`, {
+      const res = await fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/reports/infra`, {
         method: 'POST',
         headers,
         body: JSON.stringify({
@@ -248,3 +248,4 @@ export default function ReportIssuePage() {
     </div>
   );
 }
+

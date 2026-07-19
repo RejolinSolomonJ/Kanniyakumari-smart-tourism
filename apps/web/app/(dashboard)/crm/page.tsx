@@ -21,6 +21,10 @@ import { Html5Qrcode } from 'html5-qrcode'
 // Curated Sleek HSL Colors
 const COLORS = ['#0B4F8A', '#C9981A', '#10B981', '#8B5CF6', '#EF4444', '#EC4899', '#3B82F6']
 
+
+// Bulletproof API URL Helper
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '').endsWith('/api') ? (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') : (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '') + '/api';
+
 export default function CRMDashboard() {
   const { user, token, setAuth, logout } = useAuthStore()
   const [activeTab, setActiveTab] = useState<'collector' | 'officer' | 'checker'>('collector')
@@ -97,7 +101,7 @@ export default function CRMDashboard() {
     setErrorMessage('')
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -135,21 +139,21 @@ export default function CRMDashboard() {
 
     // 1. Collector view data load
     if (user.role === 'COLLECTOR' || user.role === 'SUPER_ADMIN') {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, {
+      fetch(`${API_BASE}/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (data && !data.error) setCollectorStats(data) })
         .catch(() => console.log('Simulating local Collector stats.'))
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/analytics`, {
+      fetch(`${API_BASE}/admin/analytics`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setCollectorCharts(data) })
         .catch(() => console.log('Simulating local Collector charts.'))
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports`, {
+      fetch(`${API_BASE}/admin/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -157,7 +161,7 @@ export default function CRMDashboard() {
         .catch(() => setInfraReports(getMockInfraReports()))
 
       // Destination Ratings & Sentiment Breakdown
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/stats`)
+      fetch(`${API_BASE}/reviews/stats`)
         .then(res => res.json())
         .then(data => {
           if (Array.isArray(data)) setReviewsSentiment(data)
@@ -165,7 +169,7 @@ export default function CRMDashboard() {
         .catch(() => setReviewsSentiment(getMockReviewsSentiment()))
 
       // Destination-wise Bookings Audit Report
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports`, {
+      fetch(`${API_BASE}/admin/destinations/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -175,28 +179,28 @@ export default function CRMDashboard() {
 
     // 2. Tourism Officer view data load
     if (user.role === 'TOURISM_OFFICER' || user.role === 'SUPER_ADMIN' || user.role === 'COLLECTOR') {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/bookings`, {
+      fetch(`${API_BASE}/admin/bookings`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setBookings(data) })
         .catch(() => setBookings(getMockBookings()))
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reviews/pending`, {
+      fetch(`${API_BASE}/admin/reviews/pending`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setPendingReviews(data) })
         .catch(() => setPendingReviews(getMockPendingReviews()))
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations`, {
+      fetch(`${API_BASE}/admin/destinations`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setDestinations(data) })
         .catch(() => setDestinations(getMockDestinations()))
 
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports`, {
+      fetch(`${API_BASE}/admin/destinations/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -215,7 +219,7 @@ export default function CRMDashboard() {
   // Get ticket checker scan logs
   const fetchLogs = () => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/logs`, {
+    fetch(`${API_BASE}/scanner/logs`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -226,7 +230,7 @@ export default function CRMDashboard() {
   // Get ticket checker workstation stats
   const fetchCheckerStats = () => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/stats`, {
+    fetch(`${API_BASE}/scanner/stats`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -242,7 +246,7 @@ export default function CRMDashboard() {
   // Handle Infrastructure issue resolution
   const handleResolveReport = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/${id}/status`, {
+    fetch(`${API_BASE}/admin/reports/${id}/status`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -262,7 +266,7 @@ export default function CRMDashboard() {
   // Handle Review approvals
   const handleApproveReview = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}/approve`, {
+    fetch(`${API_BASE}/reviews/${id}/approve`, {
       method: 'PUT',
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
@@ -278,7 +282,7 @@ export default function CRMDashboard() {
   // Handle Review rejections
   const handleRejectReview = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}`, {
+    fetch(`${API_BASE}/reviews/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
@@ -296,7 +300,7 @@ export default function CRMDashboard() {
     e.preventDefault()
     const authToken = localStorage.getItem('auth_token') || token
     
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/${editingDest.id}`, {
+    fetch(`${API_BASE}/admin/destinations/${editingDest.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -322,7 +326,7 @@ export default function CRMDashboard() {
     setBreakdownDetails(null)
 
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports/${dest.id}`, {
+    fetch(`${API_BASE}/admin/destinations/reports/${dest.id}`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -364,7 +368,7 @@ export default function CRMDashboard() {
     const authToken = localStorage.getItem('auth_token') || token
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/validate`, {
+      const res = await fetch(`${API_BASE}/scanner/validate`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -380,7 +384,7 @@ export default function CRMDashboard() {
       console.error('Scan error:', err)
       setScanResult({
         valid: false,
-        message: `Connection Failed: ${err.message || 'Unknown network error'}. URL: ${process.env.NEXT_PUBLIC_API_URL}`
+        message: `Connection Failed: ${err.message || 'Unknown network error'}. URL: ${API_BASE}`
       })
       setIsValidating(false)
       return
@@ -1529,3 +1533,4 @@ export default function CRMDashboard() {
     </div>
   )
 }
+

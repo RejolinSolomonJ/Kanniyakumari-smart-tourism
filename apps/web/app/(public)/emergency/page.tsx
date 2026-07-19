@@ -64,7 +64,7 @@ export default function EmergencyPage() {
   const [contacts, setContacts] = useState(allContacts)
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/emergency/contacts`)
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/emergency/contacts`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
@@ -138,3 +138,4 @@ export default function EmergencyPage() {
     </div>
   )
 }
+

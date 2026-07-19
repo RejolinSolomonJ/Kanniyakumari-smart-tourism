@@ -28,7 +28,7 @@ export default function TouristDashboard() {
 
     const localSaved = JSON.parse(localStorage.getItem('local_bookings') || '[]')
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings/user`, {
+    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/bookings/user`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -703,3 +703,4 @@ export default function TouristDashboard() {
     </div>
   )
 }
+
