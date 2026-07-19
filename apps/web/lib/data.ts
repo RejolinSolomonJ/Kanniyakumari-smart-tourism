@@ -1355,18 +1355,18 @@ export const downloads = [
 
 // ─── GALLERY PHOTOS ─────────────────────────────────────────────
 export const galleryPhotos = [
-  { src: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=800', title: 'Vivekananda Rock Memorial', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800', title: 'Thiruvalluvar Statue', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800', title: 'Kanyakumari Beach Sunset', category: 'Beach' },
-  { src: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800', title: 'Padmanabhapuram Palace Murals', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba5854?w=800', title: 'Thirparappu Waterfalls', category: 'Waterfall' },
-  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', title: 'Western Ghats Scenic View', category: 'Nature' },
-  { src: 'https://images.unsplash.com/photo-1476673160081-cf065607f449?w=800', title: 'Golden Sunset over Arabian Sea', category: 'Beach' },
-  { src: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800', title: 'Sothavilai Beach Palm Shore', category: 'Beach' },
-  { src: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800', title: 'Gandhi Memorial at Dusk', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800', title: 'Keeriparai Forest Trail', category: 'Nature' },
-  { src: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=800', title: 'Our Lady of Ransom Church', category: 'Heritage' },
-  { src: 'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800', title: 'Muttom Lighthouse View', category: 'Beach' },
+  { src: '/images/mixed/Vivekananda_Memorial.jpg', title: 'Vivekananda Rock Memorial', category: 'Heritage' },
+  { src: '/images/mixed/thiruvalluvar-statue.jpg', title: 'Thiruvalluvar Statue', category: 'Heritage' },
+  { src: '/images/mixed/kanyakumari-beaches.jpg', title: 'Kanyakumari Beach Sunset', category: 'Beach' },
+  { src: '/images/museums/padmanabhapuram palace museum.jpg', title: 'Padmanabhapuram Palace', category: 'Heritage' },
+  { src: '/images/waterfalls/Thirparappu Falls.jpg', title: 'Thirparappu Waterfalls', category: 'Waterfall' },
+  { src: '/images/adventure/kalikesam maramalai.jpg', title: 'Western Ghats Scenic View', category: 'Nature' },
+  { src: '/images/mixed/sunrise and sunset view point.jpg', title: 'Golden Sunset over Arabian Sea', category: 'Beach' },
+  { src: '/images/mixed/sothavilai_Beach.jpg', title: 'Sothavilai Beach Palm Shore', category: 'Beach' },
+  { src: '/images/mixed/Gandhi-memorial-mandapam.jpg', title: 'Gandhi Memorial at Dusk', category: 'Heritage' },
+  { src: '/images/waterfalls/Keeriparai Forest Cascades.jpg', title: 'Keeriparai Forest Trail', category: 'Nature' },
+  { src: '/images/religious/Our Lady of Ransom Church.jpg', title: 'Our Lady of Ransom Church', category: 'Heritage' },
+  { src: '/images/mixed/Muttom-Point-Lighthouse.jpg', title: 'Muttom Lighthouse View', category: 'Beach' },
 ]
 
 // ─── GALLERY VIDEOS ─────────────────────────────────────────────
