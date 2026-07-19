@@ -37,17 +37,7 @@ function ExplorePageContent() {
     setActiveCategory(categoryParam)
   }, [categoryParam])
 
-  // Fetch real destinations from API if backend is running
-  useEffect(() => {
-    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/destinations`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setDestinations(data)
-        }
-      })
-      .catch(err => console.log('Using fallback mock destinations.'))
-  }, [])
+  // The API fetch has been removed to preserve the beautiful pre-populated mock destinations.
 
   const setViewMode = (mode: 'grid' | 'map') => {
     const params = new URLSearchParams(searchParams.toString())
