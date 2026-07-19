@@ -1227,7 +1227,7 @@ export default function CRMDashboard() {
                       </div>
                       <div className="flex justify-between border-b border-white/5 pb-1.5">
                         <span className="opacity-75">Category / Qty:</span>
-                        <span>{scanResult.ticketDetails.ticketType} / {scanResult.ticketDetails.quantity} Pax</span>
+                        <span>{scanResult.ticketDetails.ticketType} / {scanResult.ticketDetails.quantity} {scanResult.ticketDetails.ticketType.includes('PARKING') || scanResult.ticketDetails.ticketType.includes('CAMERA') ? 'Unit(s)' : 'Pax'}</span>
                       </div>
                       {scanResult.ticketDetails.timeSlot && (
                         <div className="flex justify-between border-b border-white/5 pb-1.5">

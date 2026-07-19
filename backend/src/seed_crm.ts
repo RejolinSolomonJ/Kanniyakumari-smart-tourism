@@ -41,6 +41,27 @@ async function main() {
   })
   console.log(`Created/Updated: ${officer.email} (Role: ${officer.role})`)
 
+  // 3. Ticket Checker (Site Manager) Account
+  const palace = await prisma.destination.findFirst({ where: { nameEn: 'Padmanabhapuram Palace' }})
+  
+  if (palace) {
+    const checker = await prisma.user.upsert({
+      where: { email: 'checker@kanyakumari.gov.in' },
+      update: { passwordHash, role: Role.SITE_MANAGER, destinationId: palace.id },
+      create: {
+        name: 'Palace Gate Checker',
+        email: 'checker@kanyakumari.gov.in',
+        phone: '+910000000003',
+        passwordHash,
+        role: Role.SITE_MANAGER,
+        destinationId: palace.id,
+        provider: Provider.EMAIL,
+        isVerified: true
+      }
+    })
+    console.log(`Created/Updated: ${checker.email} (Role: ${checker.role}, Gate: Palace)`)
+  }
+
   console.log('✅ CRM Accounts Seeded Successfully!')
 }
 
