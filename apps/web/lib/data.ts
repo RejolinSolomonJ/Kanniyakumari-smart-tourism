@@ -1347,10 +1347,10 @@ export const religiousSites = [
 
 // ─── DOWNLOADS ──────────────────────────────────────────────────
 export const downloads = [
-  { id: '1', titleEn: 'Official Kanyakumari Tourist Map', titleTa: 'அதிகாரப்பூர்வ சுற்றுலா வரைபடம்', fileUrl: '#', fileType: 'PDF', category: 'Maps', downloadCount: 420 },
-  { id: '2', titleEn: 'Tamil Nadu Tourism Guide – Kanyakumari Edition', titleTa: 'தமிழ்நாடு சுற்றுலா வழிகாட்டி - கன்னியாகுமரி பதிப்பு', fileUrl: '#', fileType: 'PDF', category: 'Brochures', downloadCount: 185 },
-  { id: '3', titleEn: 'Ferry Schedule & Ticket Rates', titleTa: 'படகு நேர அட்டவணை & கட்டண விகிதங்கள்', fileUrl: '#', fileType: 'PDF', category: 'Schedules', downloadCount: 312 },
-  { id: '4', titleEn: 'Emergency Services Directory', titleTa: 'அவசர சேவைகள் கையேடு', fileUrl: '#', fileType: 'PDF', category: 'Safety', downloadCount: 89 },
+  { id: '1', titleEn: 'Official Kanyakumari Tourist Map', titleTa: 'அதிகாரப்பூர்வ சுற்றுலா வரைபடம்', fileUrl: '/downloads/tourist_map.pdf', fileType: 'PDF', category: 'Maps', downloadCount: 420 },
+  { id: '2', titleEn: 'Tamil Nadu Tourism Guide – Kanyakumari Edition', titleTa: 'தமிழ்நாடு சுற்றுலா வழிகாட்டி - கன்னியாகுமரி பதிப்பு', fileUrl: '/downloads/tourism_guide.pdf', fileType: 'PDF', category: 'Brochures', downloadCount: 185 },
+  { id: '3', titleEn: 'Ferry Schedule & Ticket Rates', titleTa: 'படகு நேர அட்டவணை & கட்டண விகிதங்கள்', fileUrl: '/downloads/ferry_schedule.pdf', fileType: 'PDF', category: 'Schedules', downloadCount: 312 },
+  { id: '4', titleEn: 'Emergency Services Directory', titleTa: 'அவசர சேவைகள் கையேடு', fileUrl: '/downloads/emergency_services.pdf', fileType: 'PDF', category: 'Safety', downloadCount: 89 },
 ]
 
 // ─── GALLERY PHOTOS ─────────────────────────────────────────────
