@@ -376,10 +376,11 @@ export default function CRMDashboard() {
       setScanResult(data)
       fetchLogs()
       fetchCheckerStats()
-    } catch (err) {
+    } catch (err: any) {
+      console.error('Scan error:', err)
       setScanResult({
         valid: false,
-        message: 'Connection Failed: Could not securely connect to the backend server. Please check your internet connection or try again.'
+        message: `Connection Failed: ${err.message || 'Unknown network error'}. URL: ${process.env.NEXT_PUBLIC_API_URL}`
       })
       setIsValidating(false)
       return
