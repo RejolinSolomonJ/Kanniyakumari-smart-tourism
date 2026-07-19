@@ -61,10 +61,14 @@ export default function StayPage() {
         if (Array.isArray(data) && data.length > 0) {
           setHotels(data)
         } else {
-          setHotels([])
+          console.log('API returned empty or error, using mock data.', data)
+          setHotels(mockHotels)
         }
       })
-      .catch(() => console.log('Using mock hotels data.'))
+      .catch((err) => {
+        console.error('Fetch error, using mock data.', err)
+        setHotels(mockHotels)
+      })
       .finally(() => setIsLoading(false))
   }, [activeType])
 
