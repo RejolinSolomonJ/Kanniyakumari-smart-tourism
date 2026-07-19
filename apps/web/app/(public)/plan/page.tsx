@@ -788,6 +788,21 @@ Respond ONLY with valid JSON matching this exact structure (no conversational te
                 </button>
 
                 <button
+                  onClick={() => {
+                    const title = encodeURIComponent(itinerary.title || 'Kanyakumari Trip');
+                    const details = encodeURIComponent(
+                      `Itinerary Summary:\n${itinerary.summary}\n\n` +
+                      itinerary.days.map((d: any) => `Day ${d.day}: ${d.theme}`).join('\n') +
+                      `\n\nLogin to Kanyakumari Smart Tourism to view full details.`
+                    );
+                    window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`, '_blank');
+                  }}
+                  className="w-full py-2.5 flex items-center justify-center gap-2 text-body-sm font-semibold border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
+                >
+                  <Calendar className="w-4 h-4" /> Add to Google Calendar
+                </button>
+
+                <button
                   onClick={() => setStep(1)}
                   className="w-full py-2.5 bg-granite-100 hover:bg-granite-200 text-granite-800 font-semibold rounded-full text-body-sm transition-all"
                 >
