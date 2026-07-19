@@ -219,8 +219,8 @@ export const destinations = [
     nameEn: 'Mathoor Hanging Bridge',
     nameTa: 'மத்தூர் தொங்கு பாலம்',
     category: 'ADVENTURE',
-    heroImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop',
-    images: ['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'],
+    heroImage: '/images/adventure/mathoor hanging bringe.jpg',
+    images: ['/images/adventure/mathoor hanging bringe.jpg'],
     entryFeeAdult: 20,
     entryFeeChild: 10,
     rating: 4.7,
@@ -312,6 +312,233 @@ export const destinations = [
     descriptionTa: 'மேற்குத் தொடர்ச்சி மலையில் அமைந்த அடர்ந்த வெப்பமண்டலக் காடு.',
     nearby: [],
     tips: 'Forest department guide mandatory for treks. Carry water & wear hiking shoes.'
+  },
+  // ─── ADVENTURE DESTINATIONS ──────────────────────────────────────
+  {
+    id: '16',
+    slug: 'injikkadavu-trek',
+    nameEn: 'Injikkadavu Trek',
+    nameTa: 'இஞ்சிக்காடவு நடைபயணம்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/injikkadavu trek.jpeg',
+    images: [
+      '/images/adventure/injikkadavu trek.jpeg',
+    ],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.9,
+    location: 'Kanyakumari Wildlife Sanctuary',
+    lat: 8.3500,
+    lng: 77.3800,
+    openingHours: 'By Forest Dept. Permit Only',
+    descriptionEn: 'One of the toughest and most rewarding official treks in Kanyakumari under the Trek Tamil Nadu program. An ~18 km trail through dense rainforest with river crossings, wildlife sightings, and breathtaking scenery. Government permit and forest guide are mandatory.',
+    descriptionTa: 'கன்னியாகுமரியின் மிகவும் சவாலான மற்றும் சிறப்பான அதிகாரப்பூர்வ நடைபயணம். அரசு அனுமதி மற்றும் வனத்துறை வழிகாட்டி கட்டாயம்.',
+    nearby: ['keeriparai-reserve-forest', 'kalikesam-maramalai-trek'],
+    tips: 'Distance ~18 km | Duration 7–8 hrs. Book permit via Trek Tamil Nadu portal. Forest guide mandatory. Carry water, energy snacks & first-aid kit. Avoid monsoon season.',
+    difficulty: 'Extreme',
+    distance: '~18 km',
+    duration: '7–8 hours',
+    permitRequired: true,
+    guideRequired: true,
+    highlights: ['Dense rainforest', 'Streams & river crossings', 'Wildlife habitat', 'Trek Tamil Nadu official trail']
+  },
+  {
+    id: '17',
+    slug: 'kalikesam-maramalai-trek',
+    nameEn: 'Kalikesam – Maramalai Trek',
+    nameTa: 'காளிகேசம் – மாரமலை நடைபயணம்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/kalikesam maramalai.jpg',
+    images: [
+      '/images/adventure/kalikesam maramalai.jpg',
+    ],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.8,
+    location: 'Kalikesam, Kanyakumari Wildlife Sanctuary',
+    lat: 8.3700,
+    lng: 77.3600,
+    openingHours: 'By Forest Dept. Permit Only',
+    descriptionEn: 'An advanced mountain ridge trek through dense evergreen forest leading to hidden viewpoints atop Maramalai. Requires a forest permit from the Department of Forest. Ideal for experienced trekkers.',
+    descriptionTa: 'மாரமலை உச்சிக்கு செல்லும் மலை முகட்டு நடைபயணம். நிரந்தர பசுமைக் காடுகள் மற்றும் மறைந்த காட்சி புள்ளிகள்.',
+    nearby: ['injikkadavu-trek', 'kalikesam-balamore-trek'],
+    tips: 'Forest permit required from Nagercoil Forest Office. Advanced trekking experience necessary. Carry sufficient water and wear proper hiking boots.',
+    difficulty: 'Extreme',
+    permitRequired: true,
+    guideRequired: true,
+    highlights: ['Mountain ridges', 'Dense evergreen forest', 'Hidden viewpoints', 'Advanced trek']
+  },
+  {
+    id: '18',
+    slug: 'kalikesam-balamore-trek',
+    nameEn: 'Kalikesam – Balamore Trek',
+    nameTa: 'காளிகேசம் – பாலமோர் நடைபயணம்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/kalikesam-balamore.jpg',
+    images: ['/images/adventure/kalikesam-balamore.jpg'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.6,
+    location: 'Kalikesam, Kanyakumari Wildlife Sanctuary',
+    lat: 8.3650,
+    lng: 77.3550,
+    openingHours: 'By Forest Dept. Permit Only',
+    descriptionEn: 'A moderate-to-difficult forest expedition trek from Kalikesam to Balamore. The trail crosses streams and rocky terrain through thick forest cover. Guided treks only — no solo access.',
+    descriptionTa: 'காளிகேசம் முதல் பாலமோர் வரை நீர்நிலைகள் மற்றும் கற்பாறை பகுதிகளில் நடைபயணம்.',
+    nearby: ['kalikesam-maramalai-trek', 'kalikesam-river'],
+    tips: 'Guided trek only — no solo access. Wear trail shoes. Streams may be deep after rains. Forest permit required.',
+    difficulty: 'Hard',
+    permitRequired: true,
+    guideRequired: true,
+    highlights: ['Forest expedition', 'Streams', 'Rocky terrain', 'Guided trek only']
+  },
+  {
+    id: '19',
+    slug: 'marunthuvazh-malai',
+    nameEn: 'Marunthuvazh Malai',
+    nameTa: 'மருந்துவாழ் மலை',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/Marundhuvazh-Malai.jpg',
+    images: [
+      '/images/adventure/Marundhuvazh-Malai.jpg',
+    ],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.7,
+    location: 'Near Kanyakumari Town',
+    lat: 8.1800,
+    lng: 77.4200,
+    openingHours: '5:00 AM - 6:00 PM',
+    descriptionEn: 'A rocky hill climb featuring cave exploration, ideal for sunrise treks with panoramic sea views. The summit rewards trekkers with a stunning 360° view of the ocean and surrounding landscape. Suitable for casual and intermediate trekkers. No special permit required.',
+    descriptionTa: 'சிறிய கற்பாறை மலை ஏற்றம். குகை ஆய்வு மற்றும் கடலின் பரந்த காட்சியுடன் சூரிய உதய நடைபயணம்.',
+    nearby: ['velimalai'],
+    tips: 'Best for sunrise. Start early (5–6 AM). 1–2 hour trek. Caves are accessible. Comfortable footwear sufficient.',
+    difficulty: 'Moderate',
+    distance: '~3 km',
+    duration: '1–2 hours',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Rocky climb', 'Cave exploration', 'Sunrise trek', 'Panoramic sea views']
+  },
+  {
+    id: '20',
+    slug: 'velimalai',
+    nameEn: 'Velimalai Trek',
+    nameTa: 'வேலிமலை நடைபயணம்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/velimalai trek.jpg',
+    images: ['/images/adventure/velimalai trek.jpg'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.5,
+    location: 'Velimalai (34 km from Kanyakumari)',
+    lat: 8.2500,
+    lng: 77.3100,
+    openingHours: '6:00 AM - 5:30 PM',
+    descriptionEn: 'An offbeat hill trek through rocky ridges with misty viewpoints — perfect for photography enthusiasts. Velimalai offers a serene and less-crowded alternative to the popular treks, with stunning mist-covered landscapes and excellent sunrise views.',
+    descriptionTa: 'கற்பாறை முகடுகள் மற்றும் மூடுபனி காட்சிகளுடன் கூடிய புகைப்படக்கலைக்கு ஏற்ற ஒரு தனிச்சிறப்பு மலை நடைபயணம்.',
+    nearby: ['marunthuvazh-malai', 'keeriparai-reserve-forest'],
+    tips: 'Best during early mornings for misty views. Great for photography. No special permit needed. Wear good grip shoes.',
+    difficulty: 'Moderate',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Offbeat hill trek', 'Rocky ridges', 'Misty viewpoints', 'Excellent photography']
+  },
+  {
+    id: '21',
+    slug: 'kalikesam-river',
+    nameEn: 'Kalikesam River & Nature Trails',
+    nameTa: 'காளிகேசம் ஆறு & இயற்கை பாதைகள்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/Kalikesam River & Nature Trails.jpg',
+    images: ['/images/adventure/Kalikesam River & Nature Trails.jpg'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.6,
+    location: 'Kalikesam (50 km from Kanyakumari)',
+    lat: 8.3600,
+    lng: 77.3500,
+    openingHours: '6:00 AM - 5:00 PM',
+    descriptionEn: 'Experience crystal-clear river waters, boulder hopping, and short nature walks through lush forest. Kalikesam is a popular eco-spot with scenic forest drives and natural swimming pools formed by the river.',
+    descriptionTa: 'தெளிந்த ஆற்று நீர், பாறை தாவல் மற்றும் காட்டு இயற்கை நடைபயணம். சுற்றுலாவுக்கு ஏற்ற இயற்கை இடம்.',
+    nearby: ['kalikesam-balamore-trek', 'keeriparai-reserve-forest'],
+    tips: 'Go early morning. Avoid during heavy monsoon rains — flash floods are possible. Wear sandals for river crossing.',
+    difficulty: 'Easy',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Crystal-clear river', 'Boulder hopping', 'Forest drive', 'Short nature walks']
+  },
+  {
+    id: '22',
+    slug: 'kothaiyar-twin-falls',
+    nameEn: 'Kothaiyar Twin Falls',
+    nameTa: 'கோதையாறு இரட்டை அருவிகள்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/kodayar-twin-falls.webp',
+    images: ['/images/adventure/kodayar-twin-falls.webp'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.5,
+    location: 'Kothaiyar Valley (60 km from Kanyakumari)',
+    lat: 8.4000,
+    lng: 77.3200,
+    openingHours: '7:00 AM - 5:00 PM',
+    descriptionEn: 'A hidden twin waterfall accessible via a short forest approach through a scenic valley. Best visited after the monsoon season when both falls are at full flow. A truly off-the-beaten-path gem of Kanyakumari.',
+    descriptionTa: 'குறுகிய காட்டு பாதை வழியாக செல்லும் மறைவான இரட்டை அருவி. மழைக்காலத்திற்கு பிறகு சிறந்தது.',
+    nearby: ['kalikesam-river'],
+    tips: 'Best visited October–January after monsoon. Short forest approach on foot. Carry water and wear waterproof footwear.',
+    difficulty: 'Easy',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Hidden waterfall', 'Short forest approach', 'Scenic valley', 'Seasonal — best after monsoon']
+  },
+  {
+    id: '23',
+    slug: 'muttom-cliffs',
+    nameEn: 'Muttom Cliffs',
+    nameTa: 'முட்டம் பாறை முகடுகள்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/muttom cliff.jpg',
+    images: ['/images/adventure/muttom cliff.jpg'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.4,
+    location: 'Muttom (20 km from Kanyakumari)',
+    lat: 8.1226,
+    lng: 77.3287,
+    openingHours: 'Open 24 hours',
+    descriptionEn: 'Dramatic cliff-edge walking along Muttom\'s rocky coastline, perfect for adventurous photography. The jagged rock formations and crashing waves create spectacular scenery for sunset visits.',
+    descriptionTa: 'முட்டம் கடற்கரையின் பாறை முகடுகளில் உற்சாகமான நடைபயணம் மற்றும் புகைப்படம் எடுத்தல்.',
+    nearby: ['muttom-beach', 'aralvaimozhi-hills'],
+    tips: 'Best at golden hour for photography. Exercise caution near cliff edges. Avoid during rough sea conditions.',
+    difficulty: 'Easy',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Cliff-edge walking', 'Dramatic photography', 'Rock formations', 'Sunset views']
+  },
+  {
+    id: '24',
+    slug: 'aralvaimozhi-hills',
+    nameEn: 'Aralvaimozhi Hills',
+    nameTa: 'அரல்வாய்மொழி மலைகள்',
+    category: 'ADVENTURE',
+    heroImage: '/images/adventure/aralvaimozhi hills.jpg',
+    images: ['/images/adventure/aralvaimozhi hills.jpg'],
+    entryFeeAdult: 0,
+    entryFeeChild: 0,
+    rating: 4.5,
+    location: 'Aralvaimozhi (45 km from Kanyakumari)',
+    lat: 8.2900,
+    lng: 77.3000,
+    openingHours: '6:00 AM - 6:00 PM',
+    descriptionEn: 'A ridge walk through the scenic Aralvaimozhi hills with breathtaking sunset views over the Western Ghats. The wind-energy corridor here makes for an iconic backdrop of windmills set against rolling green ridges.',
+    descriptionTa: 'மேற்குத் தொடர்ச்சி மலையின் அரல்வாய்மொழி முகட்டு நடைப்பாதை மற்றும் சூரிய அஸ்தமன காட்சிகள்.',
+    nearby: ['velimalai', 'keeriparai-reserve-forest'],
+    tips: 'Sunset ridge walk is spectacular. The windmill corridor makes for dramatic photos. Comfortable footwear recommended.',
+    difficulty: 'Easy',
+    permitRequired: false,
+    guideRequired: false,
+    highlights: ['Ridge walk', 'Sunset views', 'Windmill backdrop', 'Western Ghats scenery']
   }
 ]
 
@@ -718,7 +945,7 @@ export const religiousSites = [
     description: 'An ancient 3,000-year-old temple dedicated to Goddess Kanyakumari, located at the very confluence of the three oceans. Famous for the deity\'s sparkling diamond nose ring.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: '/images/bhagavathi-amman-temple.jpg'
+    image: '/images/religious/Bhagavathi Amman Temple.jpg'
   },
   { 
     name: 'Suchindram Thanumalayan Temple', 
@@ -727,7 +954,7 @@ export const religiousSites = [
     description: 'An architectural marvel dedicated to the Hindu trinity: Shiva (Sthanu), Vishnu (Mal), and Brahma (Ayan). Famous for its musical pillars and an 18-foot Hanuman statue.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Suchindram_Thanumalayan_Temple.jpg'
+    image: '/images/religious/Suchindram Thanumalayan Temple.jpg'
   },
   { 
     name: 'Nagaraja Temple', 
@@ -736,7 +963,7 @@ export const religiousSites = [
     description: 'A unique temple dedicated to the King of Serpents, Nagaraja. The town of Nagercoil is named after this ancient shrine, which has a traditional thatched roof.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Nagaraja_temple.JPG'
+    image: '/images/religious/Nagaraja_Temple,_Nagercoil.jpg'
   },
   { 
     name: 'Thiruvattar Adikesava Perumal Temple', 
@@ -745,7 +972,7 @@ export const religiousSites = [
     description: 'One of the 108 Divya Desams, dedicated to Lord Vishnu reclining on Adisesha. It predates and has similar architectural style to the Padmanabhaswamy temple in Trivandrum.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Thiruvattar_Adhi_Kesava_Temple.JPG'
+    image: '/images/religious/Thiruvattar Adikesava Perumal Temple.jpg'
   },
   { 
     name: 'Mandaikadu Bhagavathi Amman Temple', 
@@ -754,7 +981,7 @@ export const religiousSites = [
     description: 'Known as the "Sabarimala of Women", this temple features a natural, growing 15-foot high ant-hill (Valmiki) representing the Goddess.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Mondaikkadu_temple._tamil_nadu_-_panoramio.jpg'
+    image: '/images/religious/Mandaikadu Bhagavathi Amman Temple.jpg'
   },
   { 
     name: 'Lord Subramanya Temple (Kumara Koil)', 
@@ -763,7 +990,7 @@ export const religiousSites = [
     description: 'Set on a beautiful green hillock in the Western Ghats, this temple is dedicated to Lord Murugan. Celebrated for its unique architecture and serene mountain views.', 
     type: 'Temple', 
     religion: 'Hinduism',
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800'
+    image: '/images/religious/Lord Subramanya Temple (Kumara Koil).jpg'
   },
   { 
     name: 'Our Lady of Ransom Church', 
@@ -772,7 +999,7 @@ export const religiousSites = [
     description: 'A magnificent Gothic-style Roman Catholic church overlooking the sea. Its 153-foot tall white spires and stunning stained-glass windows are iconic.', 
     type: 'Church', 
     religion: 'Christianity',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/3/36/Our_Lady_of_Ransom_Church_in_Kanyakumari.jpg'
+    image: '/images/religious/Our Lady of Ransom Church.jpg'
   },
   { 
     name: 'St. Francis Xavier Cathedral', 
@@ -781,7 +1008,7 @@ export const religiousSites = [
     description: 'A highly historic church built in the 1540s. St. Francis Xavier lived, preached, and performed several miracles here, making it a major pilgrimage center.', 
     type: 'Church', 
     religion: 'Christianity',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/St._Xavier%27s_Church%2C_Kottar.JPG'
+    image: "/images/religious/St. Francis Xavier Cathedral.jpg"
   },
   { 
     name: 'Thiruvithancode Arappally (St. Mary\'s Church)', 
@@ -790,7 +1017,7 @@ export const religiousSites = [
     description: 'Recognized as one of the oldest standing churches in the world, founded in 57 AD by St. Thomas the Apostle. Features traditional granite architecture.', 
     type: 'Church', 
     religion: 'Christianity',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Thiruvithamkode_Arappaly.jpg'
+    image: "/images/religious/Thiruvithancode Arappally (St. Mary's Church).jpg"
   },
   { 
     name: 'CSI Home Church', 
@@ -799,7 +1026,7 @@ export const religiousSites = [
     description: 'One of the oldest and largest Protestant churches in South Asia, constructed in 1819 with grand colonial style pillars and a massive prayer hall.', 
     type: 'Church', 
     religion: 'Christianity',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/CSI_Home_Church_Nagercoil.jpg'
+    image: '/images/religious/CSI Home Church.jpg'
   },
   { 
     name: 'Malik Deenar Jumma Mosque (Valiyapalli)', 
@@ -808,7 +1035,7 @@ export const religiousSites = [
     description: 'A historical 7th-century mosque established by Malik Deenar. Built in early Islamic style, it is one of the earliest centers of Islam in South India.', 
     type: 'Mosque', 
     religion: 'Islam',
-    image: 'https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=800'
+    image: '/images/religious/Malik Deenar Jumma Mosque (Valiyapalli).jpg'
   },
   { 
     name: 'Peer Mohammed Oliyullah Dargah', 
@@ -817,7 +1044,7 @@ export const religiousSites = [
     description: 'The shrine of Sufi saint-philosopher Peer Mohammed Oliyullah, famous for his spiritual writings. Celebrated by people of all faiths during the annual festival.', 
     type: 'Dargah', 
     religion: 'Islam',
-    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800'
+    image: '/images/religious/Peer Mohammed Oliyullah Dargah.jpg'
   },
   { 
     name: 'Malik Mohammad Oliyullah Dargah', 
@@ -826,7 +1053,7 @@ export const religiousSites = [
     description: 'A historically significant Dargah drawing devotees from all over the district for prayer, reflection, and spiritual healing.', 
     type: 'Dargah', 
     religion: 'Islam',
-    image: 'https://images.unsplash.com/photo-1508962914676-134849a727f0?w=800'
+    image: '/images/religious/Malik Mohammad Oliyullah Dargah.jpg'
   },
   { 
     name: 'Thittuvilai Jumma Mosque', 
@@ -835,7 +1062,7 @@ export const religiousSites = [
     description: 'A prominent and beautiful community mosque located in the serene village of Thittuvilai, serving as a center of religious life.', 
     type: 'Mosque', 
     religion: 'Islam',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800'
+    image: '/images/religious/Thittuvilai Jumma Mosque.jpg'
   }
 ]
 
