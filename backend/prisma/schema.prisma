@@ -127,6 +127,7 @@ model Ticket {
   unitPrice       Float
   totalPrice      Float
   visitDate       DateTime
+  timeSlot        String?
   qrCode          String        @unique
   qrCodeUrl       String
   isScanned       Boolean       @default(false)
@@ -145,6 +146,8 @@ enum TicketType {
   CAMERA
   PARKING_CAR
   PARKING_BIKE
+  FERRY_ADULT
+  FERRY_CHILD
 }
 
 // ─────────────────────────────────────────

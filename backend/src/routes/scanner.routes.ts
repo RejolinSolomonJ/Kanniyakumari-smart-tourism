@@ -113,6 +113,7 @@ scannerRouter.post('/validate', authenticate, requireSiteManager, async (req: Au
           visitorName: ticket.booking.user.name,
           ticketType: ticket.ticketType,
           quantity: ticket.quantity,
+          timeSlot: ticket.timeSlot,
           scannedAt: ticket.scannedAt
         }
       })
@@ -137,6 +138,7 @@ scannerRouter.post('/validate', authenticate, requireSiteManager, async (req: Au
         visitorName: ticket.booking.user.name,
         ticketType: ticket.ticketType,
         quantity: ticket.quantity,
+        timeSlot: ticket.timeSlot,
         visitDate: ticket.visitDate
       }
     })

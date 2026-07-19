@@ -1224,6 +1224,12 @@ export default function CRMDashboard() {
                         <span className="opacity-75">Category / Qty:</span>
                         <span>{scanResult.ticketDetails.ticketType} / {scanResult.ticketDetails.quantity} Pax</span>
                       </div>
+                      {scanResult.ticketDetails.timeSlot && (
+                        <div className="flex justify-between border-b border-white/5 pb-1.5">
+                          <span className="opacity-75">Time Slot:</span>
+                          <span className="font-bold text-[#FFD54F]">{scanResult.ticketDetails.timeSlot}</span>
+                        </div>
+                      )}
                     </div>
                   )}
 

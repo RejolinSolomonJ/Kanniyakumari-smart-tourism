@@ -25,6 +25,9 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
   const [carQty, setCarQty] = useState(0)
   const [bikeQty, setBikeQty] = useState(0)
 
+  const [ferryTimeSlot, setFerryTimeSlot] = useState('')
+  const isFerry = slug === 'vivekananda-rock-memorial' || slug === 'thiruvalluvar-statue'
+
   const [bookingSuccess, setBookingSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -88,10 +91,10 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
     try {
       const ticketsArray = []
       if (adultQty > 0) {
-        ticketsArray.push({ type: 'ADULT', quantity: adultQty, unitPrice: adultPrice })
+        ticketsArray.push({ type: isFerry ? 'FERRY_ADULT' : 'ADULT', quantity: adultQty, unitPrice: adultPrice, timeSlot: isFerry ? ferryTimeSlot : undefined })
       }
       if (childQty > 0) {
-        ticketsArray.push({ type: 'CHILD', quantity: childQty, unitPrice: childPrice })
+        ticketsArray.push({ type: isFerry ? 'FERRY_CHILD' : 'CHILD', quantity: childQty, unitPrice: childPrice, timeSlot: isFerry ? ferryTimeSlot : undefined })
       }
       if (cameraQty > 0) {
         ticketsArray.push({ type: 'CAMERA', quantity: cameraQty, unitPrice: cameraPrice })
@@ -481,12 +484,33 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                   />
                 </div>
 
+                {/* Ferry Time Slot */}
+                {isFerry && (
+                  <div>
+                    <label className="block text-caption font-semibold text-granite-600 mb-1.5 flex items-center gap-1">
+                      <Clock className="w-4 h-4 text-ocean" /> Boarding Time Slot
+                    </label>
+                    <select
+                      required
+                      className="input-field bg-white"
+                      value={ferryTimeSlot}
+                      onChange={(e) => setFerryTimeSlot(e.target.value)}
+                    >
+                      <option value="" disabled>Select a 2-hour window</option>
+                      <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+                      <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                      <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+                      <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                    </select>
+                  </div>
+                )}
+
                 {/* Ticket quantities */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <div>
-                      <span className="block text-body-sm font-semibold text-granite-800">Adult</span>
-                      <span className="text-caption text-granite-400">Age 12+</span>
+                      <span className="block text-body-sm font-semibold text-granite-800">{isFerry ? 'Ferry Pass (Adult)' : 'Adult'}</span>
+                      <span className="text-caption text-granite-400">Age 12+ • {formatCurrency(adultPrice)}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <button
@@ -510,8 +534,8 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                   {childPrice > 0 && (
                     <div className="flex justify-between items-center">
                       <div>
-                        <span className="block text-body-sm font-semibold text-granite-800">Child</span>
-                        <span className="text-caption text-granite-400">Age 5-12</span>
+                        <span className="block text-body-sm font-semibold text-granite-800">{isFerry ? 'Ferry Pass (Child)' : 'Child'}</span>
+                        <span className="text-caption text-granite-400">Age 5-12 • {formatCurrency(childPrice)}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <button

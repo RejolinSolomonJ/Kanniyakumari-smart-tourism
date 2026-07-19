@@ -578,10 +578,10 @@ export default function TouristDashboard() {
                    {/* Time or Duration */}
                    <div className="space-y-1.5">
                      <p className="text-[10px] font-bold text-granite-400 tracking-widest uppercase">
-                        {activeTicket.type === 'hotel' ? 'DURATION' : 'TIME'}
+                        {activeTicket.type === 'hotel' ? 'DURATION' : activeTicket.timeSlot ? 'BOARDING SLOT' : 'TIME'}
                      </p>
-                     <p className="font-bold text-base md:text-lg text-granite-900 uppercase">
-                        {activeTicket.type === 'hotel' ? `${activeTicket.nights} NIGHTS` : '09:00 AM'}
+                     <p className={`font-bold text-granite-900 uppercase ${activeTicket.timeSlot ? 'text-xs md:text-sm' : 'text-base md:text-lg'}`}>
+                        {activeTicket.type === 'hotel' ? `${activeTicket.nights} NIGHTS` : activeTicket.timeSlot || '09:00 AM'}
                      </p>
                    </div>
 
