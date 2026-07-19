@@ -1374,30 +1374,30 @@ export const galleryVideos = [
   {
     title: 'Kanyakumari Drone View 🌊✨',
     desc: 'Breathtaking 4K aerial shots of Thiruvalluvar Statue & Vivekananda Rock Memorial.',
-    thumbnail: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800',
+    thumbnail: 'https://img.youtube.com/vi/8QuuRsH-GkI/maxresdefault.jpg',
     duration: '2:15',
-    youtubeId: 'dQw4w9WgXcQ'
+    youtubeId: '8QuuRsH-GkI'
   },
   {
     title: 'Sunrise over Triveni Sangam 🌅',
     desc: 'Time-lapse video of the unique sunrise where three oceans converge.',
-    thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
+    thumbnail: 'https://img.youtube.com/vi/UFPDDuEHrwU/maxresdefault.jpg',
     duration: '1:45',
-    youtubeId: 'dQw4w9WgXcQ'
+    youtubeId: 'UFPDDuEHrwU'
   },
   {
     title: 'Suchindram Temple Musical Pillars 🎶',
     desc: 'Watch and listen to the ancient stone pillars that produce musical notes when tapped.',
-    thumbnail: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800',
+    thumbnail: 'https://img.youtube.com/vi/zKzxFm6Kxfo/maxresdefault.jpg',
     duration: '3:20',
-    youtubeId: 'dQw4w9WgXcQ'
+    youtubeId: 'zKzxFm6Kxfo'
   },
   {
     title: 'Western Ghats Trek — Keeriparai 🌿',
     desc: 'Follow a guided trek through the lush tropical forests of the Kanyakumari Wildlife Sanctuary.',
-    thumbnail: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800',
+    thumbnail: 'https://img.youtube.com/vi/BKFypmrtgLo/maxresdefault.jpg',
     duration: '5:10',
-    youtubeId: 'dQw4w9WgXcQ'
+    youtubeId: 'BKFypmrtgLo'
   }
 ]
 

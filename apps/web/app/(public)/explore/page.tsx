@@ -71,33 +71,73 @@ function ExplorePageContent() {
   })
 
   return (
-    <div className="pt-24 min-h-screen bg-granite-50 pb-16">
-      <div className="container-wide">
-        {/* Banner Section */}
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-ocean py-16 px-8 text-center text-white mb-12 shadow-lg">
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <h1 className="font-serif text-heading-xl md:text-display-lg font-bold mb-4">
+    <div className="min-h-screen bg-granite-50 pb-16">
+
+        {/* ── Parallax Hero Banner ── */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            backgroundImage: "url('/images/background.jpg')",
+            backgroundAttachment: 'fixed',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '50vh',
+          }}
+        >
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/55" />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center justify-center min-h-[50vh] px-4 text-center py-24">
+            <motion.span
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-xs font-bold tracking-widest uppercase mb-5"
+            >
+              EXPLORE BY CATEGORY
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-serif text-4xl md:text-6xl font-bold text-white mb-4 leading-tight"
+            >
               Discover Kanyakumari
-            </h1>
-            <p className="text-body opacity-95 mb-8">
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-white/80 text-base md:text-lg max-w-xl mb-10"
+            >
               Explore ancient wonders, pristine shores, and hidden waterfalls in the southern edge of India.
-            </p>
+            </motion.p>
+
             {/* Search Input */}
-            <div className="flex bg-white text-granite-900 rounded-full p-1.5 shadow-md max-w-lg mx-auto border border-white/20">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex bg-white text-granite-900 rounded-full p-1.5 shadow-xl max-w-lg w-full border border-white/20"
+            >
               <span className="flex items-center pl-4 text-granite-400">
                 <Search className="w-5 h-5" />
               </span>
               <input
                 type="text"
                 placeholder="Search destinations (e.g. Rock Memorial, Temple)..."
-                className="w-full bg-transparent border-0 ring-0 focus:ring-0 px-3 py-2 text-body-sm focus:outline-none"
+                className="w-full bg-transparent border-0 ring-0 focus:ring-0 px-3 py-2 text-sm focus:outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
+
+      <div className="container-wide">
 
         {/* Category Explorer */}
         <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
