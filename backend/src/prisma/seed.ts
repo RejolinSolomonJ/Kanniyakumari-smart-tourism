@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Provider, Category, HotelType, EventType, BlogCategory, MediaType, EmergencyType } from '@prisma/client'
+import { PrismaClient, Role, Provider, Category, HotelType, EventType, BlogCategory, MediaType, EmergencyType, BookingType, BookingStatus, PaymentStatus, TicketType } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -63,6 +63,42 @@ async function main() {
       name: 'Ramesh Kumar (Site Manager)',
       email: 'ramesh@kanyakumaritourism.gov.in',
       phone: '9876543211',
+      passwordHash,
+      role: Role.SITE_MANAGER,
+      provider: Provider.EMAIL,
+      isVerified: true,
+    }
+  })
+
+  const collector = await prisma.user.create({
+    data: {
+      name: 'District Collector (Kanyakumari)',
+      email: 'collector@kanyakumaritourism.gov.in',
+      phone: '9876543213',
+      passwordHash,
+      role: Role.COLLECTOR,
+      provider: Provider.EMAIL,
+      isVerified: true,
+    }
+  })
+
+  const tourismOfficer = await prisma.user.create({
+    data: {
+      name: 'Tourism Officer',
+      email: 'officer@kanyakumaritourism.gov.in',
+      phone: '9876543214',
+      passwordHash,
+      role: Role.TOURISM_OFFICER,
+      provider: Provider.EMAIL,
+      isVerified: true,
+    }
+  })
+
+  const ticketChecker = await prisma.user.create({
+    data: {
+      name: 'Ticket Checker',
+      email: 'checker@kanyakumaritourism.gov.in',
+      phone: '9876543215',
       passwordHash,
       role: Role.SITE_MANAGER,
       provider: Provider.EMAIL,
@@ -758,6 +794,124 @@ async function main() {
   })
 
   console.log('🖼 Gallery items seeded.')
+
+  // Station ticket checker at Padmanabhapuram Palace
+  const padmanabhapuram = await prisma.destination.findUnique({
+    where: { slug: 'padmanabhapuram-palace' }
+  })
+  if (padmanabhapuram) {
+    await prisma.user.update({
+      where: { email: 'checker@kanyakumaritourism.gov.in' },
+      data: { destinationId: padmanabhapuram.id }
+    })
+    console.log('📌 Ticket Checker assigned to Padmanabhapuram Palace.')
+
+    // Seed the mock bookings/tickets for John Doe (Tourist)
+    const touristUser = await prisma.user.findUnique({
+      where: { email: 'john@example.com' }
+    })
+    
+    if (touristUser) {
+      const vivekanandaRock = await prisma.destination.findUnique({
+        where: { slug: 'vivekananda-rock-memorial' }
+      })
+      const waterfalls = await prisma.destination.findUnique({
+        where: { slug: 'thirparappu-waterfalls' }
+      })
+      
+      // 1. Vivekananda Rock Booking & Ticket
+      if (vivekanandaRock) {
+        const b1 = await prisma.booking.create({
+          data: {
+            id: 'BK-8902',
+            userId: touristUser.id,
+            type: BookingType.TICKET,
+            status: BookingStatus.CONFIRMED,
+            totalAmount: 140,
+            paymentStatus: PaymentStatus.SUCCESS,
+            paymentId: 'pay_mock_8902'
+          }
+        })
+        await prisma.ticket.create({
+          data: {
+            id: 'TK-1002',
+            destinationId: vivekanandaRock.id,
+            bookingId: b1.id,
+            ticketType: TicketType.ADULT,
+            quantity: 2,
+            unitPrice: 70,
+            totalPrice: 140,
+            visitDate: new Date(Date.now() + 86400000 * 2),
+            qrCode: 'BK-8902_TK-1002',
+            qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BK-8902_TK-1002',
+            isScanned: false
+          }
+        })
+      }
+
+      // 2. Padmanabhapuram Palace Booking & Ticket
+      const b2 = await prisma.booking.create({
+        data: {
+          id: 'BK-4402',
+          userId: touristUser.id,
+          type: BookingType.TICKET,
+          status: BookingStatus.CONFIRMED,
+          totalAmount: 150,
+          paymentStatus: PaymentStatus.SUCCESS,
+          paymentId: 'pay_mock_4402'
+        }
+      })
+      await prisma.ticket.create({
+        data: {
+          id: 'TK-4402',
+          destinationId: padmanabhapuram.id,
+          bookingId: b2.id,
+          ticketType: TicketType.ADULT,
+          quantity: 3,
+          unitPrice: 50,
+          totalPrice: 150,
+          visitDate: new Date(Date.now() + 86400000 * 3),
+          qrCode: 'BK-4402_TK-4402',
+          qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BK-4402_TK-4402',
+          isScanned: false
+        }
+      })
+
+      // 3. Thirparappu Waterfalls Booking & Ticket
+      if (waterfalls) {
+        const b3 = await prisma.booking.create({
+          data: {
+            id: 'BK-5601',
+            userId: touristUser.id,
+            type: BookingType.TICKET,
+            status: BookingStatus.CONFIRMED,
+            totalAmount: 40,
+            paymentStatus: PaymentStatus.SUCCESS,
+            paymentId: 'pay_mock_5601'
+          }
+        })
+        await prisma.ticket.create({
+          data: {
+            id: 'TK-2391',
+            destinationId: waterfalls.id,
+            bookingId: b3.id,
+            ticketType: TicketType.ADULT,
+            quantity: 2,
+            unitPrice: 20,
+            totalPrice: 40,
+            visitDate: new Date(Date.now() - 86400000 * 5),
+            qrCode: 'BK-5601_TK-2391',
+            qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BK-5601_TK-2391',
+            isScanned: true,
+            scannedAt: new Date(Date.now() - 86400000 * 5),
+            scannedBy: 'Ticket Checker'
+          }
+        })
+      }
+      console.log('🎟 Mock bookings & tickets seeded.')
+    }
+  }
+
   console.log('🎉 Seeding successfully completed!')
 }
 

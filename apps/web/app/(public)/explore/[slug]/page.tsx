@@ -164,12 +164,8 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       if (verifyData.success) {
         // Save to local storage for profile page integration
         const bookingId = bookingData.booking.id;
-        const ticketsList = ticketsArray.map((t, idx) => ({
-          id: `TK-${bookingId}-${idx}`,
-          visitDate,
-          ticketType: t.type,
-          quantity: t.quantity,
-          qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${bookingId}_${t.type}_${t.quantity}`,
+        const ticketsList = bookingData.booking.tickets.map((t: any) => ({
+          ...t,
           destination: {
             nameEn: destination.nameEn || destination.name || 'Destination'
           }
@@ -464,7 +460,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                 <p className="text-body-sm text-granite-500">
                   Your ticket booking is verified. View details in your tourist profile.
                 </p>
-                <Link href="/bookings/tickets" className="btn-primary w-full py-2.5">
+                <Link href="/tourist" className="btn-primary w-full py-2.5">
                   View Bookings
                 </Link>
               </div>

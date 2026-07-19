@@ -41,6 +41,19 @@ reportsRouter.post('/infra', optionalAuth, async (req: AuthRequest, res) => {
   }
 })
 
+// GET /api/reports/infra/public - Public access to view recent reports
+reportsRouter.get('/infra/public', async (req, res) => {
+  try {
+    const reports = await prisma.infraReport.findMany({
+      take: 10,
+      orderBy: { createdAt: 'desc' }
+    })
+    return res.json(reports)
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch public reports' })
+  }
+})
+
 // GET /api/reports/infra - Admin access only to view all reports
 reportsRouter.get('/infra', authenticate, requireAdmin, async (req, res) => {
   try {

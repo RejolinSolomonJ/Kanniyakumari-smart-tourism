@@ -277,7 +277,7 @@ export default function Navbar() {
                 isAuthenticated ? (
                   <div className="relative hidden md:block group">
                     <Link
-                      href="/tourist"
+                      href={['COLLECTOR', 'TOURISM_OFFICER', 'SITE_MANAGER', 'SUPER_ADMIN'].includes(user?.role || '') ? '/crm' : '/tourist'}
                       className={cn(
                         'flex items-center gap-2 px-4 py-2 rounded-full text-body-sm font-medium transition-all duration-300',
                         scrolled
@@ -295,8 +295,11 @@ export default function Navbar() {
                     </Link>
                     {/* Dropdown */}
                     <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-granite-100 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                      <Link href="/tourist" className="block px-4 py-3 text-sm text-granite-700 hover:bg-ocean-50 hover:text-ocean transition-colors">
-                        My Dashboard
+                      <Link 
+                        href={['COLLECTOR', 'TOURISM_OFFICER', 'SITE_MANAGER', 'SUPER_ADMIN'].includes(user?.role || '') ? '/crm' : '/tourist'} 
+                        className="block px-4 py-3 text-sm text-granite-700 hover:bg-ocean-50 hover:text-ocean transition-colors"
+                      >
+                        {['COLLECTOR', 'TOURISM_OFFICER', 'SITE_MANAGER', 'SUPER_ADMIN'].includes(user?.role || '') ? 'CRM Dashboard' : 'My Dashboard'}
                       </Link>
                       <button
                         onClick={() => {
