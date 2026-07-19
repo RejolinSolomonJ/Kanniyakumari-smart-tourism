@@ -72,13 +72,27 @@ export default function ComparePage() {
       bestTime = "Monsoon Season (Jul - Nov)";
     }
 
+    let hoursStr = "8:00 AM - 6:00 PM";
+    if (dest.openingHours) {
+      if (typeof dest.openingHours === 'string') {
+        hoursStr = dest.openingHours;
+      } else if (typeof dest.openingHours === 'object') {
+        const oh = dest.openingHours as any;
+        if (oh.open && oh.close) {
+          hoursStr = `${oh.open} - ${oh.close}`;
+        } else {
+          hoursStr = JSON.stringify(dest.openingHours);
+        }
+      }
+    }
+
     return {
       id: dest.id,
       name: dest.nameEn,
       category: dest.category?.toLowerCase() || "nature",
       image: dest.heroImage || "/images/mixed/kanyakumari-beaches.jpg",
       fee: feeStr,
-      hours: dest.openingHours || "8:00 AM - 6:00 PM",
+      hours: hoursStr,
       rating: dest.rating || 4.7,
       distance: dest.location || "Central Kanyakumari",
       highlights,
