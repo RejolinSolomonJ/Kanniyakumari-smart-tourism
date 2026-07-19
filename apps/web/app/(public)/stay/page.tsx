@@ -54,6 +54,23 @@ export default function StayPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   const [apiError, setApiError] = useState<string | null>(null)
+  const [hotelDetails, setHotelDetails] = useState<any>(null)
+  const [isDetailsLoading, setIsDetailsLoading] = useState(false)
+
+  useEffect(() => {
+    if (bookingHotel && bookingHotel.id) {
+      setIsDetailsLoading(true)
+      fetch(`/api/hotels/${bookingHotel.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setHotelDetails(data)
+        })
+        .catch(err => console.error(err))
+        .finally(() => setIsDetailsLoading(false))
+    } else {
+      setHotelDetails(null)
+    }
+  }, [bookingHotel])
 
   useEffect(() => {
     setIsLoading(true)
@@ -210,14 +227,12 @@ export default function StayPage() {
                     <span className="block text-caption text-granite-400 font-medium">Starting from</span>
                     <span className="text-body-lg font-bold text-granite-900">{formatCurrency(hotel.pricePerNight)}<span className="text-caption font-normal">/night</span></span>
                   </div>
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => { setBookingHotel(hotel); setBookingSubmitted(false); setBookingName(''); setBookingPhone(''); }}
                     className="btn-gold py-2 px-5 text-body-sm font-semibold cursor-pointer text-center inline-block"
                   >
-                    Official Booking
-                  </a>
+                    View Details
+                  </button>
                 </div>
                 <a 
                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
@@ -247,62 +262,42 @@ export default function StayPage() {
                 <button onClick={() => setBookingHotel(null)} className="text-granite-400 hover:text-granite-600"><X className="w-5 h-5" /></button>
               </div>
 
-              {bookingSubmitted ? (
-                <div className="text-center py-6 space-y-3">
-                  <div className="w-12 h-12 bg-sea-50 rounded-full flex items-center justify-center mx-auto text-sea"><ShieldCheck className="w-8 h-8" /></div>
-                  <h4 className="font-serif text-heading-sm text-granite-900">Inquiry Submitted!</h4>
-                  <p className="text-body-sm text-granite-500">Your booking inquiry for {bookingHotel.nameEn} has been recorded. You will receive a confirmation call shortly.</p>
-                  <button onClick={() => setBookingHotel(null)} className="btn-primary w-full py-2.5">Close</button>
+              {isDetailsLoading ? (
+                <div className="py-10 flex flex-col items-center justify-center gap-4">
+                  <div className="w-10 h-10 border-4 border-ocean/30 border-t-ocean rounded-full animate-spin"></div>
+                  <p className="text-granite-500 font-medium">Fetching Official Hotel Details...</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {bookingHotel.website && (
-                    <div className="bg-ocean/10 p-4 rounded-xl border border-ocean/20">
-                      <p className="text-sm text-granite-600 mb-3 flex items-center gap-2">
-                        <Globe className="w-4 h-4 text-ocean shrink-0" />
-                        Book directly on the official website for the best rates and instant confirmation.
-                      </p>
-                      <a href={bookingHotel.website} target="_blank" rel="noreferrer" className="btn-primary w-full py-2.5 flex justify-center items-center gap-2 font-bold">
-                        Visit Official Website
+                  {hotelDetails?.website ? (
+                    <div className="bg-ocean/10 p-5 rounded-xl border border-ocean/20 text-center space-y-3">
+                      <Globe className="w-8 h-8 text-ocean mx-auto" />
+                      <div>
+                        <h4 className="font-bold text-granite-900">Official Hotel Website</h4>
+                        <p className="text-sm text-granite-600">Book directly with the property for the best rates.</p>
+                      </div>
+                      <a href={hotelDetails.website} target="_blank" rel="noreferrer" className="btn-primary w-full py-3 flex justify-center items-center gap-2 font-bold shadow-md hover:shadow-lg transition-all">
+                        Book on Official Website
                       </a>
                     </div>
-                  )}
-
-                  {bookingHotel.website && (
-                    <div className="flex items-center gap-3 my-4">
-                      <div className="flex-1 h-px bg-granite-200"></div>
-                      <span className="text-[10px] uppercase font-bold text-granite-400">Or Submit Inquiry</span>
-                      <div className="flex-1 h-px bg-granite-200"></div>
+                  ) : (
+                    <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-800 text-sm text-center">
+                      This property does not have an official website listed on Google.
                     </div>
                   )}
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-caption font-semibold text-granite-600 mb-1">Full Name</label>
-                    <input type="text" required placeholder="Your name" className="input-field" value={bookingName} onChange={(e) => setBookingName(e.target.value)} />
-                  </div>
-                  <div>
-                    <label className="block text-caption font-semibold text-granite-600 mb-1">Phone Number</label>
-                    <input type="tel" required placeholder="10-digit mobile" className="input-field" value={bookingPhone} onChange={(e) => setBookingPhone(e.target.value)} />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-caption font-semibold text-granite-600 mb-1">Check-in Date</label>
-                      <input type="date" required min={new Date().toISOString().split('T')[0]} className="input-field" value={bookingDate} onChange={(e) => setBookingDate(e.target.value)} />
+                  {hotelDetails?.googleMapsUrl && (
+                    <a href={hotelDetails.googleMapsUrl} target="_blank" rel="noreferrer" className="w-full py-3 px-4 rounded-xl border border-slate-200 hover:border-slate-350 hover:bg-slate-50 transition-all text-sm font-semibold flex items-center justify-center gap-2 text-slate-700 bg-white shadow-sm">
+                      <MapPin className="w-4 h-4 text-ocean" /> View on Google Maps
+                    </a>
+                  )}
+
+                  {hotelDetails?.phone && (
+                    <div className="flex items-center justify-center gap-2 text-granite-600 bg-granite-50 py-3 rounded-xl border border-granite-100">
+                      <Phone className="w-4 h-4" /> 
+                      <span className="font-semibold">{hotelDetails.phone}</span>
                     </div>
-                    <div>
-                      <label className="block text-caption font-semibold text-granite-600 mb-1">Nights</label>
-                      <select className="input-field" value={bookingNights} onChange={(e) => setBookingNights(Number(e.target.value))}>
-                        {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n} Night{n > 1 ? 's' : ''}</option>)}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="bg-granite-50 p-3 rounded-xl text-center">
-                    <span className="text-caption text-granite-500">Estimated Total: </span>
-                    <span className="font-bold text-granite-900">{formatCurrency(bookingHotel.pricePerNight * bookingNights)}</span>
-                  </div>
-                  <button type="submit" className="btn-gold w-full py-3 text-body-sm font-bold">Submit Booking Inquiry</button>
-                </form>
+                  )}
                 </div>
               )}
             </div>
