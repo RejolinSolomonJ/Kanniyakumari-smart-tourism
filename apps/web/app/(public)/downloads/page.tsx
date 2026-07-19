@@ -30,8 +30,13 @@ export default function DownloadsPage() {
       })
       .catch(err => console.log(err))
 
-    // Open/download file
-    window.open(fileUrl, '_blank')
+    // Force download
+    const a = document.createElement('a')
+    a.href = fileUrl
+    a.download = fileUrl.split('/').pop() || 'download.pdf'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
   }
 
   return (
