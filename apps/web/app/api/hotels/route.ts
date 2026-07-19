@@ -25,42 +25,34 @@ export async function GET(request: Request) {
       default: textQuery = "hotels resorts homestays in Kanyakumari"; break;
     }
 
-    // Use Google Places API (New)
-    const searchUrl = 'https://places.googleapis.com/v1/places:searchText'
+    // Use Google Places API (Legacy) which is more reliable across basic API keys
+    const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(textQuery)}&key=${GOOGLE_MAPS_API_KEY}`
     
     const response = await fetch(searchUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
-        'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.rating,places.photos,places.primaryType,places.websiteUri'
-      },
-      body: JSON.stringify({
-        textQuery: textQuery
-      })
+      method: 'GET'
     })
 
     const data = await response.json()
 
-    if (data.error) {
-      console.error("Google Maps API Error:", data.error)
-      return NextResponse.json({ error: data.error.message }, { status: 500 })
+    if (data.error_message) {
+      console.error("Google Maps API Error:", data.error_message)
+      return NextResponse.json({ error: data.error_message }, { status: 500 })
     }
 
-    if (!data.places) {
+    if (!data.results || data.results.length === 0) {
       return NextResponse.json([]) // No results
     }
 
     // Map Google Places results to our Hotel structure
-    const hotels = data.places.map((place: any) => {
+    const hotels = data.results.map((place: any) => {
       // Determine Type based on requested param first
       let type = typeParam === 'ALL' ? 'MID_RANGE' : typeParam;
       
       if (typeParam === 'ALL') {
-        if (place.primaryType === 'resort') type = 'RESORT'
+        if (place.types?.includes('resort')) type = 'RESORT'
         else if (place.rating >= 4.5) type = 'LUXURY'
         else if (place.rating < 3.5) type = 'BUDGET'
-        else if (place.primaryType === 'lodging' && place.rating === 4.0) type = 'GOVERNMENT'
+        else if (place.types?.includes('lodging') && place.rating === 4.0) type = 'GOVERNMENT'
       }
 
       // Calculate a realistic price based on rating
@@ -76,22 +68,22 @@ export async function GET(request: Request) {
       let images = ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500'] // Fallback
       if (place.photos && place.photos.length > 0) {
         images = place.photos.slice(0, 1).map((photo: any) => 
-          `https://places.googleapis.com/v1/${photo.name}/media?maxHeightPx=800&maxWidthPx=800&key=${GOOGLE_MAPS_API_KEY}`
+          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&maxheight=800&photo_reference=${photo.photo_reference}&key=${GOOGLE_MAPS_API_KEY}`
         )
       }
 
       return {
-        id: place.id,
-        nameEn: place.displayName?.text || 'Unknown Hotel',
-        nameTa: place.displayName?.text || 'Unknown Hotel',
+        id: place.place_id,
+        nameEn: place.name || 'Unknown Hotel',
+        nameTa: place.name || 'Unknown Hotel',
         type: type,
         pricePerNight: pricePerNight,
-        address: place.formattedAddress,
+        address: place.formatted_address,
         starRating: Math.floor(rating),
         images: images,
         amenities: ['AC', 'Wi-Fi', 'Restaurant', 'Parking'].slice(0, Math.max(1, Math.floor(rating))),
         phone: 'Available at Reception',
-        website: place.websiteUri || null
+        website: null
       }
     })
 
