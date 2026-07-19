@@ -210,12 +210,14 @@ export default function StayPage() {
                     <span className="block text-caption text-granite-400 font-medium">Starting from</span>
                     <span className="text-body-lg font-bold text-granite-900">{formatCurrency(hotel.pricePerNight)}<span className="text-caption font-normal">/night</span></span>
                   </div>
-                  <button
-                    onClick={() => { setBookingHotel(hotel); setBookingSubmitted(false); setBookingName(''); setBookingPhone(''); }}
-                    className="btn-gold py-2 px-5 text-body-sm font-semibold cursor-pointer"
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold py-2 px-5 text-body-sm font-semibold cursor-pointer text-center inline-block"
                   >
-                    Book Stay
-                  </button>
+                    Official Booking
+                  </a>
                 </div>
                 <a 
                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(hotel.nameEn + ', Kanyakumari')}`}
