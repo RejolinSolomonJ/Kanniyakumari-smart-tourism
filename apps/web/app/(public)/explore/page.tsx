@@ -22,14 +22,19 @@ const categories = [
 ]
 
 function ExplorePageContent() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeCategory, setActiveCategory] = useState('ALL')
-  const [feeFilter, setFeeFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL')
-  const [destinations, setDestinations] = useState(allDestinations)
-  
   const searchParams = useSearchParams()
   const router = useRouter()
   const viewMode = searchParams.get('view') || 'grid'
+  const categoryParam = searchParams.get('category')?.toUpperCase() || 'ALL'
+
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeCategory, setActiveCategory] = useState(categoryParam)
+  const [feeFilter, setFeeFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL')
+  const [destinations, setDestinations] = useState(allDestinations)
+
+  useEffect(() => {
+    setActiveCategory(categoryParam)
+  }, [categoryParam])
 
   // Fetch real destinations from API if backend is running
   useEffect(() => {
