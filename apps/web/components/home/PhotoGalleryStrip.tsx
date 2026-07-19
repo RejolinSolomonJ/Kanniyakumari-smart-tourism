@@ -5,14 +5,14 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 const photos = [
-  { src: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=400&h=300&fit=crop', title: 'Vivekananda Rock Memorial', height: 'h-48' },
-  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=500&fit=crop', title: 'Sunset at Kanyakumari', height: 'h-64' },
-  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=350&fit=crop', title: 'Western Ghats View', height: 'h-52' },
-  { src: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=280&fit=crop', title: 'Temple Architecture', height: 'h-44' },
-  { src: 'https://images.unsplash.com/photo-1432405972618-c6b0cfba5854?w=400&h=400&fit=crop', title: 'Thirparappu Falls', height: 'h-56' },
-  { src: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&h=320&fit=crop', title: 'Palace Heritage', height: 'h-48' },
-  { src: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=450&fit=crop', title: 'Local Cuisine', height: 'h-60' },
-  { src: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop', title: 'Coastal Beauty', height: 'h-48' },
+  { src: '/images/mixed/Vivekananda_Memorial.jpg', title: 'Vivekananda Rock Memorial', height: 'h-48' },
+  { src: '/images/mixed/sunrise and sunset view point.jpg', title: 'Sunset at Kanyakumari', height: 'h-64' },
+  { src: '/images/adventure/kalikesam maramalai.jpg', title: 'Western Ghats View', height: 'h-52' },
+  { src: '/images/mixed/SUCHINDAM_TEMPLE.jpg', title: 'Temple Architecture', height: 'h-44' },
+  { src: '/images/waterfalls/Thirparappu Falls.jpg', title: 'Thirparappu Falls', height: 'h-56' },
+  { src: '/images/museums/padmanabhapuram palace museum.jpg', title: 'Palace Heritage', height: 'h-48' },
+  { src: '/images/Mathur_aqueduct.jpg', title: 'Mathoor Hanging Bridge', height: 'h-60' },
+  { src: '/images/mixed/sothavilai_Beach.jpg', title: 'Coastal Beauty', height: 'h-48' },
 ]
 
 export default function PhotoGalleryStrip() {

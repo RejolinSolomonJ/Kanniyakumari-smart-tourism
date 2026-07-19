@@ -37,7 +37,7 @@ const destinations = [
     name: 'Suchindram Temple',
     nameTa: 'சுசீந்திரம் கோவில்',
     category: 'Temple',
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&h=450&fit=crop',
+    image: '/images/mixed/SUCHINDAM_TEMPLE.jpg',
     slug: 'suchindram-thanumalayan-temple',
   },
   {
@@ -96,14 +96,14 @@ export default function FeaturedDestinations() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={index === 2 ? 'md:row-span-2' : ''}
+              className=""
             >
               <Link href={`/explore/${dest.slug}`} className="destination-card group block h-full">
                 <div className="card-image">
                   <img
                     src={dest.image}
                     alt={dest.name}
-                    className={`w-full object-cover ${index === 2 ? 'h-[420px] lg:h-full' : 'h-64'}`}
+                    className="w-full object-cover h-64"
                   />
                   <div className="absolute inset-0 bg-gradient-card opacity-60" />
                   
