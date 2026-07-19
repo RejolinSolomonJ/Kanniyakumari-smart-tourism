@@ -45,7 +45,7 @@ export default function BookTicketsPage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <h3 className="font-serif text-heading-sm text-granite-900 group-hover:text-ocean transition-colors">
-                      {dest.nameEn}
+                      {dest.slug === 'vivekananda-rock-memorial' ? 'Ferry Booking - Thiruvalluvar Statue & Vivekananda Rock' : dest.nameEn}
                     </h3>
                     <span className="badge bg-ocean-50 text-ocean text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
                       {dest.category}
