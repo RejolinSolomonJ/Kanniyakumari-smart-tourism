@@ -37,7 +37,7 @@ export default function EventsPage() {
   const [activeType, setActiveType] = useState('ALL')
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/events')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

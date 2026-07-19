@@ -9,9 +9,7 @@ import { usePathname } from 'next/navigation'
 export default function AIAssistant() {
   const pathname = usePathname()
 
-  if (pathname === '/') {
-    return null
-  }
+
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<any[]>([
     { role: 'model', content: 'Hello! I am your official Kanyakumari AI Tourism Assistant. How can I help you explore today?' }

@@ -22,7 +22,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -56,7 +56,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/otp/send', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone })
@@ -81,7 +81,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/otp/verify', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, otp })
@@ -113,7 +113,7 @@ export default function LoginPage() {
   const handleGoogleLogin = async (response: any) => {
     setIsLoading(true)
     try {
-      const res = await fetch('http://localhost:5000/api/auth/google', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential: response.credential })

@@ -14,13 +14,25 @@ export default function ARVRPage() {
       {/* Immersive Viewer Area */}
       <div className="relative h-[65vh] md:h-[75vh] w-full bg-granite-900 overflow-hidden">
         {/* Placeholder for 360 Viewer Canvas (Three.js / A-Frame) */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out"
-          style={{ 
-            backgroundImage: `url(${activeTour.image})`,
-            transform: isPlaying ? 'scale(1.05)' : 'scale(1)'
-          }}
-        />
+        {['vivekananda-rock', 'thiruvalluvar-statue', 'padmanabhapuram'].includes(activeTour.id) ? (
+          <video
+            src={activeTour.id === 'vivekananda-rock' ? "/vive.mp4" : activeTour.id === 'thiruvalluvar-statue' ? "/Thiruvalluvar.mp4" : "/padc.mp4"}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
+            style={{ transform: isPlaying ? 'scale(1.05)' : 'scale(1)' }}
+          />
+        ) : (
+          <div 
+            className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out"
+            style={{ 
+              backgroundImage: `url(${activeTour.image})`,
+              transform: isPlaying ? 'scale(1.05)' : 'scale(1)'
+            }}
+          />
+        )}
         
         {/* Vignette Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none" />
@@ -47,7 +59,13 @@ export default function ARVRPage() {
             
             <div className="flex items-center gap-4 pt-4">
               <button 
-                onClick={() => setIsPlaying(!isPlaying)}
+                onClick={() => {
+                  if (['vivekananda-rock', 'thiruvalluvar-statue', 'padmanabhapuram', 'gandhi-memorial-mandapam'].includes(activeTour.id)) {
+                    window.location.href = 'https://pixtronicsite.s3.ap-south-1.amazonaws.com/Kanchipuram+E/English+NEW+EXE+13+11+2025/Kanyakumari+E/Web/index.htm';
+                  } else {
+                    setIsPlaying(!isPlaying);
+                  }
+                }}
                 className="flex items-center gap-2 px-6 py-3 bg-gold text-black font-bold rounded-full hover:bg-white transition-all transform hover:scale-105"
               >
                 <Play className="w-5 h-5 fill-current" />

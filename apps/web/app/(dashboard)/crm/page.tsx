@@ -97,7 +97,7 @@ export default function CRMDashboard() {
     setErrorMessage('')
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -135,21 +135,21 @@ export default function CRMDashboard() {
 
     // 1. Collector view data load
     if (user.role === 'COLLECTOR' || user.role === 'SUPER_ADMIN') {
-      fetch('http://localhost:5000/api/admin/dashboard', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (data && !data.error) setCollectorStats(data) })
         .catch(() => console.log('Simulating local Collector stats.'))
 
-      fetch('http://localhost:5000/api/admin/analytics', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/analytics`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setCollectorCharts(data) })
         .catch(() => console.log('Simulating local Collector charts.'))
 
-      fetch('http://localhost:5000/api/admin/reports', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -157,7 +157,7 @@ export default function CRMDashboard() {
         .catch(() => setInfraReports(getMockInfraReports()))
 
       // Destination Ratings & Sentiment Breakdown
-      fetch('http://localhost:5000/api/reviews/stats')
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/stats`)
         .then(res => res.json())
         .then(data => {
           if (Array.isArray(data)) setReviewsSentiment(data)
@@ -165,7 +165,7 @@ export default function CRMDashboard() {
         .catch(() => setReviewsSentiment(getMockReviewsSentiment()))
 
       // Destination-wise Bookings Audit Report
-      fetch('http://localhost:5000/api/admin/destinations/reports', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -175,28 +175,28 @@ export default function CRMDashboard() {
 
     // 2. Tourism Officer view data load
     if (user.role === 'TOURISM_OFFICER' || user.role === 'SUPER_ADMIN' || user.role === 'COLLECTOR') {
-      fetch('http://localhost:5000/api/admin/bookings', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/bookings`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setBookings(data) })
         .catch(() => setBookings(getMockBookings()))
 
-      fetch('http://localhost:5000/api/admin/reviews/pending', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reviews/pending`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setPendingReviews(data) })
         .catch(() => setPendingReviews(getMockPendingReviews()))
 
-      fetch('http://localhost:5000/api/admin/destinations', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
         .then(data => { if (Array.isArray(data)) setDestinations(data) })
         .catch(() => setDestinations(getMockDestinations()))
 
-      fetch('http://localhost:5000/api/admin/destinations/reports', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
         .then(res => res.json())
@@ -215,7 +215,7 @@ export default function CRMDashboard() {
   // Get ticket checker scan logs
   const fetchLogs = () => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch('http://localhost:5000/api/scanner/logs', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/logs`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -226,7 +226,7 @@ export default function CRMDashboard() {
   // Get ticket checker workstation stats
   const fetchCheckerStats = () => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch('http://localhost:5000/api/scanner/stats', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/stats`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -242,7 +242,7 @@ export default function CRMDashboard() {
   // Handle Infrastructure issue resolution
   const handleResolveReport = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`http://localhost:5000/api/admin/reports/${id}/status`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/${id}/status`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ export default function CRMDashboard() {
   // Handle Review approvals
   const handleApproveReview = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`http://localhost:5000/api/reviews/${id}/approve`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}/approve`, {
       method: 'PUT',
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
@@ -278,7 +278,7 @@ export default function CRMDashboard() {
   // Handle Review rejections
   const handleRejectReview = (id: string) => {
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`http://localhost:5000/api/reviews/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
@@ -296,7 +296,7 @@ export default function CRMDashboard() {
     e.preventDefault()
     const authToken = localStorage.getItem('auth_token') || token
     
-    fetch(`http://localhost:5000/api/admin/destinations/${editingDest.id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/${editingDest.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -322,7 +322,7 @@ export default function CRMDashboard() {
     setBreakdownDetails(null)
 
     const authToken = localStorage.getItem('auth_token') || token
-    fetch(`http://localhost:5000/api/admin/destinations/reports/${dest.id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/destinations/reports/${dest.id}`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     })
       .then(res => res.json())
@@ -364,7 +364,7 @@ export default function CRMDashboard() {
     const authToken = localStorage.getItem('auth_token') || token
 
     try {
-      const res = await fetch('http://localhost:5000/api/scanner/validate', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/scanner/validate`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
