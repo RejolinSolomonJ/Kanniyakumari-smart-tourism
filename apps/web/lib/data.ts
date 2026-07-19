@@ -1435,7 +1435,7 @@ export const wildlifeZones = [
   {
     name: 'Udayagiri Biodiversity Park',
     type: 'Biodiversity Park',
-    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013',
+    image: '/images/rural/Government Horticulture Farm (Pechiparai).webp',
     status: 'Open',
     action: 'Explore'
   },
@@ -1449,28 +1449,28 @@ export const wildlifeZones = [
   {
     name: 'Wildlife Sanctuary Buffer Zone',
     type: 'Buffer Zone',
-    image: 'https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2000',
+    image: '/images/rural/Kumari Organic Coconut Groves.jpg',
     status: 'Permission Required',
     action: 'Learn More'
   },
   {
     name: 'Core Wildlife Conservation Zone',
     type: 'Conservation Area',
-    image: 'https://images.unsplash.com/photo-1518182170546-076616fd4025?q=80&w=2070',
+    image: '/images/rural/Vaikundam Rubber Plantation & Estate.jpg',
     status: 'Restricted',
     action: 'Conservation Area'
   },
   {
     name: 'Elephant Corridors',
     type: 'Restricted Corridor',
-    image: 'https://images.unsplash.com/photo-1579737877660-f4728f325d7c?q=80&w=2070',
+    image: '/images/rural/Pechiparai Canal Trails.jpg',
     status: 'Restricted',
     action: 'No Public Entry'
   },
   {
     name: 'Interior Reserve Forests',
     type: 'Protected Area',
-    image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070',
+    image: '/images/waterfalls/Balamore Forest Cascades.jpg',
     status: 'Restricted',
     action: 'Protected Area'
   }
