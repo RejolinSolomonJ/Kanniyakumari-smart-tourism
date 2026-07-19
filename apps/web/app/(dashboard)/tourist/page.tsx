@@ -28,7 +28,7 @@ export default function TouristDashboard() {
 
     const localSaved = JSON.parse(localStorage.getItem('local_bookings') || '[]')
 
-    fetch('http://localhost:5000/api/bookings/user', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings/user`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

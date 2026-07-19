@@ -40,7 +40,7 @@ export default function AdminDashboard() {
     if (!token) return
 
     // Fetch stats
-    fetch('http://localhost:5000/api/admin/dashboard', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
       .catch(() => console.log('Using mock admin stats.'))
 
     // Fetch charts
-    fetch('http://localhost:5000/api/admin/analytics', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/analytics`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
       .catch(() => console.log('Using mock chart data.'))
 
     // Fetch reports
-    fetch('http://localhost:5000/api/admin/reports', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
 
   const handleResolveReport = (id: string) => {
     const token = localStorage.getItem('auth_token')
-    fetch(`http://localhost:5000/api/admin/reports/${id}/status`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/reports/${id}/status`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',

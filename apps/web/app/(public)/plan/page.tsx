@@ -53,7 +53,7 @@ export default function ItineraryPlannerPage() {
 
     try {
       const token = localStorage.getItem('auth_token')
-      const response = await fetch('http://localhost:5000/api/ai/itinerary', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ai/itinerary`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

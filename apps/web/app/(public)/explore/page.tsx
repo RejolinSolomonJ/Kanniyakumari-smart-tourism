@@ -39,7 +39,7 @@ function ExplorePageContent() {
 
   // Fetch real destinations from API if backend is running
   useEffect(() => {
-    fetch('http://localhost:5000/api/destinations')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

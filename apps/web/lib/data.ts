@@ -1432,31 +1432,31 @@ export const wildlifeZones = [
 // ─── AR/VR TOURS ────────────────────────────────────────────────
 export const arvrTours = [
   {
+    id: 'padmanabhapuram',
+    title: 'Padmanabhapuram Palace',
+    description: 'Walk through the ancient wooden architecture. Explore the Queen\'s Palace, Council Chamber, and Murals.',
+    image: '/images/museums/padmanabhapuram palace museum.jpg',
+    tag: '360° Tour'
+  },
+  {
     id: 'vivekananda-rock',
     title: 'Vivekananda Rock Memorial',
     description: 'Immersive 360° view from the iconic rock memorial. Experience the meditation hall and panoramic ocean views.',
-    image: 'https://images.unsplash.com/photo-1621427638795-7e4e88e1e6d8?w=1200',
+    image: '/images/mixed/Vivekananda_Memorial.jpg',
     tag: 'VR Ready'
   },
   {
     id: 'thiruvalluvar-statue',
     title: 'Thiruvalluvar Statue',
     description: 'Explore the 133-feet tall stone sculpture up close. View the intricate carvings and base reliefs.',
-    image: 'https://images.unsplash.com/photo-1598463283737-124b1757835f?w=1200',
+    image: '/images/mixed/thiruvalluvar-statue.jpg',
     tag: 'AR Enhanced'
   },
   {
-    id: 'padmanabhapuram',
-    title: 'Padmanabhapuram Palace',
-    description: 'Walk through the ancient wooden architecture. Explore the Queen\'s Palace, Council Chamber, and Murals.',
-    image: 'https://images.unsplash.com/photo-1623547285973-19cb9e28fba1?w=1200',
-    tag: '360° Tour'
-  },
-  {
-    id: 'suchindram-temple',
-    title: 'Suchindram Temple Interior',
-    description: 'Experience the musical pillars, 18-ft Hanuman statue, and the grand corridor from inside.',
-    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200',
+    id: 'gandhi-memorial-mandapam',
+    title: 'Gandhi Memorial Mandapam',
+    description: 'Explore the architectural marvel built to honor Mahatma Gandhi, designed so the sun\'s rays fall on his ashes on October 2nd.',
+    image: '/images/mixed/Gandhi-memorial-mandapam.jpg',
     tag: 'VR Ready'
   }
 ]

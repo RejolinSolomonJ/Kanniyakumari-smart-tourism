@@ -16,7 +16,7 @@ export default function GuidesPage() {
   const [bookingSuccess, setBookingSuccess] = useState(false)
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/guides')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/guides`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
@@ -45,7 +45,7 @@ export default function GuidesPage() {
     const days = Math.max(1, Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1)
     const totalAmount = days * activeGuide.ratePerDay
 
-    fetch('http://localhost:5000/api/guides/book', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/guides/book`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

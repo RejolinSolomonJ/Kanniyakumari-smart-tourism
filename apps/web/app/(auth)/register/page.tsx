@@ -20,7 +20,7 @@ export default function RegisterPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, phone })
@@ -52,7 +52,7 @@ export default function RegisterPage() {
   const handleGoogleLogin = async (response: any) => {
     setIsLoading(true)
     try {
-      const res = await fetch('http://localhost:5000/api/auth/google', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential: response.credential })

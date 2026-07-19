@@ -64,7 +64,7 @@ export default function EmergencyPage() {
   const [contacts, setContacts] = useState(allContacts)
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/emergency/contacts')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/emergency/contacts`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

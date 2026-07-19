@@ -30,7 +30,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
   useEffect(() => {
     // Attempt local API fetch
-    fetch(`http://localhost:5000/api/destinations/${slug}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations/${slug}`)
       .then(res => res.json())
       .then(data => {
         if (data && !data.error) {
@@ -103,7 +103,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
         ticketsArray.push({ type: 'PARKING_BIKE', quantity: bikeQty, unitPrice: bikePrice })
       }
 
-      const bookingRes = await fetch('http://localhost:5000/api/bookings/ticket/create', {
+      const bookingRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings/ticket/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       }
 
       // Order creation
-      const orderRes = await fetch('http://localhost:5000/api/payments/create-order', {
+      const orderRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       const orderData = await orderRes.json()
 
       // Pilot Stage: Auto-Verify payment simulation
-      const verifyRes = await fetch('http://localhost:5000/api/payments/verify', {
+      const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
