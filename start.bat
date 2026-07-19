@@ -16,5 +16,5 @@ echo Web Portal: http://localhost:3000
 echo Scanner App: http://localhost:3001
 echo Backend API: http://localhost:5000
 echo --------------------------------------------------
-echo Note: Ensure your local PostgreSQL database is running on Port 5432.
+echo Note: Connected to MongoDB Atlas Cloud database.
 pause

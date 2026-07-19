@@ -187,6 +187,37 @@ adminRouter.get('/reports', async (req, res) => {
   }
 })
 
+// GET /api/admin/reviews/pending - Get unapproved reviews
+adminRouter.get('/reviews/pending', async (req, res) => {
+  try {
+    const reviews = await prisma.review.findMany({
+      where: { isApproved: false },
+      include: {
+        user: { select: { name: true, email: true } },
+        destination: { select: { nameEn: true } },
+        hotel: { select: { nameEn: true } },
+        guide: { select: { nameEn: true } }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+    return res.json(reviews)
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch pending reviews' })
+  }
+})
+
+// GET /api/admin/destinations - Get all destinations
+adminRouter.get('/destinations', async (req, res) => {
+  try {
+    const destinations = await prisma.destination.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+    return res.json(destinations)
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch destinations' })
+  }
+})
+
 // PUT /api/admin/reports/:id/status - Update report status
 adminRouter.put('/reports/:id/status', async (req, res) => {
   const { id } = req.params
@@ -202,5 +233,93 @@ adminRouter.put('/reports/:id/status', async (req, res) => {
     return res.json(report)
   } catch (error) {
     return res.status(500).json({ error: 'Failed to update report status' })
+  }
+})
+
+// GET /api/admin/destinations/reports - Get analytics reports for all destinations
+adminRouter.get('/destinations/reports', async (req, res) => {
+  try {
+    const destinations = await prisma.destination.findMany({
+      select: {
+        id: true,
+        nameEn: true,
+        slug: true,
+        entryFeeAdult: true
+      }
+    })
+
+    const reports = await Promise.all(destinations.map(async (dest) => {
+      // Sum visitor quantity and price for tickets booked
+      const bookingsSum = await prisma.ticket.aggregate({
+        where: { destinationId: dest.id },
+        _sum: {
+          quantity: true,
+          totalPrice: true
+        }
+      })
+
+      // Sum visitor quantity for tickets that are scanned (entered gate)
+      const scannedSum = await prisma.ticket.aggregate({
+        where: { 
+          destinationId: dest.id,
+          isScanned: true 
+        },
+        _sum: {
+          quantity: true
+        }
+      })
+
+      return {
+        id: dest.id,
+        name: dest.nameEn,
+        slug: dest.slug,
+        ticketsBooked: bookingsSum._sum.quantity || 0,
+        totalRevenue: bookingsSum._sum.totalPrice || 0,
+        scannedEntries: scannedSum._sum.quantity || 0
+      }
+    }))
+
+    return res.json(reports)
+  } catch (error) {
+    console.error('Error fetching destination reports:', error)
+    return res.status(500).json({ error: 'Failed to fetch destination reports' })
+  }
+})
+
+// GET /api/admin/destinations/reports/:id - Get grouped ticket breakdown analysis by type for a destination
+adminRouter.get('/destinations/reports/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const destination = await prisma.destination.findUnique({
+      where: { id },
+      select: { nameEn: true }
+    })
+    if (!destination) {
+      return res.status(404).json({ error: 'Destination not found' })
+    }
+
+    // Group tickets by type
+    const ticketBreakdown = await prisma.ticket.groupBy({
+      by: ['ticketType'],
+      where: { destinationId: id },
+      _sum: {
+        quantity: true,
+        totalPrice: true
+      }
+    })
+
+    const data = ticketBreakdown.map(item => ({
+      type: item.ticketType,
+      quantity: item._sum.quantity || 0,
+      revenue: item._sum.totalPrice || 0
+    }))
+
+    return res.json({
+      name: destination.nameEn,
+      breakdown: data
+    })
+  } catch (error) {
+    console.error('Error fetching destination breakdown report:', error)
+    return res.status(500).json({ error: 'Failed to fetch ticket breakdown analytics' })
   }
 })
