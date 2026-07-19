@@ -132,12 +132,17 @@ function ExplorePageContent() {
                 className="w-full bg-transparent border-0 ring-0 focus:ring-0 px-3 py-2 text-sm focus:outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
+                }}
               />
             </motion.div>
           </div>
         </div>
 
-      <div className="container-wide">
+      <div id="results-section" className="container-wide">
 
         {/* Category Explorer */}
         <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
