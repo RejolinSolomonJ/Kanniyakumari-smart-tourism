@@ -31,7 +31,7 @@ export default function WildlifePage() {
             <p className="text-xl text-white/90 leading-relaxed mb-8">
               A biodiversity hotspot in the Western Ghats. Home to tigers, elephants, and endemic flora. Discover the pristine beauty of India's southernmost forests.
             </p>
-
+          </div>
         </div>
 
         {/* Features Grid */}
