@@ -238,8 +238,14 @@ authRouter.post('/google', async (req, res) => {
   }
 
   try {
-    const response = await (globalThis as any).fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`)
-    const payload = await response.json()
+    const payload: any = await new Promise((resolve, reject) => {
+      const https = require('https')
+      https.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`, (response: any) => {
+        let data = ''
+        response.on('data', (chunk: any) => data += chunk)
+        response.on('end', () => resolve(JSON.parse(data)))
+      }).on('error', reject)
+    })
 
     if (payload.error_description || !payload.email) {
       return res.status(400).json({ error: 'Invalid Google token' })
