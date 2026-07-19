@@ -748,7 +748,7 @@ export const events = [
     venue: 'Kanyakumari Beach Open Air Stage',
     startDate: '2026-10-15',
     endDate: '2026-10-17',
-    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500',
+    image: '/images/cultural/Cape Festival.jpg',
     descriptionEn: 'Organized by the Department of Tourism, Tamil Nadu. Showcases regional culture with music concerts, classical dance performances, and a craft bazaar.',
     isGovernment: true
   },
@@ -760,7 +760,7 @@ export const events = [
     venue: 'Suchindram Temple Street',
     startDate: '2026-12-20',
     endDate: '2026-12-30',
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500',
+    image: '/images/cultural/Margazhi Temple Car Festival.jpg',
     descriptionEn: 'The grand chariot festival of Suchindram Thanumalayan Temple involving a massive procession of three decorated temple cars through the streets.',
     isGovernment: false
   },
@@ -772,7 +772,7 @@ export const events = [
     venue: 'Across Kanyakumari District',
     startDate: '2027-01-14',
     endDate: '2027-01-17',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500',
+    image: '/images/cultural/Pongal Celebrations.jpg',
     descriptionEn: 'Tamil harvest festival celebrated with traditional Pongal cooking, bull taming (Jallikattu), kolam art competitions, and cultural programs.',
     isGovernment: true
   },
@@ -808,7 +808,7 @@ export const events = [
     venue: 'Our Lady of Ransom Church, Kanyakumari',
     startDate: '2026-12-24',
     endDate: '2026-12-26',
-    image: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=500',
+    image: '/images/cultural/Golden Car Festival (Church).jpg',
     descriptionEn: 'The famous golden chariot procession of Our Lady of Ransom Church along Beach Road. Thousands gather to witness this grand Christmas celebration.',
     isGovernment: false
   }

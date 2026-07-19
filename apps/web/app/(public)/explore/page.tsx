@@ -32,6 +32,10 @@ function ExplorePageContent() {
   const [feeFilter, setFeeFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL')
   const [destinations, setDestinations] = useState(allDestinations)
 
+  useEffect(() => {
+    setActiveCategory(categoryParam)
+  }, [categoryParam])
+
   // Fetch real destinations from API if backend is running
   useEffect(() => {
     fetch('http://localhost:5000/api/destinations')
