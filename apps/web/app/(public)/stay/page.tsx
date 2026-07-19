@@ -53,20 +53,26 @@ export default function StayPage() {
   const [activeType, setActiveType] = useState('ALL')
   const [isLoading, setIsLoading] = useState(true)
 
+  const [apiError, setApiError] = useState<string | null>(null)
+
   useEffect(() => {
     setIsLoading(true)
+    setApiError(null)
     fetch(`/api/hotels?type=${activeType}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           setHotels(data)
+        } else if (data.error) {
+          setApiError(`Google API Error: ${data.error}`)
+          setHotels(mockHotels)
         } else {
-          console.log('API returned empty or error, using mock data.', data)
+          setApiError('Google API returned no results.')
           setHotels(mockHotels)
         }
       })
       .catch((err) => {
-        console.error('Fetch error, using mock data.', err)
+        setApiError(`Network Error: ${err.message}`)
         setHotels(mockHotels)
       })
       .finally(() => setIsLoading(false))
@@ -103,16 +109,22 @@ export default function StayPage() {
       <div className="container-wide">
         
         {/* Page Header */}
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-2">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h1 className="font-serif text-heading-xl font-bold text-granite-900 mb-4">
             Where to Stay
           </h1>
-          <p className="text-body-sm text-granite-500">
+          <p className="text-body text-granite-500">
             Book official TTDC hotels, beachfront resorts, or clean budget accommodations.
           </p>
         </div>
 
-        {/* Filter Bar */}
+        {apiError && (
+          <div className="mb-8 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl max-w-3xl mx-auto text-center font-semibold">
+            {apiError} (Fallback Offline Data Loaded)
+          </div>
+        )}
+
+        {/* Categories */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {['ALL', 'GOVERNMENT', 'RESORT', 'LUXURY', 'MID_RANGE', 'BUDGET', 'HOMESTAY'].map(type => (
             <button
