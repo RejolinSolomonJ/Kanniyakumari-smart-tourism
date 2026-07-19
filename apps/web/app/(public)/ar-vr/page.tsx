@@ -16,7 +16,7 @@ export default function ARVRPage() {
         {/* Placeholder for 360 Viewer Canvas (Three.js / A-Frame) */}
         {['vivekananda-rock', 'thiruvalluvar-statue', 'padmanabhapuram'].includes(activeTour.id) ? (
           <video
-            src={activeTour.id === 'vivekananda-rock' ? "/vive.mp4" : activeTour.id === 'thiruvalluvar-statue' ? "/Thiruvalluvar.mp4" : "/pad.mp4"}
+            src={activeTour.id === 'vivekananda-rock' ? "/vive.mp4" : activeTour.id === 'thiruvalluvar-statue' ? "/Thiruvalluvar.mp4" : "/padc.mp4"}
             autoPlay
             loop
             muted
