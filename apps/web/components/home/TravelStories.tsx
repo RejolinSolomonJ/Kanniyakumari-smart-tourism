@@ -12,7 +12,7 @@ const stories = [
     date: 'June 2026',
     readTime: '5 min read',
     image: '/images/mixed/sunrise and sunset view point.jpg',
-    slug: 'kanyakumari-beach',
+    slug: 'spiritual-dawn-southern-tip',
     category: 'Travel Story',
   },
   {
@@ -22,7 +22,7 @@ const stories = [
     date: 'May 2026',
     readTime: '7 min read',
     image: '/images/museums/padmanabhapuram palace museum.jpg',
-    slug: 'padmanabhapuram-palace',
+    slug: 'padmanabhapuram-wooden-wonder',
     category: 'Heritage',
   },
   {
@@ -32,7 +32,7 @@ const stories = [
     date: 'April 2026',
     readTime: '6 min read',
     image: '/images/waterfalls/Thirparappu Falls.jpg',
-    slug: 'thirparappu-waterfalls',
+    slug: 'western-ghats-trekking-guide',
     category: 'Adventure',
   },
 ]
@@ -74,7 +74,7 @@ export default function TravelStories() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Link href={`/explore/${story.slug}`} className="card-premium block group">
+              <Link href={`/blogs/${story.slug}`} className="card-premium block group">
                 <div className="relative overflow-hidden rounded-t-2xl">
                   <img
                     src={story.image}
