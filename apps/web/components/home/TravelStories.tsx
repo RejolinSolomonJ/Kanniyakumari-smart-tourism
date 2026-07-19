@@ -11,8 +11,8 @@ const stories = [
     author: 'Priya Sharma',
     date: 'June 2026',
     readTime: '5 min read',
-    image: '/images/kanyakumari-beaches.jpg',
-    slug: 'spiritual-dawn-southern-tip',
+    image: '/images/mixed/sunrise and sunset view point.jpg',
+    slug: 'kanyakumari-beach',
     category: 'Travel Story',
   },
   {
@@ -21,18 +21,18 @@ const stories = [
     author: 'Rajesh Kumar',
     date: 'May 2026',
     readTime: '7 min read',
-    image: '/images/padmanabhapuram-palace.jpg',
-    slug: 'exploring-padmanabhapuram-palace',
+    image: '/images/museums/padmanabhapuram palace museum.jpg',
+    slug: 'padmanabhapuram-palace',
     category: 'Heritage',
   },
   {
     title: 'The Hidden Waterfalls of Kanyakumari',
-    excerpt: 'Beyond the famous tourist spots, Kanyakumari hides pristine waterfalls in the Western Ghats. Our trek to Olakaruvi Falls through dense forests was an unforgettable adventure.',
+    excerpt: 'Beyond the famous tourist spots, Kanyakumari hides pristine waterfalls in the Western Ghats. Our trek to Thirparappu Falls through dense forests was an unforgettable adventure.',
     author: 'Anita Devi',
     date: 'April 2026',
     readTime: '6 min read',
-    image: '/images/Thirparappu_Waterfalls.jpg',
-    slug: 'hidden-waterfalls-kanyakumari',
+    image: '/images/waterfalls/Thirparappu Falls.jpg',
+    slug: 'thirparappu-waterfalls',
     category: 'Adventure',
   },
 ]
@@ -74,7 +74,7 @@ export default function TravelStories() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Link href={`/blogs/${story.slug}`} className="card-premium block group">
+              <Link href={`/explore/${story.slug}`} className="card-premium block group">
                 <div className="relative overflow-hidden rounded-t-2xl">
                   <img
                     src={story.image}
