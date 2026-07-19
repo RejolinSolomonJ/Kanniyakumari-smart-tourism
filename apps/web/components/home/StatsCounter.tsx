@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { MapPin, Users, Clock, Maximize, Compass, Ticket, Hotel, AlertTriangle, Headset } from 'lucide-react'
+import { MapPin, Users, Clock, Maximize, Compass, Ticket, Hotel, AlertTriangle, Headset, Volume2, VolumeX } from 'lucide-react'
 import Link from 'next/link'
 
 const stats = [
@@ -40,25 +40,66 @@ function AnimatedCounter({ target, suffix, inView }: { target: number; suffix: s
 export default function StatsCounter() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [muted, setMuted] = useState(true)
+
+  // Attempt to play with audio after first user interaction on the page
+  useEffect(() => {
+    const playVideo = () => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(() => {})
+      }
+    }
+    document.addEventListener('click', playVideo, { once: true })
+    document.addEventListener('keydown', playVideo, { once: true })
+    return () => {
+      document.removeEventListener('click', playVideo, playVideo as any)
+      document.removeEventListener('keydown', playVideo, playVideo as any)
+    }
+  }, [])
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !muted
+      if (!muted === false) {
+        // unmuting — make sure playing
+        videoRef.current.play().catch(() => {})
+      }
+      setMuted(!muted)
+    }
+  }
 
   return (
-    <section
-      ref={ref}
-      style={{
-        backgroundImage: "url('/images/background.jpg')",
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-      className="relative py-24 md:py-32"
-    >
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
+
+      {/* ── Video Background ── */}
+      <video
+        ref={videoRef}
+        src="/images/kanniyakumari-bg.mp4"
+        autoPlay
+        loop
+        muted={muted}
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      />
+
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/55 z-0" />
+      <div className="absolute inset-0 bg-black/55 z-10" />
 
-      <div className="relative z-10 container-wide px-4">
+      {/* ── Mute / Unmute Button ── */}
+      <button
+        onClick={toggleMute}
+        className="absolute top-5 right-5 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold hover:bg-white/25 transition-all"
+        title={muted ? 'Unmute video' : 'Mute video'}
+      >
+        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        {muted ? 'Unmute' : 'Mute'}
+      </button>
 
-        {/* ── Stats ── */}
+      {/* ── Content ── */}
+      <div className="relative z-20 container-wide px-4">
+
+        {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mb-16">
           {stats.map((stat, i) => (
             <motion.div
@@ -68,10 +109,7 @@ export default function StatsCounter() {
               transition={{ delay: i * 0.15, duration: 0.6 }}
               className="flex flex-col items-center gap-3 py-8 px-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-colors"
             >
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: stat.color + '22' }}
-              >
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: stat.color + '22' }}>
                 <stat.icon className="w-6 h-6" style={{ color: stat.color }} />
               </div>
               <div className="font-serif text-4xl md:text-5xl font-extrabold" style={{ color: stat.color }}>
@@ -82,10 +120,10 @@ export default function StatsCounter() {
           ))}
         </div>
 
-        {/* ── Divider ── */}
+        {/* Divider */}
         <div className="w-24 h-px bg-white/30 mx-auto mb-14" />
 
-        {/* ── Quick Actions ── */}
+        {/* Quick Actions */}
         <div className="flex flex-wrap justify-center gap-10 md:gap-16">
           {actions.map((action, i) => (
             <motion.div
