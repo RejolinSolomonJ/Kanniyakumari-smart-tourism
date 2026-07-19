@@ -2,7 +2,6 @@ import HeroVideo from '@/components/home/HeroVideo'
 import StatsCounter from '@/components/home/StatsCounter'
 import QuickActions from '@/components/home/QuickActions'
 import FeaturedDestinations from '@/components/home/FeaturedDestinations'
-import CategoryExplorer from '@/components/home/CategoryExplorer'
 import TimelessTreasures from '@/components/home/TimelessTreasures'
 import InteractiveMap from '@/components/home/InteractiveMap'
 import TravelStories from '@/components/home/TravelStories'
@@ -20,13 +19,12 @@ export default function HomePage() {
       <QuickActions />
       <FeaturedDestinations />
       <TimelessTreasures />
-      <CategoryExplorer />
-      <InteractiveMap />
-      <TravelStories />
       <FoodTrails />
       <FestivalCalendar />
-      <PhotoGalleryStrip />
       <StoryGallery />
+      <InteractiveMap />
+      <TravelStories />
+      <PhotoGalleryStrip />
       <GovernmentAnnouncements />
     </>
   )

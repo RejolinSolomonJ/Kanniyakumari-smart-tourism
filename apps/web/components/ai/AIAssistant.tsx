@@ -4,8 +4,14 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, X, Send, Compass, MessageSquare, Phone, AlertCircle } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
+import { usePathname } from 'next/navigation'
 
 export default function AIAssistant() {
+  const pathname = usePathname()
+
+  if (pathname === '/') {
+    return null
+  }
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<any[]>([
     { role: 'model', content: 'Hello! I am your official Kanyakumari AI Tourism Assistant. How can I help you explore today?' }

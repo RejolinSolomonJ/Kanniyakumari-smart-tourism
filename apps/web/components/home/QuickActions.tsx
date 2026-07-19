@@ -13,14 +13,13 @@ const actions = [
   { icon: Hotel, label: 'Find Hotels', href: '/stay', color: 'from-sea-500 to-sea-700', delay: 0.1 },
   { icon: AlertTriangle, label: 'Emergency', href: '/emergency', color: 'from-red-500 to-red-700', delay: 0.15 },
   { icon: Download, label: 'Download Map', href: '/downloads', color: 'from-sunset-500 to-sunset-700', delay: 0.2 },
-  { icon: Sparkles, label: 'AI Assistant', href: '/plan', color: 'from-purple-500 to-purple-700', delay: 0.25 },
 ]
 
 export default function QuickActions() {
   return (
     <section className="py-12 md:py-16 bg-white">
       <div className="container-wide">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {actions.map((action) => (
             <motion.div
               key={action.label}

@@ -8,6 +8,7 @@ import { Search, MapPin, Star, Filter, Calendar, Map as MapIcon, Grid } from 'lu
 import { cn } from '@/lib/utils'
 import { destinations as allDestinations } from '@/lib/data'
 import InteractiveMap from '@/components/home/InteractiveMap'
+import CategoryExplorer from '@/components/home/CategoryExplorer'
 
 const categories = [
   { key: 'ALL', label: 'All Places' },
@@ -96,6 +97,11 @@ function ExplorePageContent() {
               />
             </div>
           </div>
+        </div>
+
+        {/* Category Explorer */}
+        <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
+          <CategoryExplorer />
         </div>
 
         {/* Filters Panel */}
