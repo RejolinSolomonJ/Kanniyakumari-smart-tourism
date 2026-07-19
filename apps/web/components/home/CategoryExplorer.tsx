@@ -24,38 +24,40 @@ const categories = [
   { key: 'PHOTOGRAPHY', label: 'Photography', icon: Camera, count: 5, color: 'bg-teal-50 text-teal-600' },
 ]
 
-export default function CategoryExplorer() {
+export default function CategoryExplorer({ hideHeader = false }: { hideHeader?: boolean }) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
   return (
-    <section className="section-padding bg-white">
+    <section className={hideHeader ? "bg-white p-6" : "section-padding bg-white"}>
       <div className="container-wide">
-        <div className="section-header">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-gold font-medium text-body-sm tracking-wider uppercase mb-2"
-          >
-            Explore By Category
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="section-title"
-          >
-            Discover the Diverse Wonders
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="section-subtitle"
-          >
-            From pristine beaches to ancient temples, Kanyakumari offers experiences for every traveler
-          </motion.p>
-        </div>
+        {!hideHeader && (
+          <div className="section-header">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-gold font-medium text-body-sm tracking-wider uppercase mb-2"
+            >
+              Explore By Category
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="section-title"
+            >
+              Discover the Diverse Wonders
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="section-subtitle"
+            >
+              From pristine beaches to ancient temples, Kanyakumari offers experiences for every traveler
+            </motion.p>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {categories.map((cat, index) => (
