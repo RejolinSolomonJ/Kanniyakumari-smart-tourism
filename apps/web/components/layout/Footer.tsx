@@ -33,9 +33,9 @@ const footerLinks = {
     { label: 'Emergency Services', href: '/emergency' },
     { label: 'Report Infrastructure Issue', href: '/report-issue' },
     { label: 'Tourist Reviews', href: '/reviews' },
-    { label: 'RTI', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Accessibility', href: '#' },
+    { label: 'RTI', href: '/rti' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Accessibility', href: '/accessibility' },
   ],
 }
 
