@@ -309,27 +309,27 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
       </div>
 
       {/* 2. Sticky Bar */}
-      <div className="sticky top-16 bg-white border-b border-granite-200 z-30 shadow-sm py-4">
-        <div className="container-wide flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-6 text-body-sm text-granite-600">
+      <div className="sticky top-16 bg-white border-b border-granite-200 z-30 shadow-sm py-3 md:py-4">
+        <div className="container-wide flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+          <div className="flex flex-wrap gap-4 text-caption md:text-body-sm text-granite-600">
             <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-ocean" />
+              <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-ocean" />
               Hours: <strong>{typeof destination.openingHours === 'string' ? destination.openingHours : (destination.openingHours?.open ? `${destination.openingHours.open} - ${destination.openingHours.close}` : '08:00 AM - 04:00 PM')}</strong>
             </span>
             <span className="flex items-center gap-1.5">
-              <Ticket className="w-4 h-4 text-ocean" />
+              <Ticket className="w-3.5 h-3.5 md:w-4 md:h-4 text-ocean" />
               Adult Fee: <strong>{adultPrice > 0 ? formatCurrency(adultPrice) : 'Free Entry'}</strong>
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button className="p-2 rounded-full border hover:bg-granite-50 text-granite-600" aria-label="Share">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0">
+            <button className="p-2 rounded-full border hover:bg-granite-50 text-granite-600 shrink-0" aria-label="Share">
               <Share2 className="w-4 h-4" />
             </button>
-            <button className="p-2 rounded-full border hover:bg-granite-50 text-granite-600" aria-label="Save">
+            <button className="p-2 rounded-full border hover:bg-granite-50 text-granite-600 shrink-0" aria-label="Save">
               <Heart className="w-4 h-4" />
             </button>
-            <button onClick={() => window.print()} className="p-2 rounded-full border hover:bg-granite-50 text-granite-600" aria-label="Print">
+            <button onClick={() => window.print()} className="p-2 rounded-full border hover:bg-granite-50 text-granite-600 shrink-0 hidden sm:block" aria-label="Print">
               <Printer className="w-4 h-4" />
             </button>
             <a 
@@ -338,11 +338,18 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                 : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination.nameEn + ', Kanyakumari')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2 rounded-xl border border-ocean text-ocean hover:bg-ocean hover:text-white transition-all text-body-sm font-semibold flex items-center gap-1.5 cursor-pointer bg-white"
+              className="px-4 py-2 rounded-xl border border-ocean text-ocean hover:bg-ocean hover:text-white transition-all text-caption md:text-body-sm font-semibold flex items-center gap-1.5 cursor-pointer bg-white shrink-0"
             >
-              <MapPin className="w-4 h-4" /> Get Directions
+              <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4" /> Get Directions
             </a>
-            <a href="#booking-section" className="btn-primary py-2 px-6 text-body-sm font-semibold">
+            <a 
+              href="#booking-section" 
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }}
+              className="btn-primary py-2 px-5 text-caption md:text-body-sm font-semibold shrink-0"
+            >
               Book Tickets Now
             </a>
           </div>

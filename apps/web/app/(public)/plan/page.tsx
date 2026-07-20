@@ -556,8 +556,8 @@ Respond ONLY with valid JSON matching this exact structure (no conversational te
             {/* Loading Illustration */}
             <div className="relative w-32 h-32 mx-auto">
               <div className="absolute inset-0 rounded-full border-4 border-ocean/20 animate-spin border-t-ocean" />
-              <div className="absolute inset-2 bg-gradient-ocean rounded-full flex items-center justify-center">
-                <span className="text-white font-serif font-bold text-3xl">TN</span>
+              <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center p-3 shadow-inner">
+                <img src="/images/logo.png" alt="Kanyakumari Logo" className="w-full h-full object-contain drop-shadow-sm" />
               </div>
             </div>
             <div className="space-y-2">

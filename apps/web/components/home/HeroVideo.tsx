@@ -10,7 +10,7 @@ export default function HeroVideo() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {})
+      videoRef.current.play().catch(() => { })
     }
   }, [])
 
@@ -74,12 +74,12 @@ export default function HeroVideo() {
             Explore
           </Link>
           <Link href="/plan" className="btn-gold px-8 py-3.5 text-body font-semibold">
-            ✨ AI Journey Planner
+            AI Journey Planner
           </Link>
           <Link href="/bookings/tickets" className="btn-glass px-8 py-3.5 text-body">
             Book Tickets
           </Link>
-          <button 
+          <button
             onClick={() => setIsModalOpen(true)}
             className="btn-glass px-6 py-3.5 text-body gap-2"
           >

@@ -72,6 +72,11 @@ export default function CategoryExplorer({ hideHeader = false }: { hideHeader?: 
             >
               <Link
                 href={`/explore?category=${cat.key}`}
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }, 100)
+                }}
                 className={`flex flex-col items-center gap-3 p-5 rounded-2xl border transition-all duration-300 group ${
                   activeCategory === cat.key
                     ? 'border-ocean bg-ocean-50 shadow-md'
