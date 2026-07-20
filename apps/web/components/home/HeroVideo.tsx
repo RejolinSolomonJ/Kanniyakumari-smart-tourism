@@ -73,8 +73,8 @@ export default function HeroVideo() {
           <Link href="/explore" className="btn-primary px-8 py-3.5 text-body">
             Explore
           </Link>
-          <Link href="/plan" className="btn-gold px-8 py-3.5 text-body">
-            Plan Your Journey
+          <Link href="/plan" className="btn-gold px-8 py-3.5 text-body font-semibold">
+            ✨ AI Journey Planner
           </Link>
           <Link href="/bookings/tickets" className="btn-glass px-8 py-3.5 text-body">
             Book Tickets
@@ -116,7 +116,7 @@ export default function HeroVideo() {
             </button>
             <video
               className="w-full h-full rounded-xl"
-              src="/videos/Story.mp4"
+              src="/videos/Storycc.mp4"
               controls
               autoPlay
             />
