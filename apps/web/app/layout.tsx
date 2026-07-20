@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
+import TamilLettersBackground from "@/components/ui/TamilLettersBackground";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,7 +37,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col antialiased bg-background">
+        <TamilLettersBackground />
         <Navbar />
         <main className="flex-1">{children}</main>
         <AIAssistant />
