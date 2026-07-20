@@ -47,7 +47,7 @@ authRouter.post('/register', async (req, res) => {
       data: {
         name: data.name,
         email: data.email,
-        phone: data.phone,
+        phone: data.phone || `no_phone_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
         passwordHash,
         role: Role.TOURIST,
         provider: Provider.EMAIL,
@@ -260,6 +260,7 @@ authRouter.post('/google', async (req, res) => {
         data: {
           name: name || email.split('@')[0],
           email,
+          phone: `google_${sub}`,
           role: Role.TOURIST,
           provider: Provider.GOOGLE,
           providerId: sub,
