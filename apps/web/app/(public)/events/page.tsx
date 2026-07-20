@@ -36,16 +36,7 @@ export default function EventsPage() {
   const [events, setEvents] = useState(allEvents)
   const [activeType, setActiveType] = useState('ALL')
 
-  useEffect(() => {
-    fetch(`${(process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "").endsWith("/api") ? (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") : (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "") + "/api"}/events`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setEvents(data)
-        }
-      })
-      .catch(() => console.log('Using mock events.'))
-  }, [])
+  // The API fetch has been removed to preserve the beautiful pre-populated mock events.
 
   return (
     <div className="pt-24 min-h-screen bg-granite-50 pb-16">
