@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import AIAssistant from "@/components/ai/AIAssistant";
+import PublicElementsWrapper from "@/components/layout/PublicElementsWrapper";
+import PublicFooterWrapper from "@/components/layout/PublicFooterWrapper";
 
 export const metadata: Metadata = {
   title: "Kanyakumari Tourism | Government of Tamil Nadu",
@@ -28,8 +27,6 @@ export const metadata: Metadata = {
   },
 };
 
-import TamilLettersBackground from "@/components/ui/TamilLettersBackground";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,11 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen flex flex-col antialiased bg-background">
-        <TamilLettersBackground />
-        <Navbar />
+        <PublicElementsWrapper />
         <main className="flex-1">{children}</main>
-        <AIAssistant />
-        <Footer />
+        <PublicFooterWrapper />
       </body>
     </html>
   );
