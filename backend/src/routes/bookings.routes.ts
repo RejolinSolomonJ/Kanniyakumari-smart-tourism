@@ -87,7 +87,7 @@ bookingsRouter.post('/ticket/create', authenticate, async (req: AuthRequest, res
       return res.status(400).json({ error: error.errors[0].message })
     }
     console.error('Booking creation error:', error)
-    return res.status(500).json({ error: 'Failed to create booking' })
+    return res.status(500).json({ error: `Failed to create booking: ${(error as any).message || 'Unknown server error'}` })
   }
 })
 
