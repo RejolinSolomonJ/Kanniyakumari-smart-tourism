@@ -39,6 +39,7 @@ bookingsRouter.post('/ticket/create', authenticate, async (req: AuthRequest, res
         status: BookingStatus.PENDING,
         totalAmount,
         paymentStatus: PaymentStatus.PENDING,
+        paymentId: `pending_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
       }
     })
 
