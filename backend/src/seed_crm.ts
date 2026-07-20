@@ -62,6 +62,27 @@ async function main() {
     console.log(`Created/Updated: ${checker.email} (Role: ${checker.role}, Gate: Palace)`)
   }
 
+  // 4. Ferry Gate Checker Account
+  const rockMemorial = await prisma.destination.findFirst({ where: { nameEn: 'Vivekananda Rock Memorial' }})
+  
+  if (rockMemorial) {
+    const ferryChecker = await prisma.user.upsert({
+      where: { email: 'ferry_checker@kanyakumari.gov.in' },
+      update: { passwordHash, role: Role.SITE_MANAGER, destinationId: rockMemorial.id },
+      create: {
+        name: 'Ferry Gate Checker',
+        email: 'ferry_checker@kanyakumari.gov.in',
+        phone: '+910000000004',
+        passwordHash,
+        role: Role.SITE_MANAGER,
+        destinationId: rockMemorial.id,
+        provider: Provider.EMAIL,
+        isVerified: true
+      }
+    })
+    console.log(`Created/Updated: ${ferryChecker.email} (Role: ${ferryChecker.role}, Gate: Ferry)`)
+  }
+
   console.log('✅ CRM Accounts Seeded Successfully!')
 }
 
