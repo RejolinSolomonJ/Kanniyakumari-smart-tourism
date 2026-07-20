@@ -135,9 +135,11 @@ function ExplorePageContent() {
       <div id="results-section" className="container-wide">
 
         {/* Category Explorer */}
-        <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
-          <CategoryExplorer hideHeader={true} />
-        </div>
+        {viewMode !== 'map' && (
+          <div className="mb-12 bg-white rounded-3xl border border-granite-100 shadow-sm overflow-hidden">
+            <CategoryExplorer hideHeader={true} />
+          </div>
+        )}
 
         {/* Filters Panel */}
         <div id="explore-results" className="flex flex-col lg:flex-row gap-6 mb-12 justify-between items-center bg-white p-4 rounded-2xl border border-granite-100 shadow-sm">
