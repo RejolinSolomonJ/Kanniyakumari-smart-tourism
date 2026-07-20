@@ -108,7 +108,9 @@ scannerRouter.post('/validate', authenticate, requireSiteManager, async (req: Au
       // timeSlot format: "08:00 AM - 10:00 AM" or similar. For MVP, we do a basic check or just warn.
       // Since parsing dynamic time slots perfectly is complex without a strict format, 
       // we'll explicitly pass the timeSlot to the frontend to highlight if it's out of bounds.
-      const currentHour = new Date().getHours()
+      // Since servers run in UTC, we must convert the current time to IST (Asia/Kolkata) to validate Indian time slots
+      const currentHour = parseInt(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false }), 10)
+      
       let slotValid = true
       if (ticket.timeSlot.includes('08:00 AM') && currentHour > 11) slotValid = false
       if (ticket.timeSlot.includes('10:00 AM') && (currentHour < 9 || currentHour > 13)) slotValid = false
