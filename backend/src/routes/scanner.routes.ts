@@ -103,27 +103,9 @@ scannerRouter.post('/validate', authenticate, requireSiteManager, async (req: Au
       }
     }
 
-    // Time Slot Validation for Ferry Bookings
-    if (ticket.timeSlot) {
-      // timeSlot format: "08:00 AM - 10:00 AM" or similar. For MVP, we do a basic check or just warn.
-      // Since parsing dynamic time slots perfectly is complex without a strict format, 
-      // we'll explicitly pass the timeSlot to the frontend to highlight if it's out of bounds.
-      // Since servers run in UTC, we must convert the current time to IST (Asia/Kolkata) to validate Indian time slots
-      const currentHour = parseInt(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false }), 10)
-      
-      let slotValid = true
-      if (ticket.timeSlot.includes('08:00 AM') && currentHour > 11) slotValid = false
-      if (ticket.timeSlot.includes('10:00 AM') && (currentHour < 9 || currentHour > 13)) slotValid = false
-      if (ticket.timeSlot.includes('12:00 PM') && (currentHour < 11 || currentHour > 15)) slotValid = false
-      if (ticket.timeSlot.includes('02:00 PM') && (currentHour < 13 || currentHour > 17)) slotValid = false
-      
-      if (!slotValid) {
-        return res.json({
-          valid: false,
-          message: `Time Slot Expired/Invalid. This ticket is specifically valid for the ${ticket.timeSlot} slot.`
-        })
-      }
-    }
+    // Time Slot Validation for Ferry Bookings has been disabled per request
+    // Tickets can now be scanned at any time regardless of the selected slot
+
 
     if (ticket.isScanned) {
       return res.json({
