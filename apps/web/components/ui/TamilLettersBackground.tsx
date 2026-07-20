@@ -33,10 +33,10 @@ export default function TamilLettersBackground() {
       char: TAMIL_LETTERS[Math.floor(Math.random() * TAMIL_LETTERS.length)],
       startX: Math.random() * 100, // percentage vw
       startY: Math.random() * 100, // percentage vh
-      duration: Math.random() * 40 + 40, // 40-80s very slow float
+      duration: Math.random() * 30 + 30, // 30-60s slow float
       delay: Math.random() * 5,
-      scale: Math.random() * 1.5 + 0.5, // 0.5x to 2.0x size
-      opacity: Math.random() * 0.03 + 0.01 // Very subtle 0.01 to 0.04 opacity
+      scale: Math.random() * 1.5 + 0.8, // 0.8x to 2.3x size
+      opacity: Math.random() * 0.06 + 0.04 // 4% to 10% opacity for better visibility
     }))
     
     setLetters(newLetters)
@@ -45,11 +45,11 @@ export default function TamilLettersBackground() {
   if (!isClient) return null
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden mix-blend-multiply">
+    <div className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
       {letters.map((letter) => (
         <motion.div
           key={letter.id}
-          className="absolute font-tamil text-granite-900 select-none"
+          className="absolute font-tamil text-granite-400 select-none"
           style={{
             left: `${letter.startX}vw`,
             top: `${letter.startY}vh`,
