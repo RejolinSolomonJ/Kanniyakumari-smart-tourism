@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" translate="no">
       <body className="min-h-screen flex flex-col antialiased bg-background">
         <TamilLettersBackground />
         <Navbar />
