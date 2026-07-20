@@ -294,9 +294,9 @@ authRouter.post('/google', async (req, res) => {
       },
       token
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Google login error:', error)
-    return res.status(500).json({ error: 'Google login failed' })
+    return res.status(500).json({ error: `Google login failed: ${error.message || 'Unknown server error'}` })
   }
 })
 
